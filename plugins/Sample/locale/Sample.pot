@@ -1,0 +1,65 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-01-29 21:45+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#. TRANS: Exception thrown when the user greeting count could not be saved in the database.
+#. TRANS: %d is a user ID (number).
+#: User_greeting_count.php:164
+#, php-format
+msgid "Could not save new greeting count for %d."
+msgstr ""
+
+#. TRANS: Exception thrown when the user greeting count could not be saved in the database.
+#. TRANS: %d is a user ID (number).
+#: User_greeting_count.php:177
+#, php-format
+msgid "Could not increment greeting count for %d."
+msgstr ""
+
+#: SamplePlugin.php:259 hello.php:111
+msgid "Hello"
+msgstr ""
+
+#: SamplePlugin.php:259
+msgid "A warm greeting"
+msgstr ""
+
+#: SamplePlugin.php:270
+msgid "A sample plugin to show basics of development for new hackers."
+msgstr ""
+
+#: hello.php:113
+#, php-format
+msgid "Hello, %s!"
+msgstr ""
+
+#: hello.php:133
+msgid "Hello, stranger!"
+msgstr ""
+
+#: hello.php:136
+#, php-format
+msgid "Hello, %s"
+msgstr ""
+
+#: hello.php:138
+#, php-format
+msgid "I have greeted you %d time."
+msgid_plural "I have greeted you %d times."
+msgstr[0] ""
+msgstr[1] ""
