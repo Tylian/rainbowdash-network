@@ -878,7 +878,8 @@ class Profile extends Memcached_DataObject
                 $result = !$this->isSandboxed();
                 break;
             case Right::WEBLOGIN:
-                $result = !$this->isSilenced();
+#                $result = !$this->isSilenced();
+                $result = true; # Even silenced people can simply LOG IN.
                 break;
             case Right::API:
                 $result = !$this->isSilenced();

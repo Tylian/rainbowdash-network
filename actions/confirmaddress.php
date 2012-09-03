@@ -110,6 +110,7 @@ class ConfirmaddressAction extends Action
             $cur->smsemail = $carrier->toEmailAddress($cur->sms);
         }
 
+
         $result = $cur->updateKeys($orig_user);
 
         if (!$result) {
@@ -120,6 +121,11 @@ class ConfirmaddressAction extends Action
         }
 
         if ($type == 'email') {
+            # User just confirmed their email address. Unsilence them.
+            if ($orig_user->email == '') {
+                $profile = $cur->getProfile();
+                $profile->unsilence();
+            }
             $cur->emailChanged();
         }
 

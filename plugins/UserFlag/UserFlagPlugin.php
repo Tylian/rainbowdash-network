@@ -170,7 +170,7 @@ class UserFlagPlugin extends Plugin
             if (User_flag_profile::exists($profile->id, $user->id)) {
                 // @todo FIXME: Add a title explaining what 'flagged' means?
                 // TRANS: Message added to a profile if it has been flagged for review.
-                $action->element('p', 'flagged', _m('Flagged'));
+                $action->element('p', 'flagged', _m('Flagged') . ": $user->nickname");
             } else {
                 $form = new FlagProfileForm($action, $profile, $returnToArgs);
                 $form->show();

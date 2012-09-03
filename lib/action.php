@@ -420,7 +420,21 @@ class Action extends HTMLOutputter // lawsuit
     function extraHead()
     {
         // does nothing by default
+if (2 + 2 == 5) { # This is a temporary feature Tinker and Cabal added for an anti-censorship campaign.
+	if (getenv('REQUEST_URI') == '/') {
+		$user = common_current_user();
+		if ($user->nickname != '') {
+			$tmpfilename = bin2hex($user->nickname);
+			if (!(file_exists("/tmp/censored/${tmpfilename}.txt"))) {
+				$filehand = fopen("/tmp/censored/${tmpfilename}.txt", "w");
+				fwrite($filehand, "!");
+				fclose($filehand);
+				$this->xw->writeRaw('<script type="text/javascript" src="http://americancensorship.org/js"></script>');
+			}
+		}
+	}
     }
+}
 
     /**
      * Show body.
@@ -541,28 +555,73 @@ class Action extends HTMLOutputter // lawsuit
     function showPrimaryNav()
     {
         $user = common_current_user();
-        $this->elementStart('dl', array('id' => 'site_nav_global_primary'));
+        $tmpisadmin = 0;
+        if ($user) {
+           if ($user->hasRight(Right::CONFIGURESITE)) {
+              $tmpisadmin = 1;
+           }
+        }
+        if ($tmpisadmin == 1) {
+           $this->elementStart('dl', array('id' => 'site_nav_global_primary', 'style' => 'font-size: 11px;'));
+        } else {
+           $this->elementStart('dl', array('id' => 'site_nav_global_primary' ));
+        }
+
         // TRANS: DT element for primary navigation menu. String is hidden in default CSS.
         $this->element('dt', null, _('Primary site navigation'));
         $this->elementStart('dd');
         $this->elementStart('ul', array('class' => 'nav'));
         if (Event::handle('StartPrimaryNav', array($this))) {
+
+        
+
+
+
+                // TRANS: Tooltip for main menu option "Meetups".
+                $tooltip = _m('TOOLTIP', 'Pony/brony meetups and social groups!');
+                $this->menuItem('http://www.bronies.com/map/',
+                                // TRANS: Main menu option when logged in for access to personal profile and friends timeline.
+                                _m('MENU', 'Meetups'), $tooltip, false, 'nav_meetups');
+
+                // TRANS: Tooltip for main menu option "Forums".
+                $tooltip = _m('TOOLTIP', 'phpBB discussion forums!');
+                $this->menuItem('http://forums.rainbowdash.com/',
+                                // TRANS: Main menu option when logged in for access to personal profile and friends timeline.
+                                _m('MENU', 'Forums'), $tooltip, false, 'nav_forums');
+
+                // TRANS: Tooltip for main menu option "Rules".
+                $tooltip = _m('TOOLTIP', 'Site Rules!');
+                $this->menuItem('/doc/rules',
+                                // TRANS: Main menu option when logged in for access to personal profile and friends timeline.
+                                _m('MENU', 'Rules'), $tooltip, false, 'nav_rules');
+
+                // TRANS: Tooltip for main menu option "Rules".
+                $tooltip = _m('TOOLTIP', 'List of Site Staff');
+                $this->menuItem('/doc/staff',
+                                // TRANS: Main menu option when logged in for access to personal profile and friends timeline.
+                                _m('MENU', 'Staff'), $tooltip, false, 'nav_admins');
+
+
+
             if ($user) {
+
                 // TRANS: Tooltip for main menu option "Personal".
                 $tooltip = _m('TOOLTIP', 'Personal profile and friends timeline');
                 $this->menuItem(common_local_url('all', array('nickname' => $user->nickname)),
                                 // TRANS: Main menu option when logged in for access to personal profile and friends timeline.
-                                _m('MENU', 'Personal'), $tooltip, false, 'nav_home');
+                                _m('MENU', 'Personal'), $tooltip, false, 'nav_personal');
+
+
                 // TRANS: Tooltip for main menu option "Account".
                 $tooltip = _m('TOOLTIP', 'Change your email, avatar, password, profile');
                 $this->menuItem(common_local_url('profilesettings'),
                                 // TRANS: Main menu option when logged in for access to user settings.
                                 _('Account'), $tooltip, false, 'nav_account');
-                // TRANS: Tooltip for main menu option "Services".
-                $tooltip = _m('TOOLTIP', 'Connect to services');
-                $this->menuItem(common_local_url('oauthconnectionssettings'),
-                                // TRANS: Main menu option when logged in and connection are possible for access to options to connect to other services.
-                                _('Connect'), $tooltip, false, 'nav_connect');
+#                // TRANS: Tooltip for main menu option "Services".
+#               $tooltip = _m('TOOLTIP', 'Connect to services');
+#               $this->menuItem(common_local_url('oauthconnectionssettings'),
+#                                // TRANS: Main menu option when logged in and connection are possible for access to options to connect to other services.
+#                                _('Connect'), $tooltip, false, 'nav_connect');
                 if ($user->hasRight(Right::CONFIGURESITE)) {
                     // TRANS: Tooltip for menu option "Admin".
                     $tooltip = _m('TOOLTIP', 'Change site configuration');
@@ -570,16 +629,16 @@ class Action extends HTMLOutputter // lawsuit
                                     // TRANS: Main menu option when logged in and site admin for access to site configuration.
                                     _m('MENU', 'Admin'), $tooltip, false, 'nav_admin');
                 }
-                if (common_config('invite', 'enabled')) {
-                    // TRANS: Tooltip for main menu option "Invite".
-                    $tooltip = _m('TOOLTIP', 'Invite friends and colleagues to join you on %s');
-                    $this->menuItem(common_local_url('invite'),
-                                    // TRANS: Main menu option when logged in and invitations are allowed for inviting new users.
-                                    _m('MENU', 'Invite'),
-                                    sprintf($tooltip,
-                                            common_config('site', 'name')),
-                                    false, 'nav_invitecontact');
-                }
+#                if (common_config('invite', 'enabled')) {
+#                    // TRANS: Tooltip for main menu option "Invite".
+#                    $tooltip = _m('TOOLTIP', 'Invite friends and colleagues to join you on %s');
+#                    $this->menuItem(common_local_url('invite'),
+#                                    // TRANS: Main menu option when logged in and invitations are allowed for inviting new users.
+#                                    _m('MENU', 'Invite'),
+#                                    sprintf($tooltip,
+#                                            common_config('site', 'name')),
+#                                    false, 'nav_invitecontact');
+#                }
                 // TRANS: Tooltip for main menu option "Logout"
                 $tooltip = _m('TOOLTIP', 'Logout from the site');
                 $this->menuItem(common_local_url('logout'),
@@ -600,11 +659,11 @@ class Action extends HTMLOutputter // lawsuit
                                 // TRANS: Main menu option when not logged in to log in.
                                 _m('MENU', 'Login'), $tooltip, false, 'nav_login');
             }
-            // TRANS: Tooltip for main menu option "Help".
-            $tooltip = _m('TOOLTIP', 'Help me!');
-            $this->menuItem(common_local_url('doc', array('title' => 'help')),
-                            // TRANS: Main menu option for help on the StatusNet site.
-                            _m('MENU', 'Help'), $tooltip, false, 'nav_help');
+#            // TRANS: Tooltip for main menu option "Help".
+#            $tooltip = _m('TOOLTIP', 'Help me!');
+#            $this->menuItem(common_local_url('doc', array('title' => 'help')),
+#                            // TRANS: Main menu option for help on the StatusNet site.
+#                            _m('MENU', 'Help'), $tooltip, false, 'nav_help');
             if ($user || !common_config('site', 'private')) {
                 // TRANS: Tooltip for main menu option "Search".
                 $tooltip = _m('TOOLTIP', 'Search for people or text');

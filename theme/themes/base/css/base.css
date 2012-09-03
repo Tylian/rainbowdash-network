@@ -1,0 +1,9 @@
+body {background-repeat: repeat-x;}
+#aside_primary {background-color:#FFFFFF;
+-webkit-box-shadow: 0px 5px 7px 5px #186FA5;
+-moz-box-shadow: 0px 5px 7px 5px #186FA5;
+box-shadow: 0px 5px 7px 5px #186FA5;}
+#content {-webkit-box-shadow: 0px 5px 7px 5px #186FA5;
+-moz-box-shadow: 0px 5px 7px 5px #186FA5;
+box-shadow: 0px 5px 7px 5px #186FA5;}
+

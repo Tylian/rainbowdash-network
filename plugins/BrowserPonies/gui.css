@@ -1,0 +1,103 @@
+/* This file was auto-generated from .gui.tmp.css
+/* Change dialog colors in release-color */
+.browserponies a { text-decoration: none; }
+.browserponies a.button:visited {
+	color: white;
+}
+.browserponies .button:hover, button:hover, select:hover {
+	border-color: #68B1E3;
+
+background: #c0e7f7;
+background: -moz-linear-gradient(top, #c0e7f7 0%, #61a4d3 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c0e7f7), color-stop(100%,#61a4d3));
+background: -webkit-linear-gradient(top, #c0e7f7 0%,#61a4d3 100%);
+background: -o-linear-gradient(top, #c0e7f7 0%,#61a4d3 100%);
+background: -ms-linear-gradient(top, #c0e7f7 0%,#61a4d3 100%);
+*zoom: 1;
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c0e7f7', endColorstr='#61a4d3',GradientType=0 );
+background: linear-gradient(top, #c0e7f7 0%,#61a4d3 100%);
+
+}
+.browserponies .button:hover {
+	color: white;
+}
+.browserponies, .browserponies .button, .browserponies button, .browserponies select {
+    font-size: 8pt;
+	display: block; /* well just screw browsers that don't support this */
+
+	font-weight: bold;
+	padding: 5px 10px;
+	margin: 0;
+	color: white;
+    text-align: center;
+
+	border: 1px solid #70CB71;
+	text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.3);
+
+	-moz-border-radius: 20px;
+	border-radius:      20px;
+	
+	-moz-box-shadow:    2px 2px 5px #ccc;
+	-webkit-box-shadow: 2px 2px 5px #ccc;
+	box-shadow:         2px 2px 6px #ccc;
+
+	cursor: hand;
+	cursor: pointer;
+
+background: #B1EDB9;
+background: -moz-linear-gradient(top, #B1EDB9 0%, #4CC44F 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#B1EDB9), color-stop(100%,#4CC44F));
+background: -webkit-linear-gradient(top, #B1EDB9 0%,#4CC44F 100%);
+background: -o-linear-gradient(top, #B1EDB9 0%,#4CC44F 100%);
+background: -ms-linear-gradient(top, #B1EDB9 0%,#4CC44F 100%);
+*zoom: 1;
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#B1EDB9', endColorstr='#4CC44F',GradientType=0 );
+background: linear-gradient(top, #B1EDB9 0%,#4CC44F 100%);
+}
+.browserponies .button {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    float: left;
+    width: 10px;
+}
+.browserponies .button.left, .browserponies .button.middle {
+    border-bottom-right-radius: 0;
+}
+.browserponies .button.right, .browserponies .button.middle {
+    border-bottom-left-radius: 0;
+}
+.browserponies input {
+    width: 85px;
+    margin: 0;
+}
+.browserponies {
+    clear: both;
+    padding: 0;
+    padding-top: 5px;
+    width: 97px;
+}
+#browserponies-suggest {
+	display: none;
+	background: white;
+	border: 1px solid black;
+	z-index: 1000;
+	position: absolute;
+	padding: 0px 4px;
+	
+	-webkit-box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.3);
+	box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.3);
+}
+.browserponies-suggestion  {
+	cursor: pointer;
+	text-align: center;
+	opacity: 0.6;
+	transition-property: opacity;  
+    transition-duration: 0.3s;
+	transition-timing-function: ease-out;  
+	-webkit-transition-property: opacity;  
+	-webkit-transition-duration: 0.3s;  
+	-o-transition-property: opacity;  
+	-o-transition-duration: 0.3s;  
+}
+.browserponies-suggestion:hover { opacity: 1; }

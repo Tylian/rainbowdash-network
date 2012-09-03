@@ -308,7 +308,6 @@ $default =
                                                       array('shortenerName' => 'metamark.net', 'serviceUrl' => 'http://metamark.net/api/rest/simple?long_url=%1$s'),
                                                       array('shortenerName' => 'tinyurl.com', 'serviceUrl' => 'http://tinyurl.com/api-create.php?url=%1$s')),
                                  'TightUrl' => array('shortenerName' => '2tu.us', 'freeService' => true,'serviceUrl'=>'http://2tu.us/?save=y&url=%1$s'),
-                                 'Geonames' => null,
                                  'Mapstraction' => null,
                                  'OStatus' => null,
                                  'WikiHashtags' => null,
