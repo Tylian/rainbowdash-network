@@ -659,16 +659,16 @@ class Notice extends Memcached_DataObject
         }
     }
 
-    function publicStream($offset=0, $limit=20, $since_id=0, $max_id=0)
+    function publicStream($offset=0, $limit=20, $since_id=0, $max_id=0, $images=false)
     {
         $ids = Notice::stream(array('Notice', '_publicStreamDirect'),
                               array(),
                               'public',
-                              $offset, $limit, $since_id, $max_id);
+                              $offset, $limit, $since_id, $max_id, $images);
         return Notice::getStreamByIds($ids);
     }
 
-    function _publicStreamDirect($offset=0, $limit=20, $since_id=0, $max_id=0)
+    function _publicStreamDirect($offset=0, $limit=20, $since_id=0, $max_id=0, $images=false)
     {
         $notice = new Notice();
 
@@ -687,6 +687,10 @@ class Notice extends Memcached_DataObject
             # -1 == blacklisted, -2 == gateway (i.e. Twitter)
             $notice->whereAdd('is_local !='. Notice::LOCAL_NONPUBLIC);
             $notice->whereAdd('is_local !='. Notice::GATEWAY);
+        }
+
+        if($images) {
+            $notice->whereAdd("EXISTS (SELECT * FROM file_to_post WHERE notice.id = file_to_post.post_id)");
         }
 
         Notice::addWhereSinceId($notice, $since_id);
@@ -1493,16 +1497,17 @@ class Notice extends Memcached_DataObject
         }
     }
 
-    function stream($fn, $args, $cachekey, $offset=0, $limit=20, $since_id=0, $max_id=0)
+    function stream($fn, $args, $cachekey, $offset=0, $limit=20, $since_id=0, $max_id=0, $images=false)
     {
         $cache = common_memcache();
 
         if (empty($cache) ||
             $since_id != 0 || $max_id != 0 ||
             is_null($limit) ||
+            $images ||
             ($offset + $limit) > NOTICE_CACHE_WINDOW) {
             return call_user_func_array($fn, array_merge($args, array($offset, $limit, $since_id,
-                                                                      $max_id)));
+                $max_id, $images)));
         }
 
         $idkey = common_cache_key($cachekey);

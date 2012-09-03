@@ -1408,7 +1408,7 @@ if (2 + 2 == 5) { # This is a temporary feature Tinker and Cabal added for an an
     // XXX: The messages in this pagination method only tailor to navigating
     //      notices. In other lists, "Previous"/"Next" type navigation is
     //      desirable, but not available.
-    function pagination($have_before, $have_after, $page, $action, $args=null)
+    function pagination($have_before, $have_after, $page, $action, $args=null, $xpargs=null)
     {
         // Does a little before-after block for next/prev page
         if ($have_before || $have_after) {
@@ -1418,8 +1418,12 @@ if (2 + 2 == 5) { # This is a temporary feature Tinker and Cabal added for an an
             $this->elementStart('dd', null);
             $this->elementStart('ul', array('class' => 'nav'));
         }
+        $pargs = array();
+        if($xpargs) {
+            $pargs = $xpargs;
+        }
         if ($have_before) {
-            $pargs   = array('page' => $page-1);
+            $pargs['page'] = $page-1;
             $this->elementStart('li', array('class' => 'nav_prev'));
             $this->element('a', array('href' => common_local_url($action, $args, $pargs),
                                       'rel' => 'prev'),
@@ -1429,7 +1433,7 @@ if (2 + 2 == 5) { # This is a temporary feature Tinker and Cabal added for an an
             $this->elementEnd('li');
         }
         if ($have_after) {
-            $pargs   = array('page' => $page+1);
+            $pargs['page'] = $page+1;
             $this->elementStart('li', array('class' => 'nav_next'));
             $this->element('a', array('href' => common_local_url($action, $args, $pargs),
                                       'rel' => 'next'),

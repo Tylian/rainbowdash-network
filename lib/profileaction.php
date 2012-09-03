@@ -87,6 +87,7 @@ class ProfileAction extends OwnerDesignAction
         }
 
         $this->tag = $this->trimmed('tag');
+        $this->images = $this->trimmed('images');
         $this->page = ($this->arg('page')) ? ($this->arg('page')+0) : 1;
         common_set_returnto($this->selfUrl());
         return true;

@@ -183,6 +183,22 @@ class ConversationTree extends NoticeList
             } else {
                 $this->tree[$notice->reply_to] = array($notice->id);
             }
+
+        }
+
+        // Heal broken replies
+        foreach(array_keys($this->tree) as $ckey ) {
+            if($ckey == 'root') continue;
+            $fix = true;
+            foreach(array_keys($this->tree) as $skey) {
+                if( in_array($ckey, $this->tree[$skey]) ) {
+                    $fix = false;
+                    break;
+                }
+            }
+            if($fix) {
+                $this->tree[ $this->tree['root'][0] ] = array_merge($this->tree[$ckey], $this->tree[ $this->tree['root'][0] ]);
+            }
         }
 
         return $cnt;

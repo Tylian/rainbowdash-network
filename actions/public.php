@@ -79,6 +79,8 @@ class PublicAction extends Action
         parent::prepare($args);
         $this->page = ($this->arg('page')) ? ($this->arg('page')+0) : 1;
 
+        $this->images = ($this->arg('images')) ? true : false;
+
         if ($this->page > MAX_PUBLIC_PAGE) {
             $this->clientError(sprintf(_("Beyond the page limit (%s)."), MAX_PUBLIC_PAGE));
         }
@@ -86,7 +88,7 @@ class PublicAction extends Action
         common_set_returnto($this->selfUrl());
 
         $this->notice = Notice::publicStream(($this->page-1)*NOTICES_PER_PAGE,
-                                       NOTICES_PER_PAGE + 1);
+            NOTICES_PER_PAGE + 1, NULL, NULL, $this->images);
 
         if (!$this->notice) {
             $this->serverError(_('Could not retrieve public stream.'));
@@ -220,20 +222,24 @@ class PublicAction extends Action
             $this->showEmptyList();
         }
 
+        $xpargs = array();
+        if($this->images) {
+            $xpargs['images'] = $this->images;
+        }
         $this->pagination($this->page > 1, $cnt > NOTICES_PER_PAGE,
-                          $this->page, 'public');
+            $this->page, 'public', null, $xpargs);
     }
 
     function showSections()
     {
         // $top = new TopPostersSection($this);
         // $top->show();
-        $pop = new PopularNoticeSection($this);
-        $pop->show();
-        $gbp = new GroupsByMembersSection($this);
-        $gbp->show();
         $feat = new FeaturedUsersSection($this);
         $feat->show();
+        $gbp = new GroupsByMembersSection($this);
+        $gbp->show();
+        $pop = new PopularNoticeSection($this);
+        $pop->show();
     }
 
     function showAnonymousMessage()

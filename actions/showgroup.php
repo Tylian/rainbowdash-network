@@ -82,6 +82,12 @@ class ShowgroupAction extends GroupDesignAction
         }
     }
 
+    function showNoticeForm()
+    {  
+        $notice_form = new NoticeForm($this, null, "!{$this->group->nickname} ");
+        $notice_form->show();
+    }
+
     /**
      * Prepare the action
      *
@@ -96,6 +102,7 @@ class ShowgroupAction extends GroupDesignAction
         parent::prepare($args);
 
         $this->page = ($this->arg('page')) ? ($this->arg('page')+0) : 1;
+        $this->images = ($this->arg('images')) ? true : false;
 
         $nickname_arg = $this->arg('nickname');
         $nickname = common_canonical_nickname($nickname_arg);
@@ -193,16 +200,22 @@ class ShowgroupAction extends GroupDesignAction
     function showGroupNotices()
     {
         $notice = $this->group->getNotices(($this->page-1)*NOTICES_PER_PAGE,
-                                           NOTICES_PER_PAGE + 1);
+            NOTICES_PER_PAGE + 1, null, null, $this->images);
 
         $nl = new NoticeList($notice, $this);
         $cnt = $nl->show();
+
+        $xpargs = array();
+        if($this->images) {
+            $xpargs['images'] = $this->images;
+        }
 
         $this->pagination($this->page > 1,
                           $cnt > NOTICES_PER_PAGE,
                           $this->page,
                           'showgroup',
-                          array('nickname' => $this->group->nickname));
+                          array('nickname' => $this->group->nickname),
+                          $xpargs);
     }
 
     /**

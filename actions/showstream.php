@@ -86,6 +86,12 @@ class ShowstreamAction extends ProfileAction
         }
     }
 
+    function showNoticeForm()
+    {  
+        $notice_form = new NoticeForm($this, null, "@{$this->profile->nickname} ");
+        $notice_form->show();
+    }
+
     function handle($args)
     {
         // Looks like we're good; start output
@@ -235,7 +241,7 @@ class ShowstreamAction extends ProfileAction
     function showNotices()
     {
         $notice = empty($this->tag)
-          ? $this->user->getNotices(($this->page-1)*NOTICES_PER_PAGE, NOTICES_PER_PAGE + 1)
+            ? $this->user->getNotices(($this->page-1)*NOTICES_PER_PAGE, NOTICES_PER_PAGE + 1, null, null, $this->images)
             : $this->user->getTaggedNotices($this->tag, ($this->page-1)*NOTICES_PER_PAGE, NOTICES_PER_PAGE + 1, 0, 0, null);
 
         $pnl = null;
@@ -247,13 +253,18 @@ class ShowstreamAction extends ProfileAction
             $this->showEmptyListMessage();
         }
 
+        $xpargs = array();
+        if($this->images) {
+            $xpargs['images'] = $this->images;
+        }
+
         $args = array('nickname' => $this->user->nickname);
         if (!empty($this->tag))
         {
             $args['tag'] = $this->tag;
         }
         $this->pagination($this->page>1, $cnt>NOTICES_PER_PAGE, $this->page,
-                          'showstream', $args);
+            'showstream', $args, $xpargs);
     }
 
     function showAnonymousMessage()

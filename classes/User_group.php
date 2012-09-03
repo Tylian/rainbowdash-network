@@ -81,17 +81,17 @@ class User_group extends Memcached_DataObject
         return $url;
     }
 
-    function getNotices($offset, $limit, $since_id=null, $max_id=null)
+    function getNotices($offset, $limit, $since_id=null, $max_id=null, $images=false)
     {
         $ids = Notice::stream(array($this, '_streamDirect'),
                               array(),
                               'user_group:notice_ids:' . $this->id,
-                              $offset, $limit, $since_id, $max_id);
+                              $offset, $limit, $since_id, $max_id, $images);
 
         return Notice::getStreamByIds($ids);
     }
 
-    function _streamDirect($offset, $limit, $since_id, $max_id)
+    function _streamDirect($offset, $limit, $since_id, $max_id, $images)
     {
         $inbox = new Group_inbox();
 
@@ -102,6 +102,10 @@ class User_group extends Memcached_DataObject
 
         Notice::addWhereSinceId($inbox, $since_id, 'notice_id');
         Notice::addWhereMaxId($inbox, $max_id, 'notice_id');
+
+        if ($images) {
+            $inbox->whereAdd('EXISTS (SELECT * FROM file_to_post WHERE group_inbox.notice_id = file_to_post.post_id)');
+        }
 
         $inbox->orderBy('created DESC, notice_id DESC');
 

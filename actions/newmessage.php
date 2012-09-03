@@ -107,17 +107,25 @@ class NewmessageAction extends Action
 
         $this->content = $this->trimmed('content');
         $this->to = $this->trimmed('to');
+        $this->custom_name = $this->trimmed('custom_name');
 
         if ($this->to) {
 
-            $this->other = User::staticGet('id', $this->to);
+            if($this->to == 'any') {
+                $this->other = User::staticGet('nickname', $this->custom_name);
+            }
+            else {
+                $this->other = User::staticGet('id', $this->to);
+            }
 
             if (!$this->other) {
                 $this->clientError(_('No such user.'), 404);
                 return false;
             }
 
-            if (!$user->mutuallySubscribed($this->other)) {
+            if (!$user->mutuallySubscribed($this->other) &&
+                !($user->hasRole(Profile_role::MODERATOR) || $user->hasRole(Profile_role::ADMINISTRATOR)) &&
+                !(($this->other->hasRole(Profile_role::ADMINISTRATOR) || $this->other->hasRole(Profile_role::MODERATOR)) && !$user->hasRole(Profile_role::SILENCED))) {
                 $this->clientError(_('You can\'t send a message to this user.'), 404);
                 return false;
             }
@@ -160,7 +168,9 @@ class NewmessageAction extends Action
         if (!$this->other) {
             $this->showForm(_('No recipient specified.'));
             return;
-        } else if (!$user->mutuallySubscribed($this->other)) {
+        } else if (!$user->mutuallySubscribed($this->other) &&
+            !($user->hasRole(Profile_role::MODERATOR) || $user->hasRole(Profile_role::ADMINISTRATOR)) &&
+            !(($this->other->hasRole(Profile_role::ADMINISTRATOR) || $this->other->hasRole(Profile_role::MODERATOR)) && !$user->hasRole(Profile_role::SILENCED)) ) {
             $this->clientError(_('You can\'t send a message to this user.'), 404);
             return;
         } else if ($user->id == $this->other->id) {

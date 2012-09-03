@@ -45,9 +45,7 @@ if (!defined('STATUSNET') && !defined('LACONICA')) {
  */
 class RealtimePlugin extends Plugin
 {
-    protected $replyurl = null;
-    protected $favorurl = null;
-    protected $deleteurl = null;
+    protected $showurl = null;
 
     /**
      * When it's time to initialize the plugin, calculate and
@@ -56,18 +54,16 @@ class RealtimePlugin extends Plugin
 
     function onInitializePlugin()
     {
-        $this->replyurl = common_local_url('newnotice');
-        $this->favorurl = common_local_url('favor');
-        $this->repeaturl = common_local_url('repeat');
         // FIXME: need to find a better way to pass this pattern in
-        $this->deleteurl = common_local_url('deletenotice',
+        $this->showurl = common_local_url('shownotice',
                                             array('notice' => '0000000000'));
+
         return true;
     }
 
     function onEndShowScripts($action)
     {
-        $timeline = $this->_getTimeline($action);
+        $timeline = $this->_getTimeline($action) . '_html';
 
         // If there's not a timeline on this page,
         // just return true
@@ -93,8 +89,10 @@ class RealtimePlugin extends Plugin
 
         if (!empty($user->id)) {
             $user_id = $user->id;
+            $user_ismod = $user->hasRole(Profile_role::MODERATOR) ? 'true' : 'false';
         } else {
             $user_id = 0;
+            $user_ismod = 'false';
         }
 
         if ($action->boolean('realtime')) {
@@ -107,12 +105,17 @@ class RealtimePlugin extends Plugin
 
         $script = ' $(document).ready(function() { '.
           $realtimeUI.
-          $this->_updateInitialize($timeline, $user_id).
+          $this->_updateInitialize($timeline, $user_id, $user_ismod).
           '}); ';
         $action->inlineScript($script);
 
         return true;
     }
+
+    function onEndDeleteOwnNotice($user, $notice) {
+        $this->_addToTimelines($notice, array('notice_delete' => $notice->id));
+    }
+
 
     function onEndShowStatusNetStyles($action)
     {
@@ -122,8 +125,7 @@ class RealtimePlugin extends Plugin
         return true;
     }
 
-    function onHandleQueuedNotice($notice)
-    {
+    function _addToTimelines($notice, $hson=null) {
         $paths = array();
 
         // Add to the author's timeline
@@ -188,6 +190,9 @@ class RealtimePlugin extends Plugin
             }
         }
 
+        // Add to the conversation timeline
+        if($notice->conversation) $paths[] = array('conversation', $notice->conversation);
+
         if (count($paths) > 0) {
 
             $json = $this->noticeAsJson($notice);
@@ -197,10 +202,33 @@ class RealtimePlugin extends Plugin
             foreach ($paths as $path) {
                 $timeline = $this->_pathToChannel($path);
                 $this->_publish($timeline, $json);
+
+                if(!empty($hson)) {
+                    $htmlTimeline = $this->_pathToChannel($path) . '_html';   
+
+                    $this->_publish($htmlTimeline, $hson);
+                }
             }
 
             $this->_disconnect();
         }
+    }
+
+    function onHandleQueuedNotice($notice)
+    {
+        $noticeHtmlTmp = tempnam(sys_get_temp_dir(), 'noticeHtml-');
+        if($noticeHtmlTmp) {
+            $noticeHtmlTmp = 'file://' . $noticeHtmlTmp;
+
+            $noticeHtml = new NoticeListItem($notice, new HTMLOutputter($noticeHtmlTmp));
+            $noticeHtml->show();
+            $noticeHtml = fopen($noticeHtmlTmp, 'r');
+            $noticeHtml = fread($noticeHtml, filesize($noticeHtmlTmp));
+
+            unlink($noticeHtmlTmp);
+        }
+
+        $this->_addToTimelines($notice, array('profile_id' => $notice->profile_id, 'id' => $notice->id, 'in_reply_to_status_id' => $notice->reply_to, 'notice_html' => $noticeHtml));
 
         return true;
     }
@@ -352,9 +380,9 @@ class RealtimePlugin extends Plugin
         return true;
     }
 
-    function _updateInitialize($timeline, $user_id)
+    function _updateInitialize($timeline, $user_id, $user_ismod)
     {
-        return "RealtimeUpdate.init($user_id, \"$this->replyurl\", \"$this->favorurl\", \"$this->repeaturl\", \"$this->deleteurl\"); ";
+        return "RealtimeUpdate.init($user_id, \"$this->showurl\", $user_ismod); ";
     }
 
     function _connect()
@@ -400,6 +428,12 @@ class RealtimePlugin extends Plugin
                 $path = array($action_name, $nickname);
             }
             break;
+         case 'conversation':
+             $conversation = $action->trimmed('id');
+             if (!empty($conversation)) {
+                 $path = array($action_name, $conversation);
+             }
+             break;
          default:
             break;
         }

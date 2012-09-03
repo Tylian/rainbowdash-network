@@ -1,6 +1,6 @@
 /*
  * StatusNet - a distributed open-source microblogging tool
- * Copyright (C) 2008, StatusNet, Inc.
+ * Copyright (C) 2009-2011, StatusNet, Inc.
  *
  * Add a notice encoded as JSON into the current timeline
  *
@@ -21,7 +21,7 @@
  * @package   StatusNet
  * @author    Evan Prodromou <evan@status.net>
  * @author    Sarven Capadisli <csarven@status.net>
- * @copyright 2009 StatusNet, Inc.
+ * @copyright 2009-2011 StatusNet, Inc.
  * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU Affero General Public License version 3.0
  * @link      http://status.net/
  */
@@ -44,10 +44,10 @@
  */
 RealtimeUpdate = {
      _userid: 0,
-     _replyurl: '',
-     _favorurl: '',
-     _repeaturl: '',
-     _deleteurl: '',
+     _ismod: false,
+     _showurl: '',
+     _keepaliveurl: '',
+     _closeurl: '',
      _updatecounter: 0,
      _maxnotices: 50,
      _windowhasfocus: true,
@@ -66,21 +66,16 @@ RealtimeUpdate = {
       * feed data into the RealtimeUpdate object!
       *
       * @param {int} userid: local profile ID of the currently logged-in user
-      * @param {String} replyurl: URL for newnotice action, used when generating reply buttons
-      * @param {String} favorurl: URL for favor action, used when generating fave buttons
-      * @param {String} repeaturl: URL for repeat action, used when generating repeat buttons
-      * @param {String} deleteurl: URL template for deletenotice action, used when generating delete buttons.
+      * @param {String} showurl: URL for shownotice action, used when fetching formatting notices.
       *                            This URL contains a stub value of 0000000000 which will be replaced with the notice ID.
       *
       * @access public
       */
-     init: function(userid, replyurl, favorurl, repeaturl, deleteurl)
+     init: function(userid, showurl, ismod)
      {
         RealtimeUpdate._userid = userid;
-        RealtimeUpdate._replyurl = replyurl;
-        RealtimeUpdate._favorurl = favorurl;
-        RealtimeUpdate._repeaturl = repeaturl;
-        RealtimeUpdate._deleteurl = deleteurl;
+        RealtimeUpdate._showurl = showurl;
+        RealtimeUpdate._ismod = ismod;
 
         RealtimeUpdate._documenttitle = document.title;
 
@@ -124,6 +119,10 @@ RealtimeUpdate = {
       */
      receive: function(data)
      {
+          if (data.notice_delete) {
+              RealtimeUpdate.deleteNotice(data.notice_delete);
+              return;
+          }
           if (RealtimeUpdate.isNoticeVisible(data.id)) {
               // Probably posted by the user in this window, and so already
               // shown by the AJAX form handler. Ignore it.
@@ -163,15 +162,66 @@ RealtimeUpdate = {
             return;
         }
 
-        var noticeItem = RealtimeUpdate.makeNoticeItem(data);
-        var noticeItemID = $(noticeItem).attr('id');
+        RealtimeUpdate.makeNoticeItem(data, function(noticeItem) {
+            // Check again in case it got shown while we were waiting for data...
+            if (RealtimeUpdate.isNoticeVisible(data.id)) {
+                return;
+            }
 
-        $("#notices_primary .notices").prepend(noticeItem);
-        $("#notices_primary .notice:first").css({display:"none"});
-        $("#notices_primary .notice:first").fadeIn(1000);
+            var list = $("#notices_primary .notices").filter(':first');
+            var prepend = true;
 
-        SN.U.NoticeReplyTo($('#'+noticeItemID));
-        SN.U.NoticeWithAttachment($('#'+noticeItemID));
+            var threaded = list.hasClass('threaded-notices') || $('body').attr('id') == 'conversation';
+            if (threaded && data.in_reply_to_status_id) {
+                // aho!
+                var parent = $('#notice-' + data.in_reply_to_status_id);
+                if (parent.length == 0) {
+                    // @todo fetch the original, insert it, and finish the rest
+                } else {
+                    // Check the parent notice to make sure it's not a reply itself.
+                    // If so, use it's parent as the parent.
+                    /*
+                    var parentList = parent.closest('.notices');
+                    if (parentList.hasClass('threaded-replies')) {
+                        parent = parentList.closest('.notice');
+                    }
+                    */
+                    list = parent.find('.notices');
+                    if (list.length == 0) {
+                        list = $('<ol class="notices"></ol>');
+                        parent.append(list);
+                        //SN.U.NoticeInlineReplyPlaceholder(parent);
+                    }
+                    prepend = false;
+                }
+            }
+
+            var newNotice = $(noticeItem);
+            // Remove the delete button if user is not a mod.
+            if(data.profile_id != RealtimeUpdate._userid && !RealtimeUpdate._ismod) {
+                newNotice.find('.notice_delete').remove();
+            }
+
+            // Remove the repeat button if the post belongs to the current user.
+            if(data.profile_id == RealtimeUpdate._userid) {
+                newNotice.find('.form_repeat').remove();
+            }
+
+            if (prepend) {
+                list.prepend(newNotice);
+            } else {
+                var placeholder = list.find('li.notice-reply-placeholder')
+                if (placeholder.length > 0) {
+                    newNotice.insertBefore(placeholder)
+                } else {
+                    newNotice.appendTo(list);
+                }
+            }
+            newNotice.css({display:"none"}).fadeIn(500);
+
+            SN.U.NoticeReplyTo($('#notice-'+data.id));
+            SN.U.NoticeWithAttachment($('#notice-'+data.id));
+        });
      },
 
      /**
@@ -228,86 +278,33 @@ RealtimeUpdate = {
      },
 
      /**
-      * Builds a notice HTML block from JSON API-style data.
+      * Builds a notice HTML block from JSON API-style data;
+      * loads data from server, so runs async.
       *
       * @param {Object} data: extended JSON API-formatted notice
-      * @return {String} HTML fragment
-      *
-      * @fixme this replicates core StatusNet code, making maintenance harder
-      * @fixme sloppy HTML building (raw concat without escaping)
-      * @fixme no i18n support
-      * @fixme local variables pollute global namespace
+      * @param {function} callback: function(DOMNode) to receive new code
       *
       * @access private
       */
-     makeNoticeItem: function(data)
+     makeNoticeItem: function(data, callback)
      {
-          if (data.hasOwnProperty('retweeted_status')) {
-               original = data['retweeted_status'];
-               repeat   = data;
-               data     = original;
-               unique   = repeat['id'];
-               responsible = repeat['user'];
-          } else {
-               original = null;
-               repeat = null;
-               unique = data['id'];
-               responsible = data['user'];
-          }
+         var notice = $(data.notice_html);
 
-          user = data['user'];
-          html = data['html'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&amp;/g,'&');
-          source = data['source'].replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&amp;/g,'&');
+         // Change the tokens
+         notice.find('form input').filter('[name^="token"]').each(function() {
+             $(this).val(
+                 $('#notices_primary .notices.xoxo li')
+                    .filter(':first')
+                    .find('form input')
+                    .filter('[name^="token"]')
+                    .val()
+             );
+         });
 
-          ni = "<li class=\"hentry notice\" id=\"notice-"+unique+"\">"+
-               "<div class=\"entry-title\">"+
-               "<span class=\"vcard author\">"+
-               "<a href=\""+user['profile_url']+"\" class=\"url\" title=\""+user['name']+"\">"+
-               "<img src=\""+user['profile_image_url']+"\" class=\"avatar photo\" width=\"48\" height=\"48\" alt=\""+user['screen_name']+"\"/>"+
-               "<span class=\"nickname fn\">"+user['screen_name']+"</span>"+
-               "</a>"+
-               "</span>"+
-               "<p class=\"entry-content\">"+html+"</p>"+
-               "</div>"+
-               "<div class=\"entry-content\">"+
-               "<a class=\"timestamp\" rel=\"bookmark\" href=\""+data['url']+"\" >"+
-               "<abbr class=\"published\" title=\""+data['created_at']+"\">a few seconds ago</abbr>"+
-               "</a> "+
-               "<span class=\"source\">"+
-               "from "+
-                "<span class=\"device\">"+source+"</span>"+ // may have a link
-               "</span>";
-          if (data['conversation_url']) {
-               ni = ni+" <a class=\"response\" href=\""+data['conversation_url']+"\">in context</a>";
-          }
-
-          if (repeat) {
-               ru = repeat['user'];
-               ni = ni + "<span class=\"repeat vcard\">Repeated by " +
-                    "<a href=\"" + ru['profile_url'] + "\" class=\"url\">" +
-                    "<span class=\"nickname\">"+ ru['screen_name'] + "</span></a></span>";
-          }
-
-          ni = ni+"</div>";
-
-          ni = ni + "<div class=\"notice-options\">";
-
-          if (RealtimeUpdate._userid != 0) {
-               var input = $("form#form_notice fieldset input#token");
-               var session_key = input.val();
-               ni = ni+RealtimeUpdate.makeFavoriteForm(data['id'], session_key);
-               ni = ni+RealtimeUpdate.makeReplyLink(data['id'], data['user']['screen_name']);
-               if (RealtimeUpdate._userid == responsible['id']) {
-                    ni = ni+RealtimeUpdate.makeDeleteLink(data['id']);
-               } else if (RealtimeUpdate._userid != user['id']) {
-                    ni = ni+RealtimeUpdate.makeRepeatForm(data['id'],  session_key);
-               }
-          }
-
-          ni = ni+"</div>";
-
-          ni = ni+"</li>";
-          return ni;
+         if (notice.length) {
+             var node = document._importNode(notice[0], true);
+             callback(node);
+         }
      },
 
      /**
@@ -387,6 +384,19 @@ RealtimeUpdate = {
      },
 
      /**
+      * Deletes a post.
+      *
+      * @param {number} id: notice ID to remove from the timeline
+      * @return {undefined}
+      *
+      * @access private
+      */
+     deleteNotice: function(id)
+     {
+         $('#notice-' + id).remove();
+     },
+
+     /**
       * Creates a delete button.
       *
       * @param {number} id: notice ID to create a delete link for
@@ -421,11 +431,28 @@ RealtimeUpdate = {
       *
       * @access private
       */
-     initActions: function(url, timeline, path)
+    initActions: function(url, timeline, path, keepaliveurl, closeurl)
      {
         $('#notices_primary').prepend('<ul id="realtime_actions"><li id="realtime_playpause"></li><li id="realtime_timeline"></li></ul>');
 
         RealtimeUpdate._pluginPath = path;
+        RealtimeUpdate._keepaliveurl = keepaliveurl;
+        RealtimeUpdate._closeurl = closeurl;
+
+
+	 // On unload, let the server know we're no longer listening
+         $(window).unload(function() {
+            $.ajax({
+                type: 'POST',
+                url: RealtimeUpdate._closeurl});
+	 });
+
+	setInterval(function() {
+            $.ajax({
+                type: 'POST',
+                url: RealtimeUpdate._keepaliveurl});
+
+	}, 15 * 60 * 1000 ); // every 15 min; timeout in 30 min
 
         RealtimeUpdate.initPlayPause();
         RealtimeUpdate.initAddPopup(url, timeline, RealtimeUpdate._pluginPath);

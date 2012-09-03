@@ -98,6 +98,15 @@ class GroupNav extends Widget
                                  sprintf(_m('TOOLTIP','%s group members'), $nickname),
                                  $action_name == 'groupmembers',
                                  'nav_group_members');
+            $this->out->menuItem(common_local_url('showgroup', array('nickname' =>
+                $nickname)) . '?images=1',
+                                 // TRANS: Menu item in the group navigation page.
+                _m('MENU','Media'),
+                                 // TRANS: Tooltip for menu item in the group navigation page.
+                                 // TRANS: %s is the nickname of the group.
+                                 sprintf(_m('TOOLTIP','%s group media'), $nickname),
+                                 $action_name == 'showgroup',
+                                 'nav_group_group');
 
             $cur = common_current_user();
 
