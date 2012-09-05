@@ -60,3 +60,4 @@ plugins/CustomImage/*.gif
 [^/]*.ogg
 mu-[0-9\-a-f]*
 [^/]*.jpg
+.svn
