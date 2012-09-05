@@ -41,6 +41,7 @@ w[ea$s]nk
 \ban[ui]s
 \banal\b
 masturbat
+fap
 HERE;
         $wordlist = '/((' . str_replace("\n", ")|(", $wordlist) . '))/i';
         $notice->content = preg_replace($wordlist, '****', $notice->content);
