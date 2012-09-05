@@ -19,7 +19,7 @@ s[h$s][ia$s]te?(head)?
 \bvag(ina)?
 (m[ou]th(er|uh|a))?f[r$s]?[aeuo$s][c$s]?k
 (da)?fuq
-b[i$s]a?[t$s][c$s][h$s]
+b[ie$s]a?[t$s][c$s][h$s]
 \b(candy.?)?ass(hole|hat)?\b
 c[o$s][c$s]?k.?suc?k
 nigg[^l]
@@ -42,10 +42,7 @@ w[ea$s]nk
 \banal\b
 masturbat
 HERE;
-        $wordlist = explode("\n", $wordlist);
-        $wordlist = array_map(function($value) {
-            return "/$value/i";
-        }, $wordlist);
+        $wordlist = '/((' . str_replace("\n", ")|(", $wordlist) . '))/i';
         $notice->content = preg_replace($wordlist, '****', $notice->content);
         $notice->rendered = preg_replace($wordlist, '****', $notice->rendered);
         return true;
