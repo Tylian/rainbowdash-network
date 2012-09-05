@@ -16,8 +16,8 @@ d[i$s][c$s]?khead
 d[i$s][k$s]
 [^s]c[u$s]nt
 s[h$s][ia$s]te?(head)?
-\bvag(ina)?
-(m[ou]th(er|uh|a))?f[r$s]?[aeuo$s][c$s]?k
+\bvag(ina)?\b
+(m[ou]th(er|uh|a))?f[r$s]?[euo$s][c$s]?k
 (da)?fuq
 b[ie$s]a?[t$s][c$s][h$s]
 \b(candy.?)?ass(hole|hat)?\b
