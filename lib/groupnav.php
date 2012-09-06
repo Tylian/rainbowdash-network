@@ -106,7 +106,7 @@ class GroupNav extends Widget
                                  // TRANS: %s is the nickname of the group.
                                  sprintf(_m('TOOLTIP','%s group media'), $nickname),
                                  $action_name == 'showgroup',
-                                 'nav_group_group');
+                                 'nav_timeline_media');
 
             $cur = common_current_user();
 
