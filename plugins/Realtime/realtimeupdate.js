@@ -180,12 +180,10 @@ RealtimeUpdate = {
                 } else {
                     // Check the parent notice to make sure it's not a reply itself.
                     // If so, use it's parent as the parent.
-                    /*
                     var parentList = parent.closest('.notices');
                     if (parentList.hasClass('threaded-replies')) {
                         parent = parentList.closest('.notice');
                     }
-                    */
                     list = parent.find('.notices');
                     if (list.length == 0) {
                         list = $('<ol class="notices"></ol>');
@@ -197,15 +195,9 @@ RealtimeUpdate = {
             }
 
             var newNotice = $(noticeItem);
-            // Remove the delete button if user is not a mod.
-            if(data.profile_id != RealtimeUpdate._userid && !RealtimeUpdate._ismod) {
-                newNotice.find('.notice_delete').remove();
-            }
-
-            // Remove the repeat button if the post belongs to the current user.
-            if(data.profile_id == RealtimeUpdate._userid) {
-                newNotice.find('.form_repeat').remove();
-            }
+            newNotice.find('.avatar.photo')
+                .height(48)
+                .width(48);
 
             if (prepend) {
                 list.prepend(newNotice);
@@ -288,23 +280,14 @@ RealtimeUpdate = {
       */
      makeNoticeItem: function(data, callback)
      {
-         var notice = $(data.notice_html);
-
-         // Change the tokens
-         notice.find('form input').filter('[name^="token"]').each(function() {
-             $(this).val(
-                 $('#notices_primary .notices.xoxo li')
-                    .filter(':first')
-                    .find('form input')
-                    .filter('[name^="token"]')
-                    .val()
-             );
+         var url = RealtimeUpdate._showurl.replace('0000000000', data.id);
+         $.get(url, {ajax: 1}, function(data, textStatus, xhr) {
+             var notice = $('li.notice', data).filter(':first');
+             if (notice.length) {
+                 var node = document._importNode(notice[0], true);
+                 callback(node);
+             }
          });
-
-         if (notice.length) {
-             var node = document._importNode(notice[0], true);
-             callback(node);
-         }
      },
 
      /**

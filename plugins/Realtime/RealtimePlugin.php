@@ -63,7 +63,7 @@ class RealtimePlugin extends Plugin
 
     function onEndShowScripts($action)
     {
-        $timeline = $this->_getTimeline($action) . '_html';
+        $timeline = $this->_getTimeline($action);
 
         // If there's not a timeline on this page,
         // just return true
@@ -195,19 +195,13 @@ class RealtimePlugin extends Plugin
 
         if (count($paths) > 0) {
 
-            $json = $this->noticeAsJson($notice);
+            $json = $hson ?: $this->noticeAsJson($notice);
 
             $this->_connect();
 
             foreach ($paths as $path) {
                 $timeline = $this->_pathToChannel($path);
                 $this->_publish($timeline, $json);
-
-                if(!empty($hson)) {
-                    $htmlTimeline = $this->_pathToChannel($path) . '_html';   
-
-                    $this->_publish($htmlTimeline, $hson);
-                }
             }
 
             $this->_disconnect();
@@ -216,19 +210,7 @@ class RealtimePlugin extends Plugin
 
     function onHandleQueuedNotice($notice)
     {
-        $noticeHtmlTmp = tempnam(sys_get_temp_dir(), 'noticeHtml-');
-        if($noticeHtmlTmp) {
-            $noticeHtmlTmp = 'file://' . $noticeHtmlTmp;
-
-            $noticeHtml = new NoticeListItem($notice, new HTMLOutputter($noticeHtmlTmp));
-            $noticeHtml->show();
-            $noticeHtml = fopen($noticeHtmlTmp, 'r');
-            $noticeHtml = fread($noticeHtml, filesize($noticeHtmlTmp));
-
-            unlink($noticeHtmlTmp);
-        }
-
-        $this->_addToTimelines($notice, array('profile_id' => $notice->profile_id, 'id' => $notice->id, 'in_reply_to_status_id' => $notice->reply_to, 'notice_html' => $noticeHtml));
+        $this->_addToTimelines($notice, null);
 
         return true;
     }
