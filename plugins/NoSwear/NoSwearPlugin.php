@@ -23,7 +23,7 @@ b[ie$s]a?[t$s][c$s][h$s]
 \b(candy.?)?ass(hole|hat)?\b
 c[o$s][c$s]?k.?suc?k
 nigg[^l]
-\bcum
+\bcum\b
 fag(g.t)?
 p[ui$s][s$s]s
 p[e3]?n[i1][5s]
