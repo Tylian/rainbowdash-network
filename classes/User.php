@@ -448,14 +448,36 @@ class User extends Memcached_DataObject
         return $user;
     }
 
-    function adminUsers()
+    function adminUsers($type=array())
     {
         $UT = common_config('db','type')=='pgsql'?'"user"':'user';
-        $qry = "SELECT id, nickname, role ".
-            "FROM $UT JOIN profile_role ON id = profile_id " .
-            "WHERE role = '%s' OR role = '%s'";
+        $qry = "SELECT profile_role.*, $UT.* ".
+            "FROM $PT JOIN profile_role ON id = profile_role.profile_id ";
         $user = new User();
-        $user->query(sprintf($qry, Profile_role::ADMINISTRATOR, Profile_role::MODERATOR));
+
+        if(!empty($type)) {
+            if($type == array(Profile_role::MODERATOR)) {
+                $sprintf = 
+                    "LEFT OUTER JOIN profile_role exclude " .
+                    "ON profile_role.profile_id = exclude.profile_id " . 
+                    "AND exclude.role = '%s' " .
+                    "WHERE profile_role.role = '%s'" .
+                    "AND exclude.profile_id IS NULL";
+                $qry .= sprintf($sprintf, Profile_role::ADMINISTRATOR, Profile_role::MODERATOR);
+            }
+            else {
+                $where = array();
+                foreach($type as $role) {
+                    $where[] = sprintf("role = '%s'", $role);
+                }
+                $qry .= "WHERE " . implode(' OR ', $where);
+            }
+        }
+        else {
+            $qry .= sprintf("role = '%s' OR role = '%s'", Profile_role::ADMINISTRATOR, Profile_role::MODERATOR);
+        }
+
+        $user->query($qry);
 
         return $user;
     }
