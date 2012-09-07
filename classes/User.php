@@ -452,7 +452,7 @@ class User extends Memcached_DataObject
     {
         $UT = common_config('db','type')=='pgsql'?'"user"':'user';
         $qry = "SELECT profile_role.*, $UT.* ".
-            "FROM $PT JOIN profile_role ON id = profile_role.profile_id ";
+            "FROM $UT JOIN profile_role ON id = profile_role.profile_id ";
         $user = new User();
 
         if(!empty($type)) {
@@ -476,6 +476,7 @@ class User extends Memcached_DataObject
         else {
             $qry .= sprintf("WHERE role = '%s' OR role = '%s'", Profile_role::ADMINISTRATOR, Profile_role::MODERATOR);
         }
+        echo $qry;
 
         $user->query($qry);
 
