@@ -62,7 +62,6 @@ class Profile extends Memcached_DataObject
         $PT = common_config('db','type')=='pgsql'?'"profile"':'profile';
         $qry = "SELECT profile_role.*, $PT.* ".
             "FROM $PT JOIN profile_role ON id = profile_role.profile_id ";
-        $profile = new Profile();
 
         if(!empty($type)) {
             if($type == array(Profile_role::MODERATOR)) {
@@ -86,7 +85,9 @@ class Profile extends Memcached_DataObject
             $qry .= sprintf(" WHERE role = '%s' OR role = '%s'", Profile_role::ADMINISTRATOR, Profile_role::MODERATOR);
         }
 
-        $profile->query($qry);
+        $profile = Memcached_DataObject::cachedQuery('Profile',
+                                                     $qry,
+                                                     6 * 3600);
 
         return $profile;
     }
