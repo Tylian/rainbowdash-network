@@ -476,7 +476,6 @@ class User extends Memcached_DataObject
         else {
             $qry .= sprintf("WHERE role = '%s' OR role = '%s'", Profile_role::ADMINISTRATOR, Profile_role::MODERATOR);
         }
-        echo $qry;
 
         $user->query($qry);
 
