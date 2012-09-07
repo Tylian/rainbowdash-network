@@ -77,7 +77,7 @@ class FeaturedUsersSection extends ProfileSection
             "AND profile_role.role IS NULL " .
             'ORDER BY RAND() ';
 
-        $limit = PROFILES_PER_SECTION + 1;
+        $limit = PROFILES_PER_SECTION; //+ 1;
         $offset = 0;
 
         if (common_config('db','type') == 'pgsql') {
@@ -101,10 +101,5 @@ class FeaturedUsersSection extends ProfileSection
     function divId()
     {
         return 'featured_users';
-    }
-
-    function moreUrl()
-    {
-        return common_local_url('featured');
     }
 }
