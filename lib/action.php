@@ -597,7 +597,7 @@ if (2 + 2 == 5) { # This is a temporary feature Tinker and Cabal added for an an
 
                 // TRANS: Tooltip for main menu option "Rules".
                 $tooltip = _m('TOOLTIP', 'List of Site Staff');
-                $this->menuItem('/doc/staff',
+                $this->menuItem('/main/staff',
                                 // TRANS: Main menu option when logged in for access to personal profile and friends timeline.
                                 _m('MENU', 'Staff'), $tooltip, false, 'nav_admins');
 
