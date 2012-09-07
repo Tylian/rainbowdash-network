@@ -70,10 +70,12 @@ class FeaturedUsersSection extends ProfileSection
           'ORDER BY profile.created DESC ';
          */
 
-        $qry = 'SELECT profile.* ' .
-            'FROM profile JOIN '. $table .' on profile.id = '. $table .'.id ' .
-            'WHERE user.created > DATE_SUB(NOW(), INTERVAL 1 MONTH) ' .
-          'ORDER BY RAND() ';
+        $qry = "SELECT profile.* " .
+            "FROM profile JOIN $table ON profile.id = $table.id " .
+            "LEFT JOIN profile_role ON profile_id = profile.id " .
+            "WHERE user.created > DATE_SUB(NOW(), INTERVAL 1 MONTH) " .
+            "AND profile_role.role IS NULL " .
+            'ORDER BY RAND() ';
 
         $limit = PROFILES_PER_SECTION + 1;
         $offset = 0;
@@ -86,7 +88,7 @@ class FeaturedUsersSection extends ProfileSection
 
         $profile = Memcached_DataObject::cachedQuery('Profile',
                                                      $qry,
-                                                     6 * 3600);
+                                                     60);
         return $profile;
     }
 

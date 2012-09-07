@@ -236,8 +236,8 @@ class PublicAction extends Action
         // $top->show();
         $feat = new FeaturedUsersSection($this);
         $feat->show();
-        $gbp = new GroupsByMembersSection($this);
-        $gbp->show();
+        //$gbp = new GroupsByMembersSection($this);
+        //$gbp->show();
         $pop = new PopularNoticeSection($this);
         $pop->show();
     }
