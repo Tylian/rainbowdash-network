@@ -83,7 +83,7 @@ class Profile extends Memcached_DataObject
             }
         }
         else {
-            $qry .= sprintf("role = '%s' OR role = '%s'", Profile_role::ADMINISTRATOR, Profile_role::MODERATOR);
+            $qry .= sprintf(" WHERE role = '%s' OR role = '%s'", Profile_role::ADMINISTRATOR, Profile_role::MODERATOR);
         }
 
         $profile->query($qry);
