@@ -13,7 +13,7 @@ class NoSwearPlugin extends Plugin
         $s = '\!\@\#\$\%\^\&\*';
         $wordlist = <<<HERE
 d[i$s][c$s]?khead
-d[i$s][k$s]
+dik
 [^s]c[u$s]nt
 s[h$s][ia$s]te?(head)?
 \bvag(ina)?\b
@@ -35,7 +35,7 @@ fellat
 jizz?
 testicle
 testes
-w[ea$s]nk
+w[ea$s]n[kg]
 \bdbag
 \btit[stzi](llat)?
 \ban[ui]s
