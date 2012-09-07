@@ -93,7 +93,7 @@ class PublicGroupNav extends Widget
                 _("Popular notices"), $action_name == 'favorited', 'nav_timeline_favorited');
 
             $this->out->menuItem(common_local_url('public') . '?images=1', _('Media'),
-                _("Media"), $action_name == 'publiczzz', 'nav_timeline_media');
+                _("Media"), $action_name == 'public', 'nav_timeline_media');
 
             Event::handle('EndPublicGroupNav', array($this));
         }
