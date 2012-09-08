@@ -15,7 +15,7 @@ class NoSwearPlugin extends Plugin
 d[i$s][c$s]?khead
 dik
 [^s]c[u$s]nt
-s[h$s][ia$s]te?(head)?
+s[h$s][i$s]te?(head)?
 \bvag(ina)?\b
 (m[ou]th(er|uh|a))?f[r$s]?[euo$s][c$s]?k
 (da)?fuq
