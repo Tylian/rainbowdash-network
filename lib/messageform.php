@@ -143,9 +143,6 @@ class MessageForm extends Form
             }
         }
 
-        $admin_users->free();
-        unset($admin_users);
-
         $mutual_users = $user->mutuallySubscribedUsers();
 
         while ($mutual_users->fetch()) {

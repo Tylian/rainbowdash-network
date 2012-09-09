@@ -94,10 +94,6 @@ class StaffAction extends Action
         $mods = new ProfileList($this->mods, $this);
         $mods->show();
 
-        $this->admins->free();
-        $this->mods->free();
-        $this->owners->free();
-
         $this->raw(<<<HERE
 <p><b>Hoofy information for mods.</b></p>
 
