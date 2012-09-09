@@ -10,13 +10,13 @@ class LinkBlockPlugin extends Plugin
 {
     function onStartNoticeSave($notice)
     {
-        if($notice->getProfile()->noticeCount() == 0) {
+        if(!$notice->getProfile()->getCurrentNotice()) {
             common_replace_urls_callback($notice->content, array($this, 'rejectLink'));
         }
     }
 
     function onStartProfilePageProfileElements($action, $profile) {
-        if($profile->noticeCount() == 0 && !empty($profile->homepage)) {
+        if(!$profile->getCurrentNotice() && !empty($profile->homepage)) {
             $profile->homepage = _('BLOCKED. POST SOMETHING FIRST.');
         }
     }
