@@ -17,7 +17,8 @@ dik
 [^s]c[u$s]nt
 s[h$s][i$s]te?(head)?
 \bvag(ina)?\b
-(m[ou]th(er|uh|a))?f[r$s]?[euo$s][c$s]?k
+(m[ou]th(er|uh|a))?f[r$s]?[uo$s][c$s]?k
+\bf[r$s]?e[c$s]?k\b
 (da)?fuq
 b[ie$s]a?[t$s][c$s][h$s]
 \b(candy.?)?ass(hole|hat)?\b
@@ -42,6 +43,7 @@ w[ea$s]n[kg]
 \banal\b
 masturbat
 fap
+q[u$s][e$s][e$s]f
 HERE;
         $wordlist = '/((' . str_replace("\n", ")|(", $wordlist) . '))/i';
         $notice->content = preg_replace($wordlist, '****', $notice->content);
