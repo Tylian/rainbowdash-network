@@ -90,39 +90,37 @@ class Rdnrefresh extends Memcached_DataObject
     }
 
 
-    function initDB() {
-            $user = common_current_user();
-
-            if(!empty($user)) {
-                $vars = Rdnrefresh::staticGet('user_id', $user->id);
-                if (empty($vars)) {
-                    $vars = new Rdnrefresh();
-
-                    $vars->user_id        = $user->id;
-                    $vars->spoilertags = 'spoiler spoilers spoileralert poiler soiler spiler spoler spoier spoilr spoile sspoiler sppoiler spooiler spoiiler spoiller spoileer spoilerr psoiler sopiler spioler spolier spoielr spoilre';
-                    $vars->maincolor = '#373737';
-                    $vars->asidecolor = '#212C37';
-                    $vars->pagecolor = '#FFFFFF';
-                    $vars->linkcolor = '#00EE00';
-                    $vars->customstyle = 0;
-                    $vars->logo = '';
-                    $vars->backgroundimage = '';
-                    $vars->anyhighlightwords = '';
-                    $vars->usernamestags = '';
-                    $vars->hideemotes = 0;
-
-                    $result = $vars->insert();
-
-                    if (!$result) {
-                        // TRANS: Exception thrown when the user greeting count could not be saved in the database.
-                        // TRANS: %d is a user ID (number).
-                        throw Exception(sprintf(_m('Could not save new RDNRefresh settings for %d.'),   
-                            $user->id));
-                    }
-                }
-            }
-            return $vars;
+    function fetchDB($userid) {
+        $vars = Rdnrefresh::staticGet('user_id', $userid);
+        return $vars;
     }
 
+    function getValues() {
+        $user = common_current_user();
+
+        $database = Rdnrefresh::fetchDB($user->id);
+
+        $vars = array();
+        $vars['user_id'] = $database->user_id ?: $user->id;
+        $vars['spoilertags'] = $database->spoilertags ?: 'spoiler spoilers spoileralert poiler soiler spiler spoler spoier spoilr spoile sspoiler sppoiler spooiler spoiiler spoiller spoileer spoilerr psoiler sopiler spioler spolier spoielr spoilre';
+        $vars['maincolor'] = $database->maincolor ?: '#373737';
+        $vars['asidecolor'] = $database->asidecolor ?: '#212C37';
+        $vars['pagecolor'] = $database->pagecolor ?: '#FFFFFF';
+        $vars['linkcolor'] = $database->linkcolor ?: '#00EE00';
+        $vars['customstyle'] = $database->customstyle ?: 0;
+        $vars['logo'] = $database->logo ?: '';
+        $vars['backgroundimage'] = $database->backgroundimage ?: '';
+        $vars['anyhighlightwords'] = $database->anyhighlightwords ?: '';
+        $vars['usernamestags'] = $database->usernamestags ?: '';
+        $vars['hideemotes'] = $database->hideemotes ?: 0;
+
+        if($database) {
+            // Prevent leaks.
+            $database->free();
+            unset($database);
+        }
+
+        return $vars;
+    }
 
 }

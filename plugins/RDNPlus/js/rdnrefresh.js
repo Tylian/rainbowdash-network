@@ -155,13 +155,16 @@ function hideUsers(newPosts) {
                 function(){
                     tag = $(this);
                     $.each(usernamesTags, function() {
-                        if($(tag).text().toLowerCase() == this || ( $(tag).attr('href') && $(tag).attr('href').replace(siteDir,'').split('/')[0].toLowerCase() == this )) {
-                            var target = tag.closest('li'); 
-                            $.fx.off = true;
-                            target.children().addClass('hideUser');
-                            target.addClass('hideUserT'); //select LI
-                            $.fx.off = false;
+                        try {
+                            if($(tag).text().toLowerCase() == this || ( $(tag).attr('href') && $(tag).attr('href').replace(siteDir,'').split('/')[0].toLowerCase() == this )) {
+                                var target = tag.closest('li'); 
+                                $.fx.off = true;
+                                target.children().addClass('hideUser');
+                                target.addClass('hideUserT'); //select LI
+                                $.fx.off = false;
+                            }
                         }
+                        catch(e) {}
                     })
                 })
     }
@@ -222,7 +225,7 @@ function delButton(newPosts) {
         var notice_id = $(this).parent().parent().attr('id').split('-')[1];
         var container = document.createElement('div');
         var token = $(this).parent().find('.form_favor [name*="token"]').val()
-        $(container).html(('<form action="' + siteDir + '/notice/delete" method="post" class="notice_delete" id="delete-%%%"> <fieldset> <legend>Delete this notice?</legend> <input type="hidden" value="' + token + '" id="token-%%%" name="token"> <input type="hidden" value="%%%" id="notice-d%%%" name="notice"> <input title="Delete this Notice" value="Yes" class="submit notice_delete" name="yes" id="delete-submit-%%%" /> </fieldset> </form>').replace(/%%%/g,notice_id));
+        $(container).html(('<form action="' + siteDir + '/notice/delete" method="post" class="notice_delete" id="delete-%%%"> <fieldset> <legend>Delete this notice?</legend> <input type="hidden" value="' + token + '" id="token-%%%" name="token"> <input type="hidden" value="%%%" id="notice-d%%%" name="notice"> <input title="Delete this Notice" value="Yes" class="submit submit_delete" name="yes" id="delete-submit-%%%" /> </fieldset> </form>').replace(/%%%/g,notice_id));
         container.addEventListener('click', function(event) {
 
             event.preventDefault();
@@ -292,7 +295,7 @@ function highlightAny(newPosts) {
         $.each(words, function() {
             var wordex = new RegExp('(' + this + ')', 'gi');
             posts.each(function(){
-                $(this).html( $(this).html().replace(wordex, '<span class="anyHighlight">$1</span>') );
+                $(this).textWalk(wordex, '<span class="anyHighlight">$1</span>');
             });
         });
     }
@@ -302,10 +305,13 @@ function highlightAny(newPosts) {
 function highlightUsername(newPosts) {
     var mentionCounter = 0; 
     $(newPosts).find('.entry-content .vcard .url, .author .addressee').each(function(){
-        if($(this).text().toLowerCase() == currentUser || $(this).attr('href').replace(siteDir,'').split('/')[0].toLowerCase() == currentUser) {
-            $(this).addClass('userHighlight');
-            mentionCounter++
+        try {
+            if($(this).text().toLowerCase() == currentUser || $(this).attr('href').replace(siteDir,'').split('/')[0].toLowerCase() == currentUser) {
+                $(this).addClass('userHighlight');
+                mentionCounter++
+            }
         }
+        catch(e){}
     });
 }
 
@@ -346,3 +352,27 @@ function rot13(text){
         return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26); 
     }); 
 }
+
+jQuery.fn.textWalk = function( fn, str ) {
+    var func = jQuery.isFunction( fn );
+    this.contents().each( jwalk );
+
+    function jwalk() {
+        var nn = this.nodeName.toLowerCase();
+        if( nn === '#text' ) {
+            if( func ) {
+                fn.call( this );
+            } else {
+                if(this.data.search(fn) != -1) {
+                    var data = document.createElement('span');
+                    data.innerHTML = this.data.replace(fn, str);
+                    this.parentNode.replaceChild(data, this);
+                }
+            }
+        } else if( this.nodeType === 1 && this.childNodes && this.childNodes[0] && nn !== 'script' && nn !== 'textarea' ) {
+            $(this).contents().each( jwalk );
+        }
+    }
+    return this;
+};
+
