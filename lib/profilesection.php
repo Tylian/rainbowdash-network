@@ -58,7 +58,7 @@ class ProfileSection extends Section
 
         $cnt = 0;
 
-        $this->out->elementStart('ol', 'profiles');
+        $this->out->elementStart('ol', 'notices');
 
         while ($profiles->fetch() && ++$cnt <= PROFILES_PER_SECTION) {
             $this->showProfile($profiles);
