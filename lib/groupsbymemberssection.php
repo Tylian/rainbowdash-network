@@ -73,8 +73,8 @@ class GroupsByMembersSection extends GroupSection
 
     function showGroup($group)
     {
-        $this->out->elementStart('tr');
-        $this->out->elementStart('td', 'hentry notice');
+        $this->out->elementStart('li', 'hentry notice');
+        $this->out->elementStart('div', 'entry-title');
         $this->out->elementStart('span', 'vcard');
         $this->out->elementStart('a', array('title' => ($group->fullname) ?
                                             $group->fullname :
@@ -106,11 +106,8 @@ class GroupsByMembersSection extends GroupSection
         $nli = new NoticeListItem(Notice::staticGet($group->notice_id), $this->out);
         $nli->showNoticeLink();
         $this->out->elementEnd('div');
-        $this->out->elementEnd('td');
-        if ($group->value) {
-            $this->out->element('td', 'value', $group->value);
-        }
-        $this->out->elementEnd('tr');
+        $this->out->elementEnd('div');
+        $this->out->elementEnd('li');
     }
 
     function title()

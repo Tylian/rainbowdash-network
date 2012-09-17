@@ -58,13 +58,13 @@ class ProfileSection extends Section
 
         $cnt = 0;
 
-        $this->out->elementStart('table');
-        $this->out->elementStart('tbody');
+        $this->out->elementStart('ol', 'notices');
+
         while ($profiles->fetch() && ++$cnt <= PROFILES_PER_SECTION) {
             $this->showProfile($profiles);
         }
-        $this->out->elementEnd('tbody');
-        $this->out->elementEnd('table');
+
+        $this->out->elementEnd('ol');
 
         return ($cnt > PROFILES_PER_SECTION);
     }
@@ -76,8 +76,8 @@ class ProfileSection extends Section
 
     function showProfile($profile)
     {
-        $this->out->elementStart('tr');
-        $this->out->elementStart('td');
+        $this->out->elementStart('li', 'notice');
+        $this->out->elementStart('div', 'entry-title');
         $this->out->elementStart('span', 'vcard');
         $this->out->elementStart('a', array('title' => ($profile->fullname) ?
                                        $profile->fullname :
@@ -98,11 +98,7 @@ class ProfileSection extends Section
         $this->out->element('span', 'fn nickname', $profile->nickname);
         $this->out->elementEnd('a');
         $this->out->elementEnd('span');
-        $this->out->elementEnd('td');
-        if (isset($profile->value)) {
-            $this->out->element('td', 'value', $profile->value);
-        }
-
-        $this->out->elementEnd('tr');
+        $this->out->elementEnd('div');
+        $this->out->elementEnd('li');
     }
 }
