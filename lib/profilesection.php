@@ -76,7 +76,7 @@ class ProfileSection extends Section
 
     function showProfile($profile)
     {
-        $this->out->elementStart('li');
+        $this->out->elementStart('li', 'notice');
         $this->out->elementStart('div', 'entry-title');
         $this->out->elementStart('span', 'vcard');
         $this->out->elementStart('a', array('title' => ($profile->fullname) ?
