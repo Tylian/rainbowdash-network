@@ -553,7 +553,7 @@ var SN = { // StatusNet
          * @access private
          */
         NoticeReplyTo: function(notice) {
-            notice.find('.notice_reply').live('click', function() {
+            notice.find('.notice_reply').bind('click', function() {
                 var nickname = ($('.author .nickname', notice).length > 0) ? $($('.author .nickname', notice)[0]) : $('.author .nickname.uid');
                 SN.U.NoticeReplySet(nickname.text(), $($('.notice_id', notice)[0]).text());
                 return false;
