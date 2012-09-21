@@ -75,7 +75,7 @@ class GroupSection extends Section
 
     function showGroup($group)
     {
-        $this->out->elementStart('li');
+        $this->out->elementStart('li', 'notice');
         $this->out->elementStart('div', 'entry-title');
         $this->out->elementStart('span', 'vcard');
         $this->out->elementStart('a', array('title' => ($group->fullname) ?
