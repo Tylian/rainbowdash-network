@@ -79,7 +79,7 @@ class StaffAction extends Action
     function showContent()
     {
 
-        $this->raw('<p style="clear: both;"><b>The Owner of Rainbowdash Network</b></p>');
+        $this->raw('<p style="clear: both;"><b>The Head Administrators of Rainbowdash Network (Responsible for moderator promotion/demotion)</b></p>');
 
         $owners = new ProfileList($this->owners, $this);
         $owners->show();
