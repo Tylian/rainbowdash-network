@@ -226,7 +226,7 @@ function delButton(newPosts) {
         var container = document.createElement('div');
         var token = $(this).parent().find('.form_favor [name*="token"]').val()
         $(container).html(('<form action="' + siteDir + '/notice/delete" method="post" class="notice_delete" id="delete-%%%"> <fieldset> <legend>Delete this notice?</legend> <input type="hidden" value="' + token + '" id="token-%%%" name="token"> <input type="hidden" value="%%%" id="notice-d%%%" name="notice"> <input title="Delete this Notice" value="Yes" class="submit submit_delete" name="yes" id="delete-submit-%%%" /> </fieldset> </form>').replace(/%%%/g,notice_id));
-        container.addEventListener('click', function(event) {
+        $(container).bind('click', function(event) {
 
             event.preventDefault();
             event.stopPropagation();
