@@ -44,7 +44,6 @@
  */
 RealtimeUpdate = {
      _userid: 0,
-     _ismod: false,
      _showurl: '',
      _keepaliveurl: '',
      _closeurl: '',
@@ -71,12 +70,10 @@ RealtimeUpdate = {
       *
       * @access public
       */
-     init: function(userid, showurl, ismod)
+     init: function(userid, showurl)
      {
         RealtimeUpdate._userid = userid;
         RealtimeUpdate._showurl = showurl;
-        RealtimeUpdate._ismod = ismod;
-
         RealtimeUpdate._documenttitle = document.title;
 
         $(window).bind('focus', function() {
