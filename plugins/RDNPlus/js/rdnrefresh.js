@@ -202,6 +202,7 @@ function delEmotes(newPosts) {
 
 /* Reprocesses the page and/or post */
 function reProcess(newPosts) {
+    if($('#mobile-toggle-disable').length) return;
     setTimeout(reProcess, 50);
     if(!newPosts) { var newPosts = $('.hentry.notice').not('.rdnrefresh_done') }
 
