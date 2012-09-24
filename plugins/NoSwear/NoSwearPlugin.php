@@ -8,8 +8,7 @@ if (!defined('STATUSNET')) {
 
 class NoSwearPlugin extends Plugin
 {
-
-    function onStartNoticeSave($notice) {
+    public function _filter($content) {
         $s = '\!\@\#\$\%\^\&\*';
         $wordlist = <<<HERE
 d[i$s][c$s]?khead
@@ -46,10 +45,28 @@ fap
 q[u$s][e$s][e$s]f
 HERE;
         $wordlist = '/((' . str_replace("\n", ")|(", $wordlist) . '))/i';
-        $notice->content = preg_replace($wordlist, '****', $notice->content);
-        $notice->rendered = preg_replace($wordlist, '****', $notice->rendered);
+        $content = preg_replace($wordlist, '****', $content);
+        return $content;
+    }
+
+    function onStartNoticeSave($notice) {
+        $notice->content = $this->_filter($notice->content);
+        $notice->rendered = $this->_filter($notice->rendered);
         return true;
     }
 
+    function onStartRegistrationTry($action)
+    {
+        $action->args['bio'] = $this->_filter($action->trimmed('bio'));
+
+        return true;
+    }
+
+    function onStartProfileSaveForm($action)
+    {
+        $action->args['bio'] = $this->_filter($action->trimmed('bio'));
+
+        return true;
+    }
 }
 ?>
