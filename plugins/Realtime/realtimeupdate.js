@@ -181,7 +181,7 @@ RealtimeUpdate = {
                     if (parentList.hasClass('threaded-replies')) {
                         parent = parentList.closest('.notice');
                     }
-                    list = parent.find('.notices');
+                    list = parent.children('.notices');
                     if (list.length == 0) {
                         list = $('<ol class="notices"></ol>');
                         parent.append(list);
