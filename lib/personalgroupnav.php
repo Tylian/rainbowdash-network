@@ -79,6 +79,10 @@ class PersonalGroupNav extends Widget
 	// FIXME: we should probably pass this in
 
         $action = $this->action->trimmed('action');
+        if($action == 'showstream' && $this->action->arg('images')) {
+            $action = 'showstream_media';
+        }
+
         $nickname = $this->action->trimmed('nickname');
 
         if ($nickname) {
@@ -114,6 +118,13 @@ class PersonalGroupNav extends Widget
                              _m('MENU','Profile'),
                              $name,
                              $action == 'showstream', 'nav_profile');
+            $this->out->menuItem(common_local_url('showstream', array('nickname' =>
+                                                                  $nickname)) . '?images=1',
+                             // TRANS: Personal group navigation menu option when logged in for viewing own favourited notices.
+                             _m('MENU','Media'),
+                             // TRANS: Tooltip for personal group navigation menu option when logged in for viewing own favourited notices.
+                             sprintf(_('%s\'s media'), ($user_profile) ? $name : _('User')),
+                             $action == 'showstream_media', 'nav_timeline_media');
             $this->out->menuItem(common_local_url('showfavorites', array('nickname' =>
                                                                   $nickname)),
                              // TRANS: Personal group navigation menu option when logged in for viewing own favourited notices.
@@ -121,13 +132,6 @@ class PersonalGroupNav extends Widget
                              // TRANS: Tooltip for personal group navigation menu option when logged in for viewing own favourited notices.
                              sprintf(_('%s\'s favorite notices'), ($user_profile) ? $name : _('User')),
                              $action == 'showfavorites', 'nav_timeline_favorites');
-            $this->out->menuItem(common_local_url('showstream', array('nickname' =>
-                                                                  $nickname)) . '?images=1',
-                             // TRANS: Personal group navigation menu option when logged in for viewing own favourited notices.
-                             _m('MENU','Media'),
-                             // TRANS: Tooltip for personal group navigation menu option when logged in for viewing own favourited notices.
-                             sprintf(_('%s\'s media'), ($user_profile) ? $name : _('User')),
-                             $action == 'showstream', 'nav_timeline_media');
 
             $cur = common_current_user();
 

@@ -71,12 +71,18 @@ class PublicGroupNav extends Widget
     function show()
     {
         $action_name = $this->action->trimmed('action');
+        if($action_name == 'public' && $this->action->arg('images')) {
+            $action_name = 'public_media';
+        }
 
         $this->action->elementStart('ul', array('class' => 'nav'));
 
         if (Event::handle('StartPublicGroupNav', array($this))) {
             $this->out->menuItem(common_local_url('public'), _('Public'),
                 _('Public timeline'), $action_name == 'public', 'nav_timeline_public');
+
+            $this->out->menuItem(common_local_url('public') . '?images=1', _('Media'),
+                _("Media"), $action_name == 'public_media', 'nav_timeline_media');
 
             $this->out->menuItem(common_local_url('groups'), _('Groups'),
                 _('User groups'), $action_name == 'groups', 'nav_groups');
@@ -91,9 +97,6 @@ class PublicGroupNav extends Widget
 
             $this->out->menuItem(common_local_url('favorited'), _('Popular'),
                 _("Popular notices"), $action_name == 'favorited', 'nav_timeline_favorited');
-
-            $this->out->menuItem(common_local_url('public') . '?images=1', _('Media'),
-                _("Media"), $action_name == 'public', 'nav_timeline_media');
 
             Event::handle('EndPublicGroupNav', array($this));
         }
