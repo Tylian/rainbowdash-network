@@ -578,7 +578,7 @@ RealtimeUpdate = {
       */
      addNoticesHover: function()
      {
-        $('#notices_primary .notices').hover(
+        $('#notices_primary .notice-options').hover(
             function() {
                 if (RealtimeUpdate._paused === false) {
                     RealtimeUpdate.showPlay();
@@ -604,7 +604,7 @@ RealtimeUpdate = {
       */
      removeNoticesHover: function()
      {
-        $('#notices_primary .notices').unbind();
+        $('#notices_primary .notice-options').unbind();
      },
 
      /**
