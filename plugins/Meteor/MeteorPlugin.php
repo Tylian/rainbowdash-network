@@ -65,27 +65,6 @@ class MeteorPlugin extends RealtimePlugin
         parent::__construct();
     }
 
-    function onAutoload($cls)
-    {
-        $dir = dirname(__FILE__);
-
-        switch ($cls)
-        {
-        case 'NoticeonlyAction':
-            include_once $dir . '/' . strtolower(mb_substr($cls, 0, -6)) . '.php';
-            return false;
-        default:
-            return true;
-        }
-
-    }    
-
-    function onRouterInitialized($m)
-    {
-        $m->connect('notice/:notice/r', array('action' => 'noticeonly'), array('notice' => '[0-9]+'));
-        return true;
-    }
-
     /**
      * Pull settings from config file/database if set.
      */

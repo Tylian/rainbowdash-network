@@ -279,7 +279,7 @@ RealtimeUpdate = {
      {
          var url = RealtimeUpdate._showurl.replace('0000000000', data.id);
          $.get(url, {ajax: 1}, function(data, textStatus, xhr) {
-             var notice = $('li.notice', data).filter(':first');
+             var notice = $(data);
              if (notice.length) {
                  var node = document._importNode(notice[0], true);
                  callback(node);

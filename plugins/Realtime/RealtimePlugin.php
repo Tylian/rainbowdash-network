@@ -52,10 +52,31 @@ class RealtimePlugin extends Plugin
      * pass the URLs we need.
      */
 
+    function onAutoload($cls)
+    {
+        $dir = dirname(__FILE__);
+
+        switch ($cls)
+        {
+        case 'NoticeonlyAction':
+            include_once $dir . '/' . strtolower(mb_substr($cls, 0, -6)) . '.php';
+            return false;
+        default:
+            return true;
+        }
+
+    }    
+
+    function onRouterInitialized($m)
+    {
+        $m->connect('notice/:notice/r', array('action' => 'noticeonly'), array('notice' => '[0-9]+'));
+        return true;
+    }
+
     function onInitializePlugin()
     {
         // FIXME: need to find a better way to pass this pattern in
-        $this->showurl = common_local_url('shownotice',
+        $this->showurl = common_local_url('noticeonly',
                                             array('notice' => '0000000000'));
 
         return true;
