@@ -119,7 +119,6 @@ class Rdnrefresh extends Memcached_DataObject
             $dbvar = eval('return $database->' . $key . ';');
             $vars[$key] = !is_null($dbvar) ? $dbvar : $default;
         }
-        echo $vars;
 
         if($database) {
             // Prevent leaks.
