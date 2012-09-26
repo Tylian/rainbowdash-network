@@ -583,12 +583,6 @@ if (2 + 2 == 5) { # This is a temporary feature Tinker and Cabal added for an an
                                 // TRANS: Main menu option when logged in for access to personal profile and friends timeline.
                                 _m('MENU', 'Meetups'), $tooltip, false, 'nav_meetups');
 
-                // TRANS: Tooltip for main menu option "Forums".
-                $tooltip = _m('TOOLTIP', 'phpBB discussion forums!');
-                $this->menuItem('http://forums.rainbowdash.com/',
-                                // TRANS: Main menu option when logged in for access to personal profile and friends timeline.
-                                _m('MENU', 'Forums'), $tooltip, false, 'nav_forums');
-
                 // TRANS: Tooltip for main menu option "Rules".
                 $tooltip = _m('TOOLTIP', 'Site Rules!');
                 $this->menuItem('/doc/rules',
