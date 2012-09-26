@@ -89,7 +89,6 @@ class Rdnrefresh extends Memcached_DataObject
         return array(false, false, false);
     }
 
-
     function fetchDB($userid) {
         $vars = Rdnrefresh::staticGet('user_id', $userid);
         return $vars;
@@ -101,18 +100,26 @@ class Rdnrefresh extends Memcached_DataObject
         $database = Rdnrefresh::fetchDB($user->id);
 
         $vars = array();
-        $vars['user_id'] = $database->user_id ?: $user->id;
-        $vars['spoilertags'] = $database->spoilertags ?: 'spoiler spoilers spoileralert poiler soiler spiler spoler spoier spoilr spoile sspoiler sppoiler spooiler spoiiler spoiller spoileer spoilerr psoiler sopiler spioler spolier spoielr spoilre';
-        $vars['maincolor'] = $database->maincolor ?: '#373737';
-        $vars['asidecolor'] = $database->asidecolor ?: '#212C37';
-        $vars['pagecolor'] = $database->pagecolor ?: '#FFFFFF';
-        $vars['linkcolor'] = $database->linkcolor ?: '#00EE00';
-        $vars['customstyle'] = $database->customstyle ?: 0;
-        $vars['logo'] = $database->logo ?: '';
-        $vars['backgroundimage'] = $database->backgroundimage ?: '';
-        $vars['anyhighlightwords'] = $database->anyhighlightwords ?: '';
-        $vars['usernamestags'] = $database->usernamestags ?: '';
-        $vars['hideemotes'] = $database->hideemotes ?: 0;
+        $defaults = array(
+            'user_id'           => $user->id,
+            'spoilertags'       => 'spoiler spoilers spoileralert poiler soiler spiler spoler spoier spoilr spoile sspoiler sppoiler spooiler spoiiler spoiller spoileer spoilerr psoiler sopiler spioler spolier spoielr spoilre',
+            'maincolor'         => '#373737',
+            'asidecolor'        => '#212C37',
+            'pagecolor'         => '#FFFFFF',
+            'linkcolor'         => '#00EE00',
+            'customstyle'       => 0,
+            'logo'              => '',
+            'backgroundimage'   => '',
+            'anyhighlightwords' => '',
+            'usernamestags'     => '',
+            'hideemotes'        => 0,
+        );
+
+        foreach($defaults as $key => $default) {
+            $dbvar = eval('return $database->' . $key . ';');
+            $vars[$key] = !is_null($dbvar) ? $dbvar : $default;
+        }
+        echo $vars;
 
         if($database) {
             // Prevent leaks.
