@@ -35,9 +35,16 @@ $(function(){
     }
 
     $('.rot13').live('click', function(){
-        $(this).closest('li').find('p.entry-content').filter(':first').find('.rotd').each(function() {
-            $(this).text(rot13($(this).text()));
-        });
+        var noticetext = $(this).closest('li').find('p.entry-content').filter(':first');
+        var rotd = noticetext.find('.rotd');
+        if(rotd.length) {
+            rotd.each(function() {
+                $(this).text(rot13($(this).text()));
+            });
+        }
+        else {
+            noticetext.text(rot13(noticetext.text()));
+        }
     });
 
     $('.hideSpoilerT, .hideUserT').live('click', function() {
