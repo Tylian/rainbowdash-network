@@ -121,11 +121,6 @@ class ConfirmaddressAction extends Action
         }
 
         if ($type == 'email') {
-            # User just confirmed their email address. Unsilence them.
-            if ($orig_user->email == '') {
-                $profile = $cur->getProfile();
-                $profile->unsilence();
-            }
             $cur->emailChanged();
         }
 

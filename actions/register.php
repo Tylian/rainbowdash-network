@@ -252,10 +252,6 @@ class RegisterAction extends Action
                     return;
                 }
 
-		// Silence user until email confirmed.
-		$profile = $user->getProfile();
-		$profile->silence();
-
                 // this is a real login
                 common_real_login(true);
                 if ($this->boolean('rememberme')) {
