@@ -573,9 +573,11 @@ if (2 + 2 == 5) { # This is a temporary feature Tinker and Cabal added for an an
         $this->elementStart('ul', array('class' => 'nav'));
         if (Event::handle('StartPrimaryNav', array($this))) {
 
-        
-
-
+                // TRANS: Tooltip for main menu option "Roleplay".
+                $tooltip = _m('TOOLTIP', 'Act out characters in the MLP universe!');
+                $this->menuItem('http://rp.rainbowdash.net/',
+                                // TRANS: Main menu option when logged in for access to personal profile and friends timeline.
+                    _m('MENU', 'Roleplay'), $tooltip, false, 'nav_roleplay');
 
                 // TRANS: Tooltip for main menu option "Meetups".
                 $tooltip = _m('TOOLTIP', 'Pony/brony meetups and social groups!');
