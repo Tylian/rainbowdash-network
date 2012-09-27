@@ -259,6 +259,7 @@ class RequireValidatedEmailPlugin extends Plugin
         $user = common_current_user();
         if (!empty($user)) { // it's a remote notice
             if (!$this->validated($user)) {
+                $action->raw('<div style="clear: both;" class="error">Remember to validate your email first!</div>');
                 return false;
             }
         }
