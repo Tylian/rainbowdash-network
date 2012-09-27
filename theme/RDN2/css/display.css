@@ -202,6 +202,7 @@ opacity:0;
 .entity_send-a-message a,
 .entity_nudge p,
 .form_user_nudge input.submit,
+.form_user_seize input.submit,
 .form_user_block input.submit,
 .form_user_unblock input.submit,
 .form_group_block input.submit,
@@ -366,6 +367,7 @@ box-shadow:3px 7px 5px rgba(194, 194, 194, 0.7);
 background-position: 5px -785px;
 }
 .form_user_block input.submit,
+.form_user_seize input.submit,
 .form_user_unblock input.submit,
 .form_group_block input.submit,
 .form_group_unblock input.submit {
