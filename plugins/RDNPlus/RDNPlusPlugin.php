@@ -194,8 +194,8 @@ HERE;
             $notice->rendered = preg_replace($rotex, '<span class="rotd">' . $rreplacematch . '</span>', $notice->rendered, 1);
         }
 
-        if(trim($notice->content)) return true;
-        else return false;
+        if(trim(str_replace(array('*','_','/','-','='), '', $notice->content))) return true;
+        else throw new ClientException('Notice cannot be blank');
     }
 
 
