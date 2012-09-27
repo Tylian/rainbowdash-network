@@ -141,32 +141,43 @@ HERE;
         $dir = dirname(__FILE__);
 
         // HTML code
-        $search = array(
-            '@\[b\](.*?)\[/b\]@i',
-            '@\[u\](.*?)\[/u\]@i',
-            '@\[i\](.*?)\[/i\]@i',
-            '@\[s\](.*?)\[/s\]@i',
-            '@\[t\](.*?)\[/t\]@i',
+        $bbcode = array(
+            '@(\[b\])(.*?)(\[/b\])@i',
+            '@(\[u\])(.*?)(\[/u\])@i',
+            '@(\[i\])(.*?)(\[/i\])@i',
+            '@(\[s\])(.*?)(\[/s\])@i',
+            '@(\[t\])(.*?)(\[/t\])@i',
+        );
+
+        $markdown = array(
+            '@(\s|^)\*([a-z].*?[a-z])\*(\s|$)@i',
+            '@(\s|^)_([a-z].*?[a-z])_(\s|$)@i',
+            '@(\s|^)/([a-z].*?[a-z])/(\s|$)@i',
+            '@(\s|^)-([a-z].*?[a-z])-(\s|$)@i',
+            '@(\s|^)=([a-z].*?[a-z])=(\s|$)@i',
         );
 
         $plaintext = array(
-            '*$1*',
-            '_$1_',
-            '/$1/',
-            '-$1-',
-            '$1'
+            ' *$2* ',
+            ' _$2_ ',
+            ' /$2/ ',
+            ' -$2- ',
+            ' =$2= '
         );
 
-        $replacements = array(
-            '<b>$1</b>',
-            '<u>$1</u>',
-            '<i>$1</i>',
-            '<span class="striket">$1</span>',
-            '<span class="smallt">$1</span>',
+        $markup = array(
+            ' <b>$2</b> ',
+            ' <u>$2</u> ',
+            ' <i>$2</i> ',
+            ' <span class="striket">$2</span> ',
+            ' <span class="smallt">$2</span> ',
         );
 
-        $notice->content = preg_replace($search, $plaintext, $notice->content);
-        $notice->rendered = preg_replace($search, $replacements, $notice->rendered);
+        $notice->content = preg_replace($bbcode, $plaintext, $notice->content);
+        $notice->content = preg_replace($markdown, $plaintext, $notice->content);
+
+        $notice->rendered = preg_replace($bbcode, $markup, $notice->rendered);
+        $notice->rendered = preg_replace($markdown, $markup, $notice->rendered);
 
         //ROT13 - WARNING. Strips previously incorporated HTML.
         $rotex = '@\[(r|sp)\](.*?)\[/(r|sp)\]@i';
