@@ -33,7 +33,7 @@ class SeizePlugin extends Plugin
     function onEndProfilePageActionsElements($action, $profile) {
         $cur = common_current_user();
 
-        if(($cur->hasRole(Profile_role::OWNER)
+        if(($cur->hasRole(Profile_role::ADMINISTRATOR)
             //|| $cur->hasRole(Profile_role::MODERATOR)
         ) && $cur->id != $profile->id) {
             $sf = new SeizeForm($action, $profile,

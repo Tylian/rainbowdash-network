@@ -18,7 +18,7 @@ class SeizeAction extends ProfileFormAction
 
         assert(!empty($cur)); // checked by parent
 
-        if (!$cur->hasRole(Profile_role::OWNER)
+        if (!$cur->hasRole(Profile_role::ADMINISTRATOR)
             //|| !$cur->hasRole(Profile_role:MODERATOR)
         ) {
             // TRANS: Client error displayed when seizing a user that has already been seized.
