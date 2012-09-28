@@ -9,6 +9,12 @@ if (!defined('STATUSNET')) {
 // Seize an account from a user, changing their password to something arbitrary.
 class SeizePlugin extends Plugin
 {
+    function onRouterInitialized($m) {
+        $m->connect('main/seize', array('action' => 'seize'));
+
+        return true;
+    }
+
     function onAutoload($cls) {
         $dir = dirname(__FILE__);
 
@@ -16,17 +22,13 @@ class SeizePlugin extends Plugin
         case 'SeizeAction':
             include_once $dir . '/' . strtolower(mb_substr($cls, 0, -6)) . '.php';
             return false;
+        case 'SeizeForm':
+            include_once $dir . '/' . strtolower($cls) . '.php';
         default:
             return true;
         }
 
     }    
-
-    function onRouterInitialized($m) {
-        $m->connect('main/seize', array('action' => 'seize'));
-
-        return true;
-    }
 
     function onEndProfilePageActionsElements($action, $profile) {
         $cur = common_current_user();
@@ -43,23 +45,4 @@ class SeizePlugin extends Plugin
         return true;
     }
 }
-
-class SeizeForm extends ProfileActionForm {
-
-    function target()
-    {
-        return 'seize';
-    }
-
-    function title()
-    {
-        return _('Seize');
-    }
-
-    function description()
-    {
-        return _('Seize this account');
-    }
-}
-
 ?>
