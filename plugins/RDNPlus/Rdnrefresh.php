@@ -115,15 +115,20 @@ class Rdnrefresh extends Memcached_DataObject
             'hideemotes'        => 0,
         );
 
-        foreach($defaults as $key => $default) {
-            $dbvar = eval('return $database->' . $key . ';');
-            $vars[$key] = !is_null($dbvar) ? $dbvar : $default;
-        }
-
         if($database) {
+            foreach($defaults as $key => $default) {
+                $dbvar = eval('return $database->' . $key . ';');
+                $vars[$key] = !is_null($dbvar) ? $dbvar : $default;
+            }
+
             // Prevent leaks.
             $database->free();
             unset($database);
+        }
+        else {
+            foreach($defaults as $key => $default) {
+                $vars[$key] = $default;
+            }
         }
 
         return $vars;
