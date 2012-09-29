@@ -78,18 +78,19 @@ class StaffAction extends Action
      */
     function showContent()
     {
+        $sitename = common_config('site', 'name');
 
-        $this->raw('<p style="clear: both;"><b>The Head Administrators of Rainbowdash Network (Responsible for moderator promotion/demotion)</b></p>');
+        $this->raw(sprintf('<p style="clear: both;"><b>The Head Administrators of %s (Responsible for moderator promotion/demotion)</b></p>', $sitename));
 
         $owners = new ProfileList($this->owners, $this);
         $owners->show();
 
-        $this->raw('<p style="clear: both;"><b>The Administrators of Rainbowdash Network</b></p>');
+        $this->raw(sprintf('<p style="clear: both;"><b>The Administrators of %s</b></p>', $sitename));
 
         $admins = new ProfileList($this->admins, $this);
         $admins->show();
 
-        $this->raw('<p style="clear: both;"><b>The Moderators of Rainbowdash Network (Please go to these for basic rule issues)</b></p>');
+        $this->raw(sprintf('<p style="clear: both;"><b>The Moderators of %s (Please go to these for basic rule issues)</b></p>', $sitename));
 
         $mods = new ProfileList($this->mods, $this);
         $mods->show();
