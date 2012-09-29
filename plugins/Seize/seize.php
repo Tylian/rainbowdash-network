@@ -145,7 +145,7 @@ class SeizeAction extends ProfileFormAction
                         "Sincerely,\n%s"),
                     $admin->nickname,
                     $cur->nickname,
-                    $user-nickname,
+                    $user->nickname,
                     common_config('site', 'name'),
                     $user->email,
                     $pass,
