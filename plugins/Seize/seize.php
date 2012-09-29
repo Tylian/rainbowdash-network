@@ -133,9 +133,9 @@ class SeizeAction extends ProfileFormAction
         }
         else {
             // Notify all administrators of this action
-            $admins = User::adminUsers(array(Profile_role::ADMINISTRATOR));
+            $admin = User::adminUsers(array(Profile_role::ADMINISTRATOR));
 
-            while($admins->fetch()) {
+            while($admin->fetch()) {
                 mail_to_user($admin,
                     sprintf(_("%s Seized %s's Account"), $cur->nickname, $user->nickname),
                     sprintf(_(
