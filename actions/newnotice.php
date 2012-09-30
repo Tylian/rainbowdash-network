@@ -226,7 +226,7 @@ class NewnoticeAction extends Action
         }
         Event::handle('EndSaveNewNoticeWeb', array($this, $user, &$content_shortened, &$options));
 
-        if(!function_exists('fastcgi_finish_request')) finishSave();
+        if(!function_exists('fastcgi_finish_request')) $this->finishSave($notice);
     }
 
     function finishSave($notice) {
@@ -241,6 +241,7 @@ class NewnoticeAction extends Action
             $this->showNotice($notice);
             $this->elementEnd('body');
             $this->elementEnd('html');
+            $this->endXML();
         } else {
             $returnto = $this->trimmed('returnto');
 
