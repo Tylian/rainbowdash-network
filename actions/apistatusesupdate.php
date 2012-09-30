@@ -332,6 +332,10 @@ class ApiStatusesUpdateAction extends ApiAuthAction
             }
 
             try {
+                if(function_exists('fastcgi_finish_request')) {
+                    $options = array_merge($options, array('finish' => $this));
+                }
+
                 $this->notice = Notice::saveNew(
                     $this->auth_user->id,
                     $content,
@@ -348,6 +352,13 @@ class ApiStatusesUpdateAction extends ApiAuthAction
             }
         }
 
+        if(!function_exists('fastcgi_finish_request')) {
+            $this->showNotice();
+        }
+    }
+
+    function finishSave($notice) {
+        $this->notice = $notice;
         $this->showNotice();
     }
 

@@ -435,6 +435,12 @@ class Notice extends Memcached_DataObject
             $notice->saveUrls();
         }
 
+        // If we're using PHP-FPM, call the finish save function to give the user the page and continue.
+        if(isset($finish)) {
+            $finish->finishSave($notice);
+            fastcgi_finish_request();
+        }
+
         if ($distribute) {
             // Prepare inbox delivery, may be queued to background.
             $notice->distribute();

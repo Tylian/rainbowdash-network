@@ -212,6 +212,10 @@ class NewnoticeAction extends Action
 
         if (Event::handle('StartNoticeSaveWeb', array($this, &$author_id, &$text, &$options))) {
 
+            if(function_exists('fastcgi_finish_request')) {
+                $options = array_merge($options, array('finish' => $this));
+            }
+
             $notice = Notice::saveNew($user->id, $content_shortened, 'web', $options);
 
             if (isset($upload)) {
@@ -222,6 +226,10 @@ class NewnoticeAction extends Action
         }
         Event::handle('EndSaveNewNoticeWeb', array($this, $user, &$content_shortened, &$options));
 
+        if(!function_exists('fastcgi_finish_request')) finishSave();
+    }
+
+    function finishSave($notice) {
         if ($this->boolean('ajax')) {
             header('Content-Type: text/xml;charset=utf-8');
             $this->xw->startDocument('1.0', 'UTF-8');
