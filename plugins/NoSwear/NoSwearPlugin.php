@@ -35,7 +35,7 @@ fellat
 jizz?
 testicle
 testes
-w[ea$s]n[kg]
+\bw[ea$s]n[kg]
 \bdbag
 \btit[stzi](llat)?
 \ban[ui]s
