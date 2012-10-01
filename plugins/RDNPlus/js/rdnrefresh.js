@@ -233,7 +233,7 @@ function delButton(newPosts) {
         var notice_id = $(this).parent().parent().attr('id').split('-')[1];
         var container = document.createElement('div');
         var token = $(this).parent().find('.form_favor [name*="token"]').val()
-        $(container).html(('<form action="' + siteDir + '/notice/delete" method="post" class="notice_delete" id="delete-%%%"> <fieldset> <legend>Delete this notice?</legend> <input type="hidden" value="' + token + '" id="token-%%%" name="token"> <input type="hidden" value="%%%" id="notice-d%%%" name="notice"> <input title="Delete this Notice" value="Yes" class="submit notice_delete submit_delete" type="submit" name="yes" id="delete-submit-%%%" /> </fieldset> </form>').replace(/%%%/g,notice_id));
+        $(container).html(('<form action="' + siteDir + '/notice/delete" method="post" class="notice_delete" id="delete-%%%"> <fieldset> <legend>Delete this notice?</legend> <input type="hidden" value="' + token + '" id="token-%%%" name="token"> <input type="hidden" value="%%%" id="notice-d%%%" name="notice"> <input title="Delete this Notice" value="Yes" class="submit submit_delete" name="yes" id="delete-submit-%%%" /> </fieldset> </form>').replace(/%%%/g,notice_id));
         $(container).bind('click', function(event) {
 
             event.preventDefault();
@@ -260,7 +260,7 @@ function delButton(newPosts) {
             var submit = submit_i.clone();
             submit
                 .addClass('submit_dialogbox')
-                .removeClass('submit_delete notice_delete submit');
+                .removeClass('submit');
             form.append(submit);
             submit.bind('click', function() {
                 $.ajax({
