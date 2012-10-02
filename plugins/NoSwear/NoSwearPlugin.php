@@ -12,7 +12,7 @@ class NoSwearPlugin extends Plugin
         $s = '\!\@\#\$\%\^\&\*';
         $wordlist = <<<HERE
 d[i$s][c$s]?khead
-dik
+\bdik
 [^s]c[u$s]nt
 s[h$s][i$s]te?(head)?
 \bvag(ina)?\b
