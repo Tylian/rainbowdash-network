@@ -43,6 +43,7 @@ testes
 masturbat
 fap
 q[u$s][e$s][e$s]f
+d[i$s][l$s][d$s]o
 HERE;
         $wordlist = '/((' . str_replace("\n", ")|(", $wordlist) . '))/i';
         $content = preg_replace($wordlist, '****', $content);
