@@ -102,10 +102,19 @@ class RepeatAction extends Action
      */
     function handle($args)
     {
-        $repeat = $this->notice->repeat($this->user->id, 'web');
+        if(function_exists('fastcgi_finish_request')) {
+            $finish = $this;
+        }
+        else {
+            $finish = null;
+        }
 
+        $repeat = $this->notice->repeat($this->user->id, 'web', $finish);
 
+        if(!function_exists('fastcgi_finish_request')) finishSave($this->notice);
+    }
 
+    function finishSave($notice) {
         if ($this->boolean('ajax')) {
             $this->startHTML('text/xml;charset=utf-8');
             $this->elementStart('head');
@@ -117,8 +126,10 @@ class RepeatAction extends Action
                                 _('Repeated!'));
             $this->elementEnd('body');
             $this->elementEnd('html');
+            $this->endXML();
         } else {
             // FIXME!
         }
     }
+
 }

@@ -1665,7 +1665,7 @@ class Notice extends Memcached_DataObject
         return $location;
     }
 
-    function repeat($repeater_id, $source)
+    function repeat($repeater_id, $source, $finish=null)
     {
         $author = Profile::staticGet('id', $this->profile_id);
 
@@ -1686,8 +1686,13 @@ class Notice extends Memcached_DataObject
             $content = mb_substr($content, 0, $maxlen - 4) . ' ...';
         }
 
-        return self::saveNew($repeater_id, $content, $source,
-                             array('repeat_of' => $this->id));
+        $options = array('repeat_of' => $this->id);
+
+        if(!empty($finish)) {
+            $options = array_merge($options, array('finish' => $finish));
+        }
+
+        return self::saveNew($repeater_id, $content, $source, $options);
     }
 
     // These are supposed to be in chron order!
