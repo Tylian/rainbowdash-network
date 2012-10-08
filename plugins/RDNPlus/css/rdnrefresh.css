@@ -11,31 +11,37 @@ border-radius:2px;
 }
 
 .notice-options {
-width:108px!important;
+width:116px!important;
 }
 
 .striket { text-decoration:line-through; }
 
 .smallt { font-size:8pt; }
 
-.bui { list-style-type:none; }
+.bui { 
+list-style-type:none;
+display: block;
+height: 24px;
+position: absolute;
+top: 100%;
+width: 645px;
+background-color: rgba(160, 163, 173, 0.35);
+}
 
 .bui li {
 cursor:pointer;
 float:left;
-background:url(../img/illu_pattern-01.png) repeat-x scroll 0pt 0pt rgb(170,170,170);
+background-color: rgba(105, 106, 141, 0.6);
 border-radius:5px;
 width:24px;
 height:24px;
-border:2px solid rgb(204,204,204);
-text-shadow:0pt 1px 0pt rgb(255,255,255);
-margin:1px;
+margin-right:4px;
 text-align:center;
 line-height:24px;
-color:black;
+color:white;
 }
 
-.bui li:hover { background-color:rgb(110,160,30); }
+.bui li:hover { background-color:rgb(105, 106, 141); }
 
 .userHighlight,
 .anyHighlight {
