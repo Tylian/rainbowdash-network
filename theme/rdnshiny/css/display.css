@@ -122,7 +122,7 @@ h6 {font-size: 1em;}
 #header {
     position: relative;
 	width: 941px;
-	height: 265px;
+	height: 250px;
 	padding: 0px;
 	padding-top: 60px;
 	margin: 0px;
@@ -302,18 +302,18 @@ address img + .fn {display: none;}
 .form_notice textarea {
     clear: left;
     float: left;
-    padding: 10px;
+    padding: 6px;
     position: relative;
     padding-bottom: 18px;
     z-index: 9;
-	width: 560px;
-	height: 54px;
+	width: 633px;
+	height: 70px;
 	border: 1px solid #bbb;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	position: relative;
-	margin-right: 58px;
+	resize: none;
 }
 
 #content #form_notice-direct textarea {
@@ -359,9 +359,11 @@ address img + .fn {display: none;}
 .form_notice label[for=notice_data-attach],
 .form_notice #notice_data-attach {
     position:absolute;
-    top: 27px;
-    right: 34px;
+    top: 100%;
+    right: 156px;
     cursor:pointer;
+	margin: 4px !important;
+	z-index: 1002;
 }
 
 .form_notice label[for=notice_data-attach] {
@@ -400,7 +402,7 @@ address img + .fn {display: none;}
 }
 
 .form_notice .form_note {
-    color: #777;
+    color: white;
 }
 
 .form_notice.warning .form_note {
@@ -409,13 +411,21 @@ address img + .fn {display: none;}
 
 .form_note{
     position: absolute;
-    bottom: 0px;
-    right: 64px;
-    z-index: 9;
+    bottom: -20px;
+    right: 56px;
+    z-index: 1001;
     font-size: 0.8em;
 }
 
 .form_notice .form_note dt {display:none}
+
+.form_note dd:before {
+content: '(';
+}
+
+.form_note dd:after {
+content: ' remaining)';
+}
 
 .form_notice #notice_data-attach_selected button.close {
     float:right;
@@ -423,13 +433,14 @@ address img + .fn {display: none;}
 }
 
 .form_notice #notice_action-submit {
-    padding:0;
+    padding:2px 6px 0;
     position:absolute;
-    width: 106px;
-	top: 79px;
+    width: 50px;
+	top: 110px;
 	right: 0px;
 	width: 52px;
-	height: 2.2em;
+	height: 24px;
+	margin-right: 0;
 }
 
 .entity_send-a-message .form_notice #notice_action-submit {
@@ -438,7 +449,7 @@ address img + .fn {display: none;}
 	color: #fff !important;
 }
 
-.form_notice input.submit, .form_settings input.submit {
+.form_settings input.submit {
 	border: 1px solid #555;
 	border-top: none;
 	border-left: none;
@@ -457,6 +468,20 @@ address img + .fn {display: none;}
 	-moz-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 	-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
+
+.form_notice input.submit {
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	font-weight: normal;
+	font-size: 1em;
+	background-color: rgba(105, 106, 141, 0.6);
+	color: white;
+	z-index: 999 !important;
+	margin: 0px !important;
+	margin-right: 4px !important;
+}
+.bui li:hover, .form_notice input.submit:hover {background-color: rgb(105, 106, 141);}
 
 .form_notice input.submit:hover , .form_settings input.submit:hover {
 	background-color: #888;
@@ -489,16 +514,21 @@ address img + .fn {display: none;}
 	-webkit-animation: none;
 	position: relative;
 	z-index: 9999;
-	width: auto;
+	width: 236px;
 	max-height: 184px;
 	overflow-y: auto;
 	float: right;
-	margin-right: 60px;
+	margin-right: 154px;
 }
 
 .form_notice #notice_data-attach_selected  img,
 .form_notice #notice_data-attach_selected  div {
 	display: none;
+}
+
+.form_notice #notice_data-attach_selected:hover  img,
+.form_notice #notice_data-attach_selected :hover div {
+	display: block;
 }
 
 .form_notice #notice_data-attach_selected code {
@@ -658,13 +688,6 @@ border-top:0;
 
 .section .notice:first-child {
 padding-top:0;
-}
-
-.section .notice .author {
-margin-right:0;
-}
-.section .notice .author .fn {
-display:none;
 }
 
 #aside_primary ol.notices {
@@ -2361,6 +2384,45 @@ body.realtime-popup {
 
 .realtime-popup .form_notice #notice_data-geo_wrap label, .form_notice #notice_data-geo_wrap input {
     right: 2px;
+}
+
+/* Highlight and tooltip for specific tags */
+span a[href$="/tag/nsfw"]
+{
+  color: red;
+}
+
+span a[href$="/tag/nsfw"]:hover:after
+{
+  content:"This post contains a link to NSFW material. Viewer discretion is advised.";
+  background-color: #FFAAAA;
+  border: 1px dotted red;
+  padding: 1px;
+  font-size: 8pt;
+  width: 120pt;
+  position:absolute;
+  margin: 8pt 8px;
+  z-index: 999;
+}
+
+span a[href$="/tag/spoiler"],
+span a[href$="/tag/spoilers"]
+{
+  color: #008000;
+}
+
+span a[href$="/tag/spoiler"]:hover:after,
+span a[href$="/tag/spoilers"]:hover:after
+{
+  content:"This post contains or links to a spoiler. Decode or click at your own risk.";
+  background-color: #80C080;
+  border: 1px dotted #008000;
+  padding: 1px;
+  font-size: 8pt;
+  width: 120pt;
+  position:absolute;
+  margin: 8pt 8px;
+  z-index: 999;
 }
 
 }/*end of @media screen, projection, tv*/
