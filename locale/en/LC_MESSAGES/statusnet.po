@@ -167,6 +167,8 @@ msgid ""
 "Why not [register an account](%%%%action.register%%%%) and then nudge %s or "
 "post a notice to his or her attention."
 msgstr ""
+"Why not [register an account](%%%%action.register%%%%) and then nudge %s or "
+"post a dash to his or her attention."
 
 #. TRANS: H1 text
 #: actions/all.php:178
@@ -592,29 +594,29 @@ msgstr ""
 #: actions/apistatusesretweet.php:75 actions/apistatusesretweets.php:72
 #: actions/deletenotice.php:52 actions/shownotice.php:92
 msgid "No such notice."
-msgstr ""
+msgstr "No such dash."
 
 #: actions/apistatusesretweet.php:83
 msgid "Cannot repeat your own notice."
-msgstr ""
+msgstr "Cannot redash your own dash."
 
 #: actions/apistatusesretweet.php:91
 msgid "Already repeated that notice."
-msgstr ""
+msgstr "Already redashed that dash."
 
 #: actions/apistatusesshow.php:138
 msgid "Status deleted."
-msgstr ""
+msgstr "Dash deleted."
 
 #: actions/apistatusesshow.php:144
 msgid "No status with that ID found."
-msgstr ""
+msgstr "No dash with that ID found."
 
 #: actions/apistatusesupdate.php:161 actions/newnotice.php:155
 #: lib/mailhandler.php:60
 #, php-format
 msgid "That's too long. Max notice size is %d chars."
-msgstr ""
+msgstr "That's too long. Max dash size is %d chars."
 
 #: actions/apistatusesupdate.php:202
 msgid "Not found"
@@ -623,7 +625,7 @@ msgstr ""
 #: actions/apistatusesupdate.php:225 actions/newnotice.php:178
 #, php-format
 msgid "Max notice size is %d chars, including attachment URL."
-msgstr ""
+msgstr "Max dash size is %d chars, including attachment URL."
 
 #: actions/apisubscriptions.php:231 actions/apisubscriptions.php:261
 msgid "Unsupported format."
@@ -662,22 +664,22 @@ msgstr ""
 #: actions/apitimelineretweetedtome.php:111
 #, php-format
 msgid "Repeated to %s"
-msgstr ""
+msgstr "Redashed to %s"
 
 #: actions/apitimelineretweetsofme.php:114
 #, php-format
 msgid "Repeats of %s"
-msgstr ""
+msgstr "Redashes of %s"
 
 #: actions/apitimelinetag.php:102 actions/tag.php:67
 #, php-format
 msgid "Notices tagged with %s"
-msgstr ""
+msgstr "Dashes tagged with %s"
 
 #: actions/apitimelinetag.php:104 actions/tagrss.php:65
 #, php-format
 msgid "Updates tagged with %1$s on %2$s!"
-msgstr ""
+msgstr "Dashes tagged with %1$s on %2$s!"
 
 #: actions/apiusershow.php:96
 msgid "Not found."
@@ -899,7 +901,7 @@ msgstr ""
 #: actions/conversation.php:154 lib/mailbox.php:116 lib/noticelist.php:87
 #: lib/profileaction.php:218 lib/searchgroupnav.php:82
 msgid "Notices"
-msgstr ""
+msgstr "Dashes"
 
 #: actions/deleteapplication.php:63
 msgid "You must be logged in to delete an application."
@@ -959,22 +961,24 @@ msgid ""
 "You are about to permanently delete a notice. Once this is done, it cannot "
 "be undone."
 msgstr ""
+"You are about to permanently delete a dash. Once this is done, it cannot "
+"be undone."
 
 #: actions/deletenotice.php:109 actions/deletenotice.php:141
 msgid "Delete notice"
-msgstr ""
+msgstr "Delete dash"
 
 #: actions/deletenotice.php:144
 msgid "Are you sure you want to delete this notice?"
-msgstr ""
+msgstr "Are you sure you want to delete this dash?"
 
 #: actions/deletenotice.php:145
 msgid "Do not delete this notice"
-msgstr ""
+msgstr "Do not delete this dash"
 
 #: actions/deletenotice.php:146 lib/noticelist.php:655
 msgid "Delete this notice"
-msgstr ""
+msgstr "Delete this dash"
 
 #: actions/deleteuser.php:67
 msgid "You cannot delete users."
@@ -1118,7 +1122,7 @@ msgstr ""
 
 #: actions/disfavor.php:81
 msgid "This notice is not a favorite!"
-msgstr ""
+msgstr "This dash is not a favorite!"
 
 #: actions/disfavor.php:94
 msgid "Add to favorites"
@@ -1305,7 +1309,7 @@ msgstr ""
 
 #: actions/emailsettings.php:163
 msgid "Send me email when someone adds my notice as a favorite."
-msgstr ""
+msgstr "Send me email when someone adds my dash as a favorite."
 
 #: actions/emailsettings.php:169
 msgid "Send me email when someone sends me a private message."
@@ -1321,7 +1325,7 @@ msgstr ""
 
 #: actions/emailsettings.php:185
 msgid "I want to post notices by email."
-msgstr ""
+msgstr "I want to post dashes by email."
 
 #: actions/emailsettings.php:191
 msgid "Publish a MicroID for my email address."
@@ -1406,7 +1410,7 @@ msgstr ""
 
 #: actions/favor.php:79
 msgid "This notice is already a favorite!"
-msgstr ""
+msgstr "This dash is already a favorite!"
 
 #: actions/favor.php:92 lib/disfavorform.php:140
 msgid "Disfavor favorite"
@@ -1415,26 +1419,28 @@ msgstr ""
 #: actions/favorited.php:65 lib/popularnoticesection.php:91
 #: lib/publicgroupnav.php:93
 msgid "Popular notices"
-msgstr ""
+msgstr "Popular dashes"
 
 #: actions/favorited.php:67
 #, php-format
 msgid "Popular notices, page %d"
-msgstr ""
+msgstr "Popular dashes, page %d"
 
 #: actions/favorited.php:79
 msgid "The most popular notices on the site right now."
-msgstr ""
+msgstr "The most popular dashes on the site right now."
 
 #: actions/favorited.php:150
 msgid "Favorite notices appear on this page but no one has favorited one yet."
-msgstr ""
+msgstr "Favorite dashes appear on this page but no one has favorited one yet."
 
 #: actions/favorited.php:153
 msgid ""
 "Be the first to add a notice to your favorites by clicking the fave button "
 "next to any notice you like."
 msgstr ""
+"Be the first to add a dash to your favorites by clicking the fave button "
+"next to any dash you like."
 
 #: actions/favorited.php:156
 #, php-format
@@ -1442,17 +1448,19 @@ msgid ""
 "Why not [register an account](%%action.register%%) and be the first to add a "
 "notice to your favorites!"
 msgstr ""
+"Why not [register an account](%%action.register%%) and be the first to add a "
+"dash to your favorites!"
 
 #: actions/favoritesrss.php:111 actions/showfavorites.php:77
 #: lib/personalgroupnav.php:115
 #, php-format
 msgid "%s's favorite notices"
-msgstr ""
+msgstr "s's favorite dashes"
 
 #: actions/favoritesrss.php:115
 #, php-format
 msgid "Updates favored by %1$s on %2$s!"
-msgstr ""
+msgstr "Dashes favored by %1$s on %2$s!"
 
 #: actions/featured.php:69 lib/featureduserssection.php:87
 #: lib/publicgroupnav.php:89
@@ -1471,10 +1479,10 @@ msgstr ""
 
 #: actions/file.php:34
 msgid "No notice ID."
-msgstr ""
+msgstr "No dash ID."
 
 #: actions/file.php:38
-msgid "No notice."
+msgid "No dash."
 msgstr ""
 
 #: actions/file.php:42
@@ -1690,7 +1698,7 @@ msgstr ""
 #: actions/grouprss.php:140
 #, php-format
 msgid "Updates from members of %1$s on %2$s!"
-msgstr ""
+msgstr "Dashes from members of %1$s on %2$s!"
 
 #: actions/groups.php:62 lib/profileaction.php:212 lib/profileaction.php:232
 #: lib/publicgroupnav.php:81 lib/searchgroupnav.php:84 lib/subgroupnav.php:98
@@ -1768,6 +1776,8 @@ msgid ""
 "You can send and receive notices through Jabber/GTalk [instant messages](%%"
 "doc.im%%). Configure your address and settings below."
 msgstr ""
+"You can send and receive dashes through Jabber/GTalk [instant messages](%%"
+"doc.im%%). Configure your address and settings below."
 
 #: actions/imsettings.php:89
 msgid "IM is not available."
@@ -1797,11 +1807,11 @@ msgstr ""
 
 #: actions/imsettings.php:143
 msgid "Send me notices through Jabber/GTalk."
-msgstr ""
+msgstr "Send me dashes through Jabber/GTalk."
 
 #: actions/imsettings.php:148
 msgid "Post a notice when my Jabber/GTalk status changes."
-msgstr ""
+msgstr "Post a dash when my Jabber/GTalk status changes."
 
 #: actions/imsettings.php:153
 msgid "Send me replies through Jabber/GTalk from people I'm not subscribed to."
@@ -2124,11 +2134,11 @@ msgstr ""
 
 #: actions/newnotice.php:69
 msgid "New notice"
-msgstr ""
+msgstr "New dash"
 
 #: actions/newnotice.php:211
 msgid "Notice posted"
-msgstr ""
+msgstr "Dash posted"
 
 #: actions/noticesearch.php:68
 #, php-format
@@ -2136,6 +2146,8 @@ msgid ""
 "Search for notices on %%site.name%% by their contents. Separate search terms "
 "by spaces; they must be 3 characters or more."
 msgstr ""
+"Search for dashes on %%site.name%% by their contents. Separate search terms "
+"by spaces; they must be 3 characters or more."
 
 #: actions/noticesearch.php:78
 msgid "Text search"
@@ -2227,7 +2239,7 @@ msgstr ""
 
 #: actions/oembed.php:79 actions/shownotice.php:100
 msgid "Notice has no profile"
-msgstr ""
+msgstr "Dash has no profile"
 
 #: actions/oembed.php:86 actions/shownotice.php:180
 #, php-format
@@ -2253,7 +2265,7 @@ msgstr ""
 
 #: actions/opensearch.php:67
 msgid "Notice Search"
-msgstr ""
+msgstr "Dash Search"
 
 #: actions/othersettings.php:60
 msgid "Other settings"
@@ -2558,12 +2570,12 @@ msgstr ""
 
 #: actions/postnotice.php:95
 msgid "Invalid notice content"
-msgstr ""
+msgstr "Invalid dash content"
 
 #: actions/postnotice.php:101
 #, php-format
 msgid "Notice license ‘%1$s’ is not compatible with site license ‘%2$s’."
-msgstr ""
+msgstr "Dash license ‘%1$s’ is not compatible with site license ‘%2$s’."
 
 #: actions/profilesettings.php:60
 msgid "Profile settings"
@@ -2623,7 +2635,7 @@ msgstr ""
 
 #: actions/profilesettings.php:138
 msgid "Share my current location when posting notices"
-msgstr ""
+msgstr "Share my current location when posting dashes"
 
 #: actions/profilesettings.php:145 actions/tagother.php:149
 #: actions/tagother.php:209 lib/subscriptionlist.php:106
@@ -2751,6 +2763,10 @@ msgid ""
 "tool. [Join now](%%action.register%%) to share notices about yourself with "
 "friends, family, and colleagues! ([Read more](%%doc.help%%))"
 msgstr ""
+"This is %%site.name%%, a [micro-blogging](http://en.wikipedia.org/wiki/Micro-"
+"blogging) service based on the Free Software [StatusNet](http://status.net/) "
+"tool. [Join now](%%action.register%%) to share dashes about yourself with "
+"friends, family, and colleagues! ([Read more](%%doc.help%%))"
 
 #: actions/public.php:247
 #, php-format
@@ -2772,7 +2788,7 @@ msgstr ""
 #: actions/publictagcloud.php:69
 #, php-format
 msgid "No one has posted a notice with a [hashtag](%%doc.tags%%) yet."
-msgstr ""
+msgstr "No one has posted a dash with a [hashtag](%%doc.tags%%) yet."
 
 #: actions/publictagcloud.php:72
 msgid "Be the first to post one!"
@@ -2946,6 +2962,8 @@ msgid ""
 "With this form you can create  a new account. You can then post notices and "
 "link up to friends and colleagues. "
 msgstr ""
+"With this form you can create  a new account. You can then post dashes and "
+"link up to friends and colleagues. "
 
 #: actions/register.php:425
 msgid "1-64 lowercase letters or numbers, no punctuation or spaces. Required."
@@ -3004,6 +3022,20 @@ msgid ""
 "\n"
 "Thanks for signing up and we hope you enjoy using this service."
 msgstr ""
+"Congratulations, %1$s! And welcome to %%%%site.name%%%%. From here, you may "
+"want to...\n"
+"\n"
+"* Go to [your profile](%2$s) and post your first message.\n"
+"* Add a [Jabber/GTalk address](%%%%action.imsettings%%%%) so you can send "
+"dashes through instant messages.\n"
+"* [Search for people](%%%%action.peoplesearch%%%%) that you may know or that "
+"share your interests. \n"
+"* Update your [profile settings](%%%%action.profilesettings%%%%) to tell "
+"others more about you. \n"
+"* Read over the [online docs](%%%%doc.help%%%%) for features you may have "
+"missed. \n"
+"\n"
+"Thanks for signing up and we hope you enjoy using this service."
 
 #: actions/register.php:562
 msgid ""
@@ -3066,27 +3098,27 @@ msgstr ""
 
 #: actions/repeat.php:57
 msgid "Only logged-in users can repeat notices."
-msgstr ""
+msgstr "Only logged-in users can repeat dashes."
 
 #: actions/repeat.php:64 actions/repeat.php:71
 msgid "No notice specified."
-msgstr ""
+msgstr "No dash specified."
 
 #: actions/repeat.php:76
 msgid "You can't repeat your own notice."
-msgstr ""
+msgstr "You can't redash your own dash."
 
 #: actions/repeat.php:90
 msgid "You already repeated that notice."
-msgstr ""
+msgstr "You already redashed that dash."
 
 #: actions/repeat.php:114 lib/noticelist.php:674
 msgid "Repeated"
-msgstr ""
+msgstr "Redashed"
 
 #: actions/repeat.php:119
 msgid "Repeated!"
-msgstr ""
+msgstr "Redashed!"
 
 #: actions/replies.php:126 actions/repliesrss.php:68
 #: lib/personalgroupnav.php:105
@@ -3120,6 +3152,8 @@ msgid ""
 "This is the timeline showing replies to %1$s but %2$s hasn't received a "
 "notice to his attention yet."
 msgstr ""
+"This is the timeline showing replies to %1$s but %2$s hasn't received a "
+"dash to his attention yet."
 
 #: actions/replies.php:204
 #, php-format
@@ -3272,11 +3306,11 @@ msgstr ""
 #: actions/showfavorites.php:79
 #, php-format
 msgid "%1$s's favorite notices, page %2$d"
-msgstr ""
+msgstr "1$s's favorite dashes, page %2$d"
 
 #: actions/showfavorites.php:132
 msgid "Could not retrieve favorite notices."
-msgstr ""
+msgstr "Could not retrieve favorite dashes."
 
 #: actions/showfavorites.php:171
 #, php-format
@@ -3298,6 +3332,8 @@ msgid ""
 "You haven't chosen any favorite notices yet. Click the fave button on "
 "notices you like to bookmark them for later or shed a spotlight on them."
 msgstr ""
+"You haven't chosen any favorite dashes yet. Click the fave button on "
+"dashes you like to bookmark them for later or shed a spotlight on them."
 
 #: actions/showfavorites.php:208
 #, php-format
@@ -3305,6 +3341,8 @@ msgid ""
 "%s hasn't added any notices to his favorites yet. Post something interesting "
 "they would add to their favorites :)"
 msgstr ""
+"%s hasn't added any dashes to his favorites yet. Post something interesting "
+"they would add to their favorites :)"
 
 #: actions/showfavorites.php:212
 #, php-format
@@ -3313,6 +3351,9 @@ msgid ""
 "account](%%%%action.register%%%%) and then post something interesting they "
 "would add to their favorites :)"
 msgstr ""
+"%s hasn't added any dashes to his favorites yet. Why not [register an "
+"account](%%%%action.register%%%%) and then post something interesting they "
+"would add to their favorites :)"
 
 #: actions/showfavorites.php:243
 msgid "This is a way to share what you like."
@@ -3353,17 +3394,17 @@ msgstr ""
 #: actions/showgroup.php:337
 #, php-format
 msgid "Notice feed for %s group (RSS 1.0)"
-msgstr ""
+msgstr "Dash feed for %s group (RSS 1.0)"
 
 #: actions/showgroup.php:343
 #, php-format
 msgid "Notice feed for %s group (RSS 2.0)"
-msgstr ""
+msgstr "Dash feed for %s group (RSS 2.0)"
 
 #: actions/showgroup.php:349
 #, php-format
 msgid "Notice feed for %s group (Atom)"
-msgstr ""
+msgstr "Dash feed for %s group (Atom)"
 
 #: actions/showgroup.php:354
 #, php-format
@@ -3431,7 +3472,7 @@ msgstr ""
 
 #: actions/shownotice.php:90
 msgid "Notice deleted."
-msgstr ""
+msgstr "Dash deleted."
 
 #: actions/showstream.php:73
 #, php-format
@@ -3446,22 +3487,22 @@ msgstr ""
 #: actions/showstream.php:122
 #, php-format
 msgid "Notice feed for %1$s tagged %2$s (RSS 1.0)"
-msgstr ""
+msgstr "Dash feed for %1$s tagged %2$s (RSS 1.0)"
 
 #: actions/showstream.php:129
 #, php-format
 msgid "Notice feed for %s (RSS 1.0)"
-msgstr ""
+msgstr "Dash feed for %s (RSS 1.0)"
 
 #: actions/showstream.php:136
 #, php-format
 msgid "Notice feed for %s (RSS 2.0)"
-msgstr ""
+msgstr "Dash feed for %s (RSS 2.0)"
 
 #: actions/showstream.php:143
 #, php-format
 msgid "Notice feed for %s (Atom)"
-msgstr ""
+msgstr "Dash feed for %s (Atom)"
 
 #: actions/showstream.php:148
 #, php-format
@@ -3478,6 +3519,8 @@ msgid ""
 "Seen anything interesting recently? You haven't posted any notices yet, now "
 "would be a good time to start :)"
 msgstr ""
+"Seen anything interesting recently? You haven't posted any dashes yet, now "
+"would be a good time to start :)"
 
 #: actions/showstream.php:207
 #, php-format
@@ -3494,6 +3537,10 @@ msgid ""
 "[StatusNet](http://status.net/) tool. [Join now](%%%%action.register%%%%) to "
 "follow **%s**'s notices and many more! ([Read more](%%%%doc.help%%%%))"
 msgstr ""
+"**%s** has an account on %%%%site.name%%%%, a [micro-blogging](http://en."
+"wikipedia.org/wiki/Micro-blogging) service based on the Free Software "
+"[StatusNet](http://status.net/) tool. [Join now](%%%%action.register%%%%) to "
+"follow **%s**'s dashes and many more! ([Read more](%%%%doc.help%%%%))"
 
 #: actions/showstream.php:248
 #, php-format
@@ -3506,7 +3553,7 @@ msgstr ""
 #: actions/showstream.php:305
 #, php-format
 msgid "Repeat of %s"
-msgstr ""
+msgstr "Redash of %s"
 
 #: actions/silence.php:65 actions/unsilence.php:65
 msgid "You cannot silence users on this site."
@@ -3603,7 +3650,7 @@ msgstr ""
 
 #: actions/siteadminpanel.php:274
 msgid "Maximum number of characters for notices."
-msgstr ""
+msgstr "Maximum number of characters for dashes."
 
 #: actions/siteadminpanel.php:278
 msgid "Dupe limit"
@@ -3828,12 +3875,12 @@ msgstr ""
 
 #: actions/subscribers.php:63
 msgid "These are the people who listen to your notices."
-msgstr ""
+msgstr "These are the people who listen to your dashes."
 
 #: actions/subscribers.php:67
 #, php-format
 msgid "These are the people who listen to %s's notices."
-msgstr ""
+msgstr "These are the people who listen to %s's dashes."
 
 #: actions/subscribers.php:108
 msgid ""
@@ -3865,12 +3912,12 @@ msgstr ""
 
 #: actions/subscriptions.php:65
 msgid "These are the people whose notices you listen to."
-msgstr ""
+msgstr "These are the people whose dashes you listen to."
 
 #: actions/subscriptions.php:69
 #, php-format
 msgid "These are the people whose notices %s listens to."
-msgstr ""
+msgstr "These are the people whose dashes %s listens to."
 
 #: actions/subscriptions.php:126
 #, php-format
@@ -3898,22 +3945,22 @@ msgstr ""
 #: actions/tag.php:69
 #, php-format
 msgid "Notices tagged with %1$s, page %2$d"
-msgstr ""
+msgstr "Dashes tagged with %1$s, page %2$d"
 
 #: actions/tag.php:87
 #, php-format
 msgid "Notice feed for tag %s (RSS 1.0)"
-msgstr ""
+msgstr "Dash feed for tag %s (RSS 1.0)"
 
 #: actions/tag.php:93
 #, php-format
 msgid "Notice feed for tag %s (RSS 2.0)"
-msgstr ""
+msgstr "Dash feed for tag %s (RSS 2.0)"
 
 #: actions/tag.php:99
 #, php-format
 msgid "Notice feed for tag %s (Atom)"
-msgstr ""
+msgstr "Dash feed for tag %s (Atom)"
 
 #: actions/tagother.php:39
 msgid "No ID argument."
@@ -4298,16 +4345,17 @@ msgstr ""
 
 #: classes/Notice.php:241
 msgid "Problem saving notice. Too long."
-msgstr ""
+msgstr "Problem saving dash. Too long."
 
 #: classes/Notice.php:245
 msgid "Problem saving notice. Unknown user."
-msgstr ""
+msgstr "Problem saving dash. Unknown user."
 
 #: classes/Notice.php:250
 msgid ""
 "Too many notices too fast; take a breather and post again in a few minutes."
 msgstr ""
+"Too many dashes too fast; take a breather and post again in a few minutes."
 
 #: classes/Notice.php:256
 msgid ""
@@ -4317,11 +4365,11 @@ msgstr ""
 
 #: classes/Notice.php:262
 msgid "You are banned from posting notices on this site."
-msgstr ""
+msgstr "You are banned from posting dashes on this site."
 
 #: classes/Notice.php:328 classes/Notice.php:354
 msgid "Problem saving notice."
-msgstr ""
+msgstr "Problem saving dash."
 
 #: classes/Notice.php:927
 msgid "Problem saving group inbox."
@@ -4875,7 +4923,7 @@ msgstr ""
 
 #: lib/command.php:152 lib/command.php:390 lib/command.php:451
 msgid "Notice with that id does not exist"
-msgstr ""
+msgstr "Dash with that id does not exist"
 
 #: lib/command.php:168 lib/command.php:406 lib/command.php:467
 #: lib/command.php:523
@@ -4955,7 +5003,7 @@ msgstr ""
 #: lib/command.php:426
 #, php-format
 msgid "Notice from %s repeated"
-msgstr ""
+msgstr "Dash from %s repeated"
 
 #: lib/command.php:428
 msgid "Error repeating notice."
@@ -4964,7 +5012,7 @@ msgstr ""
 #: lib/command.php:482
 #, php-format
 msgid "Notice too long - maximum is %d characters, you sent %d"
-msgstr ""
+msgstr "Dash too long - maximum is %d characters, you sent %d"
 
 #: lib/command.php:491
 #, php-format
@@ -4973,7 +5021,7 @@ msgstr ""
 
 #: lib/command.php:493
 msgid "Error saving notice."
-msgstr ""
+msgstr "Error saving dash."
 
 #: lib/command.php:547
 msgid "Specify the name of the user to subscribe to"
@@ -5102,6 +5150,44 @@ msgid ""
 "tracks - not yet implemented.\n"
 "tracking - not yet implemented.\n"
 msgstr ""
+"Commands:\n"
+"on - turn on notifications\n"
+"off - turn off notifications\n"
+"help - show this help\n"
+"follow <nickname> - subscribe to user\n"
+"groups - lists the groups you have joined\n"
+"subscriptions - list the people you follow\n"
+"subscribers - list the people that follow you\n"
+"leave <nickname> - unsubscribe from user\n"
+"d <nickname> <text> - direct message to user\n"
+"get <nickname> - get last dash from user\n"
+"whois <nickname> - get profile info on user\n"
+"lose <nickname> - force user to stop following you\n"
+"fav <nickname> - add user's last dash as a 'fave'\n"
+"fav #<notice_id> - add dash with the given id as a 'fave'\n"
+"repeat #<notice_id> - redash a dash with a given id\n"
+"repeat <nickname> - redash the last dash from user\n"
+"reply #<notice_id> - reply to dash with a given id\n"
+"reply <nickname> - reply to the last dash from user\n"
+"join <group> - join group\n"
+"login - Get a link to login to the web interface\n"
+"drop <group> - leave group\n"
+"stats - get your stats\n"
+"stop - same as 'off'\n"
+"quit - same as 'off'\n"
+"sub <nickname> - same as 'follow'\n"
+"unsub <nickname> - same as 'leave'\n"
+"last <nickname> - same as 'get'\n"
+"on <nickname> - not yet implemented.\n"
+"off <nickname> - not yet implemented.\n"
+"nudge <nickname> - remind a user to update.\n"
+"invite <phone number> - not yet implemented.\n"
+"track <word> - not yet implemented.\n"
+"untrack <word> - not yet implemented.\n"
+"track off - not yet implemented.\n"
+"untrack all - not yet implemented.\n"
+"tracks - not yet implemented.\n"
+"tracking - not yet implemented.\n"
 
 #: lib/common.php:148
 msgid "No configuration file found. "
@@ -5278,12 +5364,12 @@ msgstr ""
 
 #: lib/groupsbypostssection.php:71
 msgid "Groups with most posts"
-msgstr ""
+msgstr "Groups with most dashes"
 
 #: lib/grouptagcloudsection.php:56
 #, php-format
 msgid "Tags in %s group's notices"
-msgstr ""
+msgstr "Tags in %s group's dashes"
 
 #: lib/htmloutputter.php:103
 msgid "This page is not available in a media type you accept"
@@ -5376,7 +5462,7 @@ msgstr ""
 #: lib/mail.php:240
 #, php-format
 msgid "%1$s is now listening to your notices on %2$s."
-msgstr ""
+msgstr "1$s is now listening to your dashes on %2$s."
 
 #: lib/mail.php:245
 #, php-format
@@ -5392,6 +5478,16 @@ msgid ""
 "----\n"
 "Change your email address or notification options at %8$s\n"
 msgstr ""
+"%1$s is now listening to your dashes on %2$s.\n"
+"\n"
+"\t%3$s\n"
+"\n"
+"%4$s%5$s%6$s\n"
+"Faithfully yours,\n"
+"%7$s.\n"
+"\n"
+"----\n"
+"Change your email address or notification options at %8$s\n"
 
 #: lib/mail.php:262
 #, php-format
@@ -5419,7 +5515,7 @@ msgstr ""
 #: lib/mail.php:417
 #, php-format
 msgid "%s status"
-msgstr ""
+msgstr "%s status"
 
 #: lib/mail.php:443
 msgid "SMS confirmation"
@@ -5495,11 +5591,27 @@ msgid ""
 "Faithfully yours,\n"
 "%6$s\n"
 msgstr ""
+"%1$s (@%7$s) just added your dash from %2$s as one of their favorites.\n"
+"\n"
+"The URL of your dash is:\n"
+"\n"
+"%3$s\n"
+"\n"
+"The text of your dash is:\n"
+"\n"
+"%4$s\n"
+"\n"
+"You can see the list of %1$s's favorites here:\n"
+"\n"
+"%5$s\n"
+"\n"
+"Faithfully yours,\n"
+"%6$s\n"
 
 #: lib/mail.php:635
 #, php-format
 msgid "%s (@%s) sent a notice to your attention"
-msgstr ""
+msgstr "%s (@%s) sent a dash to your attention"
 
 #: lib/mail.php:637
 #, php-format
@@ -5515,6 +5627,16 @@ msgid ""
 "\t%4$s\n"
 "\n"
 msgstr ""
+"%1$s (@%9$s) just sent a dash to your attention (an '@-reply') on %2$s.\n"
+"\n"
+"The dash is here:\n"
+"\n"
+"\t%3$s\n"
+"\n"
+"It reads:\n"
+"\n"
+"\t%4$s\n"
+"\n"
 
 #: lib/mailbox.php:89
 msgid "Only the user can read their own mailboxes."
@@ -5622,7 +5744,7 @@ msgstr ""
 
 #: lib/noticeform.php:160
 msgid "Send a notice"
-msgstr ""
+msgstr "Send a dash"
 
 #: lib/noticeform.php:173
 #, php-format
@@ -5682,7 +5804,7 @@ msgstr ""
 
 #: lib/noticelist.php:601
 msgid "Repeated by"
-msgstr ""
+msgstr "Redashed by"
 
 #: lib/noticelist.php:628
 msgid "Reply to this notice"
@@ -5694,7 +5816,7 @@ msgstr ""
 
 #: lib/noticelist.php:673
 msgid "Notice repeated"
-msgstr ""
+msgstr "Dash redashed"
 
 #: lib/nudgeform.php:116
 msgid "Nudge this user"
@@ -5722,7 +5844,7 @@ msgstr ""
 
 #: lib/oauthstore.php:345
 msgid "Duplicate notice"
-msgstr ""
+msgstr "Duplicate dash"
 
 #: lib/oauthstore.php:490
 msgid "Couldn't insert new subscription."
@@ -5823,11 +5945,11 @@ msgstr ""
 
 #: lib/repeatform.php:107
 msgid "Repeat this notice?"
-msgstr ""
+msgstr "Repeat this dash?"
 
 #: lib/repeatform.php:132
 msgid "Repeat this notice"
-msgstr ""
+msgstr "Repeat this dash"
 
 #: lib/revokeroleform.php:91
 #, php-format
@@ -5872,7 +5994,7 @@ msgstr ""
 
 #: lib/searchgroupnav.php:83
 msgid "Find content of notices"
-msgstr ""
+msgstr "Find content of dashes"
 
 #: lib/searchgroupnav.php:85
 msgid "Find groups on this site"
