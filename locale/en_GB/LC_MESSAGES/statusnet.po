@@ -5244,11 +5244,11 @@ msgstr ""
 
 #: lib/disfavorform.php:114 lib/disfavorform.php:140
 msgid "Disfavor this notice"
-msgstr ""
+msgstr "Disfavor this dash"
 
 #: lib/favorform.php:114 lib/favorform.php:140
 msgid "Favor this notice"
-msgstr ""
+msgstr "Favor this dash"
 
 #: lib/favorform.php:140
 msgid "Favor"
@@ -5808,7 +5808,7 @@ msgstr "Redashed by"
 
 #: lib/noticelist.php:628
 msgid "Reply to this notice"
-msgstr ""
+msgstr "Reply to this dash"
 
 #: lib/noticelist.php:629
 msgid "Reply"
