@@ -5945,11 +5945,11 @@ msgstr ""
 
 #: lib/repeatform.php:107
 msgid "Repeat this notice?"
-msgstr "Repeat this dash?"
+msgstr "Redash this dash?"
 
 #: lib/repeatform.php:132
 msgid "Repeat this notice"
-msgstr "Repeat this dash"
+msgstr "Redash this dash"
 
 #: lib/revokeroleform.php:91
 #, php-format
