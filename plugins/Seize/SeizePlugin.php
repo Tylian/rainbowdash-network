@@ -34,6 +34,7 @@ class SeizePlugin extends Plugin
         $cur = common_current_user();
 
         if(!empty($cur) && ($cur->hasRole(Profile_role::ADMINISTRATOR)
+            && !$profile->hasRole(Profile_role::OWNER)
             //|| $cur->hasRole(Profile_role::MODERATOR)
         ) && $cur->id != $profile->id) {
             $sf = new SeizeForm($action, $profile,
