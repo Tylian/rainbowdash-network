@@ -5462,7 +5462,7 @@ msgstr ""
 #: lib/mail.php:240
 #, php-format
 msgid "%1$s is now listening to your notices on %2$s."
-msgstr "1$s is now listening to your dashes on %2$s."
+msgstr "%1$s is now listening to your dashes on %2$s."
 
 #: lib/mail.php:245
 #, php-format
