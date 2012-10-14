@@ -634,7 +634,7 @@ class DesignAdminPanelForm extends AdminForm
 
             $this->li();
             // TRANS: Field label for sidebar color selector.
-            $this->out->element('label', array('for' => 'swatch-3'), _('Sidebar'));
+            $this->out->element('label', array('for' => 'swatch-3'), _('Wrapper'));
             $this->out->element('input', array('name' => 'design_sidebar',
                                         'type' => 'text',
                                         'id' => 'swatch-3',

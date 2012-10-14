@@ -208,7 +208,7 @@ class DesignSettingsAction extends AccountSettingsAction
 
             $this->elementStart('li');
             // TRANS: Label on profile design page for setting a profile page sidebar colour.
-            $this->element('label', array('for' => 'swatch-3'), _('Sidebar'));
+            $this->element('label', array('for' => 'swatch-3'), _('Wrapper'));
             $this->element('input', array('name' => 'design_sidebar',
                                         'type' => 'text',
                                         'id' => 'swatch-3',

@@ -72,8 +72,7 @@ textarea {
 	box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.7);
 	-moz-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.7);
 	-webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.7);
-	background: url(../images/banner.png) 0px 30px padding-box no-repeat #b5ddef;
-	background-size: contain;
+	background: url(../images/banner.png) 0px 34px padding-box no-repeat #b5ddef;
 }
 
 a {
@@ -304,7 +303,6 @@ address img + .fn {display: none;}
     float: left;
     padding: 6px;
     position: relative;
-    padding-bottom: 18px;
     z-index: 9;
 	width: 633px;
 	height: 70px;
@@ -314,10 +312,6 @@ address img + .fn {display: none;}
 	-webkit-border-radius: 4px;
 	position: relative;
 	resize: none;
-}
-
-#content #form_notice-direct textarea {
-	width: 396px;
 }
 
 .entity_send-a-message .form_notice legend {
@@ -443,10 +437,8 @@ content: ' remaining)';
 	margin-right: 0;
 }
 
-.entity_send-a-message .form_notice #notice_action-submit {
-	right: 64pt !important;
-	top: 0 !important;
-	color: #fff !important;
+#header #form_notice-direct label {
+margin-bottom: 4px;
 }
 
 .form_settings input.submit {
@@ -470,6 +462,7 @@ content: ' remaining)';
 }
 
 .form_notice input.submit {
+	border: none !important;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -479,11 +472,10 @@ content: ' remaining)';
 	color: white;
 	z-index: 999 !important;
 	margin: 0px !important;
-	margin-right: 4px !important;
 }
 .bui li:hover, .form_notice input.submit:hover {background-color: rgb(105, 106, 141);}
 
-.form_notice input.submit:hover , .form_settings input.submit:hover {
+.form_settings input.submit:hover {
 	background-color: #888;
 }
 
@@ -596,7 +588,7 @@ content: ' remaining)';
 	display:block;
 	padding-right: 10px;
 	border: 1px solid #fff;
-	border-color: transparent;
+	border-color: rgba(230, 230, 230, 0.3);
 	padding-top: 4px;
 	padding-bottom: 4px;
 	font-size: 1.1em;
@@ -612,7 +604,8 @@ content: ' remaining)';
 	text-decoration: none;
 }
 
-#site_nav_local_views li.current a {
+#site_nav_local_views li.current a,
+#site_nav_local_views a:hover {
 	background: none;
 	display: block;
 	color: #4d4d4d !important;
@@ -630,13 +623,12 @@ content: ' remaining)';
 	-moz-border-radius-topright:4px;
 	-webkit-border-top-right-radius:4px;
 }
-
+/*
 #site_nav_local_views a:hover {
-	background: url(../images/overlay20.png) repeat-x top left;
 	color: #4d424c !important;
 	background-color: #b3b3b3;
 	text-shadow: 0 1px 0 rgba(255,255,255,0.75);  
-}
+}*/
 
 #core {
 	display:inline;
@@ -827,7 +819,7 @@ display:none;
 	box-shadow: 1px 1px 2px #444;
 	-moz-box-shadow: 1px 1px 2px #444;
 	-webkit-box-shadow: 1px 1px 2px #444;
-	background-color: rgba(237, 234, 235, 0.6);
+	background-color: rgb(237, 234, 235);
     margin: 0px 15px 20px;
 	width: 248px;
 	float: right;
@@ -1026,6 +1018,32 @@ overflow:visible;
 
 .notice-options input.submit:hover, .notice-options a:hover {
     opacity: 1;
+}
+
+.inline-attachment
+{
+max-height: 75px !important;
+overflow: hidden;
+}
+
+.inline-attachment img
+{
+width: auto !important;
+opacity: 0.7;
+}
+
+.inline-attachment img:hover
+{
+opacity: 1;
+}
+
+.notice div.thumbnails
+{
+width: 630px !important;
+max-width: 630px !important;
+float: none;
+max-height: 160px;
+overflow: hidden;
 }
 
 .notice .attachment {
@@ -1355,13 +1373,6 @@ text-indent:-9999px;
 	min-width: 140px;
 }
 
-.entity_actions a, .entity_actions input, .entity_actions p {
-   	text-shadow:0 1px 0 rgba(255,255,255,0.4);
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-}
-
 .entity_moderation:hover ul,
 .entity_role:hover ul {
 	border-radius: 4px;
@@ -1576,6 +1587,10 @@ margin-left:0;
 }
 
 /* override OStatus plugin style */
+
+#remoteprofile #content_inner > p {
+	float: left;
+}
 
 #form_ostatus_connect.form_settings.dialogbox, #form_ostatus_sub.dialogbox {
     width: 76%;
@@ -1860,7 +1875,7 @@ right:3px;
 
 .entity_send-a-message .form_notice {
     width: 410px;
-    padding: 10px;
+    padding: 4px;
     position: absolute;
     top: 46px;
     right: 10px;
@@ -1872,7 +1887,7 @@ right:3px;
 }
 
 .entity_send-a-message .form_notice textarea {
-    width: 280px;
+    width: 396px;
 }
 
 .entity_send-a-message .form_notice legend {
@@ -1883,14 +1898,16 @@ margin-bottom:11px;
 }
 
 .entity_send-a-message .form_notice label,
-.entity_send-a-message .form_notice select {
+.entity_send-a-message .form_notice select,
+.entity_send-a-message #custom_name {
 display:none;
 }
 .entity_send-a-message .form_notice #notice_action-submit {
     position: absolute;
-    top: 52px;
-    right: 0px;
+    top: 0px;
+    right: 16px;
     text-align: center;
+	color: white !important;
 }
 
 .entity_moderation,
@@ -2345,6 +2362,7 @@ padding-left:20px;
 /*realtime popup*/
 body.realtime-popup {
     min-width: 100%;
+	overflow-x: hidden;
 }
 
 .realtime-popup #wrap {
@@ -2355,35 +2373,62 @@ body.realtime-popup {
 .realtime-popup #content {
     padding: 0px !important;
     margin: 0px !important;
-    width: 98% !important;
+    width: 100% !important;
+	border-top-right-radius: 4px;
 }
 
 .realtime-popup .form_notice {
     float: left !important;
     position: static !important;
+	background-color: transparent !important;
+	height: 108px !important;
+	width: 96% !important;
+	max-width: 640px !important;
+	min-width: 400px !important;
+	margin: 6px 2% !important;
+	overflow: hidden !important;
+}
+
+.realtime-popup #notice_data-attach_selected {
+bottom: 0 !important;
+width: 16px !important;
+}
+
+.realtime-popup #notice_data-attach_selected code {
+	display: none !important;
 }
 
 .realtime-popup .form_notice fieldset {
-    width: 450px !important;
+    width: 100% !important;
+	margin: 0 !important;
 }
-
 .realtime-popup .form_notice textarea {
-    width: 340px !important;
+    width: 98% !important;
+	padding: 6px 0 6px 2% !important;
 }
 
-.realtime-popup .form_notice #notice_action-submit {
-    top: 58px !important;
-    height: 2em;
-    font-size: 0.8em;
-    width: 86px;
+.realtime-popup .form_notice input.submit {
+	top: 84px !important;
 }
 
-.realtime-popup .form_notice label[for=notice_data-attach], .form_notice #notice_data-attach {
-    right: 70px;
+.realtime-popup #notice_data-attach {
+	width: 16px !important;
 }
 
-.realtime-popup .form_notice #notice_data-geo_wrap label, .form_notice #notice_data-geo_wrap input {
-    right: 2px;
+body#bookmarklet #wrap,
+body#bookmarklet #header {
+	width: 670px !important;
+	height: 150px !important;
+    margin: 0 !important;
+	padding: 0 !important;
+	background-position: 0px 0px !important;
+	background-size: 100% !important;
+	background-position: top right !important;
+	overflow: hidden;
+}
+
+body#bookmarklet #header {
+    padding: 6px !important;
 }
 
 /* Highlight and tooltip for specific tags */
