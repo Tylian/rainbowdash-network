@@ -1455,7 +1455,7 @@ msgstr ""
 #: lib/personalgroupnav.php:115
 #, php-format
 msgid "%s's favorite notices"
-msgstr "s's favorite dashes"
+msgstr "%s's favorite dashes"
 
 #: actions/favoritesrss.php:115
 #, php-format
@@ -3306,7 +3306,7 @@ msgstr ""
 #: actions/showfavorites.php:79
 #, php-format
 msgid "%1$s's favorite notices, page %2$d"
-msgstr "1$s's favorite dashes, page %2$d"
+msgstr "%1$s's favorite dashes, page %2$d"
 
 #: actions/showfavorites.php:132
 msgid "Could not retrieve favorite notices."
