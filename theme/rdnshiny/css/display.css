@@ -120,7 +120,7 @@ h6 {font-size: 1em;}
 
 #header {
     position: relative;
-	width: 941px;
+	width: 945px;
 	height: 250px;
 	padding: 0px;
 	padding-top: 60px;
@@ -481,13 +481,13 @@ margin-bottom: 4px;
 
 .form_notice .error,
 .form_notice .success {
-    clear: left;
-    float: left;
-    line-height: 1.2em;
-    padding: 2px 2px 2px 5px;
-    border: 2px solid #ccc;
-    margin-left: -2px;
-	width: 570px;
+	clear: left;
+	float: left;
+	line-height: 1.2em;
+	padding: 2px 2px 2px 5px;
+	border: 2px solid #ccc;
+	margin-left: -2px;
+	width: 645px;
 	margin-left: 0px;
 	position:absolute;
 	bottom: 100%;
