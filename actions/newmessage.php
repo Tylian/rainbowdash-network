@@ -112,18 +112,17 @@ class NewmessageAction extends Action
         if ($this->to) {
 
             if($this->to == 'allstaff') {
-                $users = User::adminUsers();
-                $nicknames = array();
-                while($users->fetch()) {
-                    if($users->nickname != $user->nickname) {
-                        $nicknames[] = $users->nickname;
+                $u = User::adminUsers();
+                $users = array();
+                while($u->fetch()) {
+                    if($u->nickname != $user->nickname) {
+                        $users[] = clone($u);
                     }
                 }
 
-                $this->custom_name = $nicknames;
-            }
-
-            if($this->to == 'any' || $this->to == 'allstaff') {
+                $this->other = $users;
+            } 
+            else if($this->to == 'any') {
                 $users = array();
                 foreach($this->custom_name as $custom_name) {
                     $u = User::staticGet('nickname', $custom_name);
