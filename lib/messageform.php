@@ -137,10 +137,14 @@ class MessageForm extends Form
 
         $admin_users = User::adminUsers();
 
-        while ($admin_users->fetch()) {
-            if ($admin_users->id != $user->id) {
-                $mutual[$admin_users->id] = $admin_users->nickname;
+        if(!empty($admin_users)) {
+            $mutual['allstaff'] = '------------- Staff -------------';
+            while ($admin_users->fetch()) {
+                if ($admin_users->id != $user->id) {
+                    $mutual[$admin_users->id] = $admin_users->nickname;
+                }
             }
+            $mutual[-100] = '---------------------------';
         }
 
         $mutual_users = $user->mutuallySubscribedUsers();

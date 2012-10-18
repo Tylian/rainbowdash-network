@@ -473,7 +473,7 @@ class User extends Memcached_DataObject
             }
         }
         else {
-            $qry .= sprintf("WHERE role = '%s' OR role = '%s'", Profile_role::ADMINISTRATOR, Profile_role::MODERATOR);
+            $qry .= sprintf("WHERE role = '%s' OR role = '%s' GROUP BY profile_id", Profile_role::ADMINISTRATOR, Profile_role::MODERATOR);
         }
 
         $user = Memcached_DataObject::cachedQuery('User',

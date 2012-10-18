@@ -107,15 +107,35 @@ class NewmessageAction extends Action
 
         $this->content = $this->trimmed('content');
         $this->to = $this->trimmed('to');
-        $this->custom_name = $this->trimmed('custom_name');
+        $this->custom_name = explode(' ', $this->trimmed('custom_name'));
 
         if ($this->to) {
 
-            if($this->to == 'any') {
-                $this->other = User::staticGet('nickname', $this->custom_name);
+            if($this->to == 'allstaff') {
+                $users = User::adminUsers();
+                $nicknames = array();
+                while($users->fetch()) {
+                    if($users->nickname != $user->nickname) {
+                        $nicknames[] = $users->nickname;
+                    }
+                }
+
+                $this->custom_name = $nicknames;
+            }
+
+            if($this->to == 'any' || $this->to == 'allstaff') {
+                $users = array();
+                foreach($this->custom_name as $custom_name) {
+                    $u = User::staticGet('nickname', $custom_name);
+                    if(!empty($u)) {
+                        $users[] = $u;
+                    }
+                }
+
+                $this->other = $users;
             }
             else {
-                $this->other = User::staticGet('id', $this->to);
+                $this->other = array(User::staticGet('id', $this->to));
             }
 
             if (!$this->other) {
@@ -123,11 +143,13 @@ class NewmessageAction extends Action
                 return false;
             }
 
-            if (!$user->mutuallySubscribed($this->other) &&
-                !($user->hasRole(Profile_role::MODERATOR) || $user->hasRole(Profile_role::ADMINISTRATOR)) &&
-                !(($this->other->hasRole(Profile_role::ADMINISTRATOR) || $this->other->hasRole(Profile_role::MODERATOR)) && !$user->hasRole(Profile_role::SILENCED))) {
-                $this->clientError(_('You can\'t send a message to this user.'), 404);
-                return false;
+            foreach($this->other as $other) {
+                if (!$user->mutuallySubscribed($other) &&
+                    !($user->hasRole(Profile_role::MODERATOR) || $user->hasRole(Profile_role::ADMINISTRATOR)) &&
+                    !(($other->hasRole(Profile_role::ADMINISTRATOR) || $other->hasRole(Profile_role::MODERATOR)) && !$user->hasRole(Profile_role::SILENCED))) {
+                    $this->clientError(_('You can\'t send a message to this user.'), 404);
+                    return false;
+                }
             }
         }
 
@@ -168,25 +190,31 @@ class NewmessageAction extends Action
         if (!$this->other) {
             $this->showForm(_('No recipient specified.'));
             return;
-        } else if (!$user->mutuallySubscribed($this->other) &&
-            !($user->hasRole(Profile_role::MODERATOR) || $user->hasRole(Profile_role::ADMINISTRATOR)) &&
-            !(($this->other->hasRole(Profile_role::ADMINISTRATOR) || $this->other->hasRole(Profile_role::MODERATOR)) && !$user->hasRole(Profile_role::SILENCED)) ) {
-            $this->clientError(_('You can\'t send a message to this user.'), 404);
-            return;
-        } else if ($user->id == $this->other->id) {
-            $this->clientError(_('Don\'t send a message to yourself; ' .
-                'just say it to yourself quietly instead.'), 403);
-            return;
         }
+        
+        $nicknames = array();
+        foreach($this->other as $other) {
+            if (!$user->mutuallySubscribed($other) &&
+                !($user->hasRole(Profile_role::MODERATOR) || $user->hasRole(Profile_role::ADMINISTRATOR)) &&
+                !(($other->hasRole(Profile_role::ADMINISTRATOR) || $other->hasRole(Profile_role::MODERATOR)) && !$user->hasRole(Profile_role::SILENCED)) ) {
+                $this->clientError(_('You can\'t send a message to this user.'), 404);
+                return;
+            } else if ($user->id == $other->id) {
+                $this->clientError(_('Don\'t send a message to yourself; ' .
+                    'just say it to yourself quietly instead.'), 403);
+                return;
+            }
 
-        $message = Message::saveNew($user->id, $this->other->id, $this->content, 'web');
+            $message = Message::saveNew($user->id, $other->id, $this->content, 'web');
 
-        if (is_string($message)) {
-            $this->showForm($message);
-            return;
+            if (is_string($message)) {
+                $this->showForm($message);
+                return;
+            }
+
+            $message->notify();
+            $nicknames[] = $other->nickname;
         }
-
-        $message->notify();
 
         if ($this->boolean('ajax')) {
             $this->startHTML('text/xml;charset=utf-8');
@@ -196,7 +224,7 @@ class NewmessageAction extends Action
             $this->elementStart('body');
             $this->element('p', array('id' => 'command_result'),
                 sprintf(_('Direct message to %s sent.'),
-                    $this->other->nickname));
+                implode(' ', $nicknames)));
             $this->elementEnd('body');
             $this->elementEnd('html');
         } else {
@@ -264,7 +292,7 @@ class NewmessageAction extends Action
 
     function showNoticeForm()
     {
-        $message_form = new MessageForm($this, $this->other, $this->content);
+        $message_form = new MessageForm($this, $other, $this->content);
         $message_form->show();
     }
 }
