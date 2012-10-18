@@ -53,14 +53,15 @@ class Design extends Memcached_DataObject
         }
         $ccolor  = Design::toWebColor($this->contentcolor);
         if (!empty($ccolor)) {
-            $css .= '#content, #site_nav_local_views li.current a, #aside_primary .section { background-color: #';
+            $css .= '#content, #site_nav_local_views li.current a, #site_nav_local_views li:hover a, ';
+			$css .= '#aside_primary .section { background-color: #';
             $css .= $ccolor->hexValue() . '} '."\n";
-            $css .= '#site_notice, #core { background-color: rgba(';
+            $css .= '#site_notice, #anon_notice #core { background-color: rgba(';
             $corecolor = hexdec($ccolor->hexValue());
             $css .= (int)($corecolor/65536) . ', ';
             $css .= (int)($corecolor/256) % 256 . ', ';
             $css .= (int)($corecolor) % 256;
-            $css .= ', 0.6)} '."\n";
+            $css .= ', 0.7)} '."\n";
         }
         $sbcolor = Design::toWebColor($this->sidebarcolor);
         if (!empty($sbcolor)) {
@@ -79,9 +80,9 @@ class Design extends Memcached_DataObject
            $repeat = ($this->disposition & BACKGROUND_TILE) ?
                'background-repeat:repeat;' :
                'background-repeat:no-repeat;';
-            $css .= '#wrap { background-image:url(' .
+            $css .= 'body { background-image:url(' .
                 Design::url($this->backgroundimage) .
-                '); ' . $repeat . '}' . "\n";
+                '); ' . $repeat . ' background-attachment:fixed; }' . "\n";
         }
         if (0 != mb_strlen($css)) {
             $out->style($css);
