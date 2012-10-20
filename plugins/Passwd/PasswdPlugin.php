@@ -22,7 +22,7 @@ class PasswdPlugin extends Plugin
     {
         $action->elementStart('li');
         $action->raw('<label for="site_password">Site Question</label>');
-        $action->element('input', array('type'=> 'password', 'id' => 'site_password', 'name' => 'site_password', 'value' => $action->trimmed('site_password')));
+        $action->element('input', array('type'=> 'text', 'id' => 'site_password', 'name' => 'site_password', 'value' => $action->trimmed('site_password')));
         $action->raw("<p class=\"form_guide\">{$this->question}</p>");
         $action->elementEnd('li');
 
