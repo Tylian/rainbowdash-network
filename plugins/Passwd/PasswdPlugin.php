@@ -9,10 +9,11 @@ if (!defined('STATUSNET') && !defined('LACONICA')) {
 class PasswdPlugin extends Plugin
 {
     public $password = 'changeme';
+    public $question = 'What is a term that is used for a dummy password that should be replaced?';
 
     function onInitializePlugin(){
-        if(!isset($this->password)) {
-            common_log(LOG_ERR, 'Passwd: Must specify a password in config.php');
+        if(!isset($this->password) || !isset($this->question)) {
+            common_log(LOG_ERR, 'Passwd: Must specify a password and question in config.php');
         }
     }
 
@@ -20,9 +21,9 @@ class PasswdPlugin extends Plugin
     function onEndRegistrationFormData($action)
     {
         $action->elementStart('li');
-        $action->raw('<label for="site_password">Access Code</label>');
+        $action->raw('<label for="site_password">Site Question</label>');
         $action->element('input', array('type'=> 'password', 'id' => 'site_password', 'name' => 'site_password', 'value' => $action->trimmed('site_password')));
-        $action->raw('<p class="form_guide">Who is the pony in the logo?</p>');
+        $action->raw("<p class=\"form_guide\">{$this->question}</p>");
         $action->elementEnd('li');
 
         $action->passwdpluginNeedsOutput = true;
@@ -31,7 +32,7 @@ class PasswdPlugin extends Plugin
 
     function onStartRegistrationTry($action)
     {
-        if ($action->trimmed('site_password') !== $this->password) {
+        if (!preg_match("/{$this->password}/i", $action->trimmed('site_password'))) {
             $action->showForm("You forgot to answer the registration question!");
             return false;
         }
