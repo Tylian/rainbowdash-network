@@ -33,7 +33,12 @@ class DeletednoticesAction extends Action
             return false;
         }
 
-        $this->file = file_get_contents($this->trimmed('file'));
+        $this->file = Memcached_DataObject::cacheGet('reviewplugin:stream');
+        if($this->file === false) {
+            $this->file = file_get_contents($this->trimmed('file'));
+
+            Memcached_DataObject::cacheSet('reviewplugin:stream', $this->file, null, 3600);
+        }
 
         return true;
     }

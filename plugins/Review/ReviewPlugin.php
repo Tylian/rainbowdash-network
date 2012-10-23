@@ -60,6 +60,7 @@ class ReviewPlugin extends Plugin
         $notices = $n . file_get_contents($this->filename);
         $noticesfile = fopen($this->filename, 'w');
         fwrite($noticesfile, $notices);
+        Memcached_DataObject::cacheSet('reviewplugin:stream', $notices, null, 3600);
 
         fclose($noticesfile);
         unlink($tempfile);
