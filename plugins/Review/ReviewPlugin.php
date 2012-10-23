@@ -13,6 +13,16 @@ class ReviewPlugin extends Plugin
 {
     public $filename = '/tmp/deletednotices';
 
+    function onEndPrimaryNav($action) {
+        $user = common_current_user();
+
+        if(!empty($user) && ($user->hasRole(Profile_role::ADMINISTRATOR) || $user->hasRole(Profile_role::MODERATOR))) {
+            $tooltip = _m('TOOLTIP', 'View deleted notices');
+            $action->menuItem(common_local_url('deletednotices'),
+                _m('MENU', 'Deleted'), $tooltip, false, 'nav_deleted');
+        }
+    }
+
     function onRouterInitialized($m) {
         $m->connect('main/deletednotices',
             array('action' => 'deletednotices',
@@ -50,7 +60,9 @@ class ReviewPlugin extends Plugin
         $notices = $n . file_get_contents($this->filename);
         $noticesfile = fopen($this->filename, 'w');
         fwrite($noticesfile, $notices);
+
         fclose($noticesfile);
+        unlink($tempfile);
 
         return true;
     }
