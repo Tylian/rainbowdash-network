@@ -558,6 +558,44 @@ var SN = { // StatusNet
                 SN.U.NoticeReplySet(nickname.text(), $($('.notice_id', notice)[0]).text());
                 return false;
             });
+            SN.U.NoticeContextRollover(notice);
+        },
+
+        /**
+         * Setup function -- DOES NOT trigger actions immediately.
+         *
+         * Sets up event handlers on the given notice's context link to
+         * show the original notice that this is a reply to /if/ it
+         * exists on-screen.
+         *
+         * @param {jQuery} notice: jQuery object containing one or more notices
+         * @access private
+         */
+        NoticeContextRollover: function(notice) {
+            var context = notice.find('a.response');
+            if(context.length === 0) return;
+            context = context.filter(':first');
+
+            context.bind('mouseover', function() {
+                if($('body').attr('id') == 'conversation') return false;
+
+                var contextNoticeId = notice.attr('class').match(/inreplyto-([0-9]+)/);
+                if(!contextNoticeId) return false;
+                contextNoticeId = contextNoticeId[1];
+
+                var contextNotice = $('#notice-'+contextNoticeId);
+                if(contextNotice.length === 0) return false;
+                contextNotice = contextNotice.clone();
+                contextNotice.children('ol, ul').remove();
+                contextNotice = $('<ol class="notices context"></ol>').append(contextNotice);
+                $(this).closest('li').append(contextNotice);
+
+                return false;
+            });
+            context.bind('mouseout', function() {
+                $(this).closest('li').find('ol.notices.context').remove();
+                return false;
+            });
         },
 
         /**

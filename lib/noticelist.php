@@ -265,7 +265,8 @@ class NoticeListItem extends Widget
     {
         if (Event::handle('StartOpenNoticeListItemElement', array($this))) {
             $id = (empty($this->repeat)) ? $this->notice->id : $this->repeat->id;
-            $this->out->elementStart('li', array('class' => 'hentry notice',
+            $replyto = (!empty($this->notice->reply_to)) ? ' inreplyto-' . $this->notice->reply_to : '';
+            $this->out->elementStart('li', array('class' => 'hentry notice' . $replyto,
                                                  'id' => 'notice-' . $id));
             Event::handle('EndOpenNoticeListItemElement', array($this));
         }
