@@ -46,7 +46,19 @@ q[u$s][e$s][e$s]f
 d[i$s][l$s][d$s]o
 HERE;
         $wordlist = '/((' . str_replace("\n", ")|(", $wordlist) . '))/i';
-        $content = preg_replace($wordlist, '****', $content);
+        $content = preg_replace_callback($wordlist, function() {
+            return array_rand(array(
+                'bananas',
+                'apples',
+                'mangoes',
+                'cherries',
+                'grapes',
+                'kiwi',
+                'dole',
+                'murdock',
+                'papayas',
+            ));
+        }, $content);
         return $content;
     }
 
