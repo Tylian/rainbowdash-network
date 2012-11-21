@@ -143,9 +143,7 @@ class NewmessageAction extends Action
             }
 
             foreach($this->other as $other) {
-                if (!$user->mutuallySubscribed($other) &&
-                    !($user->hasRole(Profile_role::MODERATOR) || $user->hasRole(Profile_role::ADMINISTRATOR)) &&
-                    !(($other->hasRole(Profile_role::ADMINISTRATOR) || $other->hasRole(Profile_role::MODERATOR)) && !$user->hasRole(Profile_role::SILENCED))) {
+                if (!$user->mutuallySubscribed($other)) {
                     $this->clientError(_('You can\'t send a message to this user.'), 404);
                     return false;
                 }
@@ -193,9 +191,7 @@ class NewmessageAction extends Action
         
         $nicknames = array();
         foreach($this->other as $other) {
-            if (!$user->mutuallySubscribed($other) &&
-                !($user->hasRole(Profile_role::MODERATOR) || $user->hasRole(Profile_role::ADMINISTRATOR)) &&
-                !(($other->hasRole(Profile_role::ADMINISTRATOR) || $other->hasRole(Profile_role::MODERATOR)) && !$user->hasRole(Profile_role::SILENCED)) ) {
+            if (!$user->mutuallySubscribed($other)) {
                 $this->clientError(_('You can\'t send a message to this user.'), 404);
                 return;
             } else if ($user->id == $other->id) {
@@ -291,7 +287,7 @@ class NewmessageAction extends Action
 
     function showNoticeForm()
     {
-        $message_form = new MessageForm($this, $other, $this->content);
+        $message_form = new MessageForm($this, $this->other[0], $this->content);
         $message_form->show();
     }
 }

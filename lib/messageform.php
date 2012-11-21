@@ -132,6 +132,10 @@ class MessageForm extends Form
 
         $mutual = array();
 
+        if($this->to) {
+            $mutual[$this->to->id] = $this->to->nickname;
+        }
+
         // TRANS Label entry in drop-down selection box in direct-message inbox/outbox. This is the default entry in the drop-down box, doubling as instructions and a brake against accidental submissions with the first user in the list.
         $mutual[0] = _('Select recipient:');
 
