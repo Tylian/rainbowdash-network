@@ -573,6 +573,11 @@ class RegisterAction extends Action
         $profileurl = common_local_url('showstream',
                                        array('nickname' => $nickname));
 
+        // Redirect to custom welcome page
+        if(file_exists(INSTALLDIR . '/doc-src/welcome')) {
+            common_redirect(common_local_url('doc', array('title' => 'welcome')));
+        }
+
         $this->elementStart('div', 'success');
         $instr = sprintf(_('Congratulations, %1$s! And welcome to %%%%site.name%%%%. '.
                            'From here, you may want to...'. "\n\n" .
