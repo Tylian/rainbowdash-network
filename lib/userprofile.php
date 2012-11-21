@@ -98,6 +98,7 @@ class UserProfile extends Widget
         if (Event::handle('StartProfilePageAvatar', array($this->out, $this->profile))) {
 
             $avatar = $this->profile->getAvatar(AVATAR_PROFILE_SIZE);
+            $fullavatar = $this->profile->getOriginalAvatar();
             if (!$avatar) {
                 // hack for remote Twitter users: no 96px, but large Twitter size is 73px
                 $avatar = $this->profile->getAvatar(73);
@@ -107,11 +108,13 @@ class UserProfile extends Widget
             // TRANS: DT element in area for user avatar.
             $this->out->element('dt', null, _('Photo'));
             $this->out->elementStart('dd');
+            $this->out->elementStart('a', array('href' => ($fullavatar) ? $fullavatar->displayUrl() : Avatar::defaultImage(AVATAR_PROFILE_SIZE)));
             $this->out->element('img', array('src' => ($avatar) ? $avatar->displayUrl() : Avatar::defaultImage(AVATAR_PROFILE_SIZE),
                                         'class' => 'photo avatar',
                                         'width' => AVATAR_PROFILE_SIZE,
                                         'height' => AVATAR_PROFILE_SIZE,
                                         'alt' => $this->profile->nickname));
+            $this->out->elementEnd('a');
             $this->out->elementEnd('dd');
 
             $cur = common_current_user();
