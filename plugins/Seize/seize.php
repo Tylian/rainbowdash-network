@@ -137,20 +137,22 @@ class SeizeAction extends ProfileFormAction
             $admin = User::adminUsers(array(Profile_role::ADMINISTRATOR));
 
             while($admin->fetch()) {
-                mail_to_user($admin,
-                    sprintf(_("%s Seized %s's Account"), $cur->nickname, $user->nickname),
-                    sprintf(_(
-                        "Dear %s,\n\n" .
-                        "%s has just seized %s's account on %s. " . 
-                        "If you believe this action is in error, please notify the user at %s and give them this password so they can log in: %s\n\n" .
-                        "Sincerely,\n%s"),
-                    $admin->nickname,
-                    $cur->nickname,
-                    $user->nickname,
-                    common_config('site', 'name'),
-                    $user->email,
-                    $pass,
-                    common_config('site', 'name')));
+                if(!empty($user->email)) {
+                    mail_to_user($admin,
+                        sprintf(_("%s Seized %s's Account"), $cur->nickname, $user->nickname),
+                        sprintf(_(
+                            "Dear %s,\n\n" .
+                            "%s has just seized %s's account on %s. " . 
+                            "If you believe this action is in error, please notify the user at %s and give them this password so they can log in: %s\n\n" .
+                            "Sincerely,\n%s"),
+                        $admin->nickname,
+                        $cur->nickname,
+                        $user->nickname,
+                        common_config('site', 'name'),
+                        $user->email,
+                        $pass,
+                        common_config('site', 'name')));
+                }
             }
 
             $this->serverError(sprintf(_('Account successfully seized. Password is %s. Please note that all administrators have been notified of this action via email.'), $pass));
