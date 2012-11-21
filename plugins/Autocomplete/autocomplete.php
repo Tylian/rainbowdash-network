@@ -108,6 +108,7 @@ class AutocompleteAction extends Action
             $user = new User();
             $user->limit($limit);
             $user->whereAdd('nickname like \'' . trim($user->escape($q), '\'') . '%\'');
+            $user->orderBy('modified DESC');
             if($user->find()){
                 while($user->fetch()) {
                     $this->users[]=clone($user);
@@ -120,6 +121,7 @@ class AutocompleteAction extends Action
             $group = new User_group();
             $group->limit($limit);
             $group->whereAdd('nickname like \'' . trim($group->escape($q), '\'') . '%\'');
+            $group->orderBy('modified DESC');
             if($group->find()){
                 while($group->fetch()) {
                     $this->groups[]=clone($group);
