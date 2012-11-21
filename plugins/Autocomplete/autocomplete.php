@@ -98,6 +98,7 @@ class AutocompleteAction extends Action
         }
         $this->groups=array();
         $this->users=array();
+        $this->tags=array();
         $q = $this->arg('q');
         $limit = $this->arg('limit');
         if($limit > 200) $limit=200; //prevent DOS attacks
@@ -122,6 +123,18 @@ class AutocompleteAction extends Action
             if($group->find()){
                 while($group->fetch()) {
                     $this->groups[]=clone($group);
+                }
+            }
+        }
+        if(substr($q,0,1)=='#'){
+            // tag search
+            $q=substr($q,1);
+            $tag = new Notice_tag();
+            $tag->limit($limit);
+            $tag->whereAdd('tag like \'' . trim($tag->escape($q), '\'') . '%\'');
+            if($tag->find()){
+                while($tag->fetch()) {
+                    $this->tags[]=clone($tag);
                 }
             }
         }
@@ -160,6 +173,12 @@ class AutocompleteAction extends Action
                 'fullname'=> $group->fullname,
                 'avatar' => $avatar,
                 'type' => 'group');
+        }
+        foreach($this->tags as $tag){
+            $results[] = array(
+                'nickname' => $tag->tag,
+                'avatar' => Avatar::defaultImage(AVATAR_MINI_SIZE),
+                'type' => 'tag');
         }
         foreach($results as $result) {
             print json_encode($result) . "\n";

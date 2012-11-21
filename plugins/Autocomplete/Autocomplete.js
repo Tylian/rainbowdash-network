@@ -32,6 +32,8 @@ $(document).ready(function(){
                     return '@' + row.nickname;
                 case 'group':
                     return '!' + row.nickname;
+                case 'tag':
+                    return '#' + row.nickname;
             }
         }
     });
