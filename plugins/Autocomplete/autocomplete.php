@@ -132,9 +132,12 @@ class AutocompleteAction extends Action
             // tag search
             $q=substr($q,1);
             $tag = new Notice_tag();
+            $tag->selectAdd();
+            $tag->selectAdd('*');
+            $tag->selectAdd('COUNT(*) AS cnt');
             $tag->limit($limit);
             $tag->whereAdd('tag like \'' . trim($tag->escape($q), '\'') . '%\'');
-            $tag->orderBy('notice_id DESC');
+            $tag->orderBy('cnt DESC');
             $tag->groupBy('tag');
             if($tag->find()){
                 while($tag->fetch()) {
