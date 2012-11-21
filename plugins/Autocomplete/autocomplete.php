@@ -132,6 +132,8 @@ class AutocompleteAction extends Action
             $tag = new Notice_tag();
             $tag->limit($limit);
             $tag->whereAdd('tag like \'' . trim($tag->escape($q), '\'') . '%\'');
+            $tag->orderBy('notice_id DESC');
+            $tag->groupBy('tag');
             if($tag->find()){
                 while($tag->fetch()) {
                     $this->tags[]=clone($tag);
