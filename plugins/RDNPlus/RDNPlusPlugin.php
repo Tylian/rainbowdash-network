@@ -142,11 +142,11 @@ HERE;
 
         // HTML code
         $bbcode = array(
-            '@(\[b\])(.*?)(\[/b\])@i',
-            '@(\[u\])(.*?)(\[/u\])@i',
-            '@(\[i\])(.*?)(\[/i\])@i',
-            '@(\[s\])(.*?)(\[/s\])@i',
-            '@(\[t\])(.*?)(\[/t\])@i',
+            '@(.)\[b\](.*?)\[/b\](.)@i',
+            '@(.)\[u\](.*?)\[/u\](.)@i',
+            '@(.)\[i\](.*?)\[/i\](.)@i',
+            '@(.)\[s\](.*?)\[/s\](.)@i',
+            '@(.)\[t\](.*?)\[/t\](.)@i',
         );
 
         $markdown = array(
@@ -158,26 +158,34 @@ HERE;
         );
 
         $plaintext = array(
-            ' *$2* ',
-            ' _$2_ ',
-            ' /$2/ ',
-            ' -$2- ',
-            ' =$2= '
+            '$1*$2*$3',
+            '$1_$2_$3',
+            '$1/$2/$3',
+            '$1-$2-$3',
+            '$1=$2=$3',
         );
 
         $markup = array(
-            ' <b>$2</b> ',
-            ' <u>$2</u> ',
-            ' <i>$2</i> ',
-            ' <span class="striket">$2</span> ',
-            ' <span class="smallt">$2</span> ',
+            '$1<b>$2</b>$3',
+            '$1<u>$2</u>$3',
+            '$1<i>$2</i>$3',
+            '$1<span class="striket">$2</span>$3',
+            '$1<span class="smallt">$2</span>$3',
+        );
+
+        $markup_hybrid = array(
+            '$1<b>*$2*</b>$3',
+            '$1_<u>$2</u>_$3',
+            '$1<i>/$2/</i>$3',
+            '$1-<span class="striket">$2</span>-$3',
+            '$1<span class="smallt">=$2=</span>$3',
         );
 
         $notice->content = preg_replace($bbcode, $plaintext, $notice->content);
         $notice->content = preg_replace($markdown, $plaintext, $notice->content);
 
         $notice->rendered = preg_replace($bbcode, $markup, $notice->rendered);
-        $notice->rendered = preg_replace($markdown, $markup, $notice->rendered);
+        $notice->rendered = preg_replace($markdown, $markup_hybrid, $notice->rendered);
 
         //ROT13 - WARNING. Strips previously incorporated HTML.
         $rotex = '@\[(r|sp)\](.*?)\[/(r|sp)\]@i';
