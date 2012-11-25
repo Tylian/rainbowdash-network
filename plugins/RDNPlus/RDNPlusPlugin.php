@@ -209,10 +209,9 @@ HERE;
 
     function onStartShowFaveForm($action)
     {
-        $action->out->element('img', array('src' => $this->path('img/rot13_button.png'),
-            'title' => _m('Encrypt/Decrypt Spoiler'),
-            'class' => 'rot13',
-        ));
+        $action->out->elementStart('a', array('class' => 'rot13'));
+        $action->out->raw('Decode Spoiler');
+        $action->out->elementEnd('a');
         /*
         $action->out->element('img', array('src' => $this->path('img/bird_16_blue.png'),
             'title' => _m('Retweet to Twitter'),

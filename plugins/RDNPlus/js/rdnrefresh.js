@@ -34,7 +34,8 @@ $(function(){
         }
     }
 
-    $('.rot13').live('click', function(){
+    $('.rot13').live('click', function(e){
+        e.preventDefault();
         var noticetext = $(this).closest('li').find('p.entry-content').filter(':first');
         var rotd = noticetext.find('.rotd');
         if(rotd.length) {

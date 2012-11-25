@@ -8,6 +8,7 @@ float:left;
 display:block;
 background-color:#5F9410;
 border-radius:2px;
+background-image:url(../img/rot13_button.png);
 }
 
 .notice-options {
