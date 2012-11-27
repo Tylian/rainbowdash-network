@@ -56,7 +56,7 @@ class Design extends Memcached_DataObject
             $css .= '#content, #site_nav_local_views li.current a, #site_nav_local_views li:hover a, ';
 			$css .= '#aside_primary .section { background-color: #';
             $css .= $ccolor->hexValue() . '} '."\n";
-            $css .= '#site_notice, #anon_notice #core { background-color: rgba(';
+            $css .= '#site_notice, #anon_notice, #core { background-color: rgba(';
             $corecolor = hexdec($ccolor->hexValue());
             $css .= (int)($corecolor/65536) . ', ';
             $css .= (int)($corecolor/256) % 256 . ', ';
