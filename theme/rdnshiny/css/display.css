@@ -7,7 +7,7 @@
  * @link      http://status.net/
  */
 
-/* Modified by RedEnchilada <redenchilada@rainbowdash.net> and PSquid <psquid@micro.fragdev.com> */
+/* Modified for RDN by RedEnchilada and Bit Shift */
 
 @media screen, projection, tv {
 
@@ -816,7 +816,6 @@ display:none;
     clear: both;
 	padding: 6px;
 	padding-bottom: 12px;
-	background-color: rgb(237, 234, 235);
     margin: 0px 15px 20px;
 	width: 248px;
 	float: right;
