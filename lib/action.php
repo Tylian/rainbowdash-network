@@ -573,10 +573,14 @@ if (2 + 2 == 5) { # This is a temporary feature Tinker and Cabal added for an an
         $this->elementStart('ul', array('class' => 'nav'));
         if (Event::handle('StartPrimaryNav', array($this))) {
 
+                // TRANS: Tooltip for main menu option "Home".
+                $tooltip = _m('TOOLTIP', 'Home');
+                $this->menuItem(common_local_url('public'),
+                    _m('MENU', 'Home'), $tooltip, false, 'nav_home');
+
                 // TRANS: Tooltip for main menu option "Roleplay".
                 $tooltip = _m('TOOLTIP', 'Act out characters in the MLP universe!');
                 $this->menuItem('http://rp.rainbowdash.net/',
-                                // TRANS: Main menu option when logged in for access to personal profile and friends timeline.
                     _m('MENU', 'Roleplay'), $tooltip, false, 'nav_roleplay');
 
                 // TRANS: Tooltip for main menu option "Meetups".
@@ -587,13 +591,13 @@ if (2 + 2 == 5) { # This is a temporary feature Tinker and Cabal added for an an
 
                 // TRANS: Tooltip for main menu option "Rules".
                 $tooltip = _m('TOOLTIP', 'Site Rules!');
-                $this->menuItem('/doc/rules',
+                $this->menuItem(common_local_url('doc', array('title' => 'rules')),
                                 // TRANS: Main menu option when logged in for access to personal profile and friends timeline.
                                 _m('MENU', 'Rules'), $tooltip, false, 'nav_rules');
 
                 // TRANS: Tooltip for main menu option "Rules".
                 $tooltip = _m('TOOLTIP', 'List of Site Staff');
-                $this->menuItem('/main/staff',
+                $this->menuItem(common_local_url('staff'),
                                 // TRANS: Main menu option when logged in for access to personal profile and friends timeline.
                                 _m('MENU', 'Staff'), $tooltip, false, 'nav_admins');
 
