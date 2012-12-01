@@ -65,7 +65,6 @@ class Design extends Memcached_DataObject
         }
         $sbcolor = Design::toWebColor($this->sidebarcolor);
         if (!empty($sbcolor)) {
-            $css .= "#wrap { background-color: #{$sbcolor->hexValue()}}\n";
             $css .= "#wrap { background-color: rgba({$sbcolor->red}, {$sbcolor->green}, {$sbcolor->blue}, 0.9)}\n";
         }
         $tcolor  = Design::toWebColor($this->textcolor);
