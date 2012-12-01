@@ -16,27 +16,21 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 if (!defined('STATUSNET') && !defined('LACONICA')) {
     exit(1);
 }
-
 define('BACKGROUND_ON', 1);
 define('BACKGROUND_OFF', 2);
 define('BACKGROUND_TILE', 4);
-
 /**
  * Table Definition for design
  */
-
 require_once INSTALLDIR . '/classes/Memcached_DataObject.php';
 require_once INSTALLDIR . '/lib/webcolor.php';
-
 class Design extends Memcached_DataObject
 {
     ###START_AUTOCODE
     /* the code below is auto generated do not remove the above tag */
-
     public $__table = 'design';                          // table name
     public $id;                              // int(4)  primary_key not_null
     public $backgroundcolor;                 // int(4)
@@ -46,71 +40,59 @@ class Design extends Memcached_DataObject
     public $linkcolor;                       // int(4)
     public $backgroundimage;                 // varchar(255)
     public $disposition;                     // tinyint(1)   default_1
-
     /* Static get */
     function staticGet($k,$v=NULL) { return Memcached_DataObject::staticGet('Design',$k,$v); }
-
     /* the code above is auto generated do not remove the tag below */
     ###END_AUTOCODE
-
     function showCSS($out)
     {
         $css = '';
-
         $bgcolor = Design::toWebColor($this->backgroundcolor);
-
         if (!empty($bgcolor)) {
             $css .= 'body { background-color: #' . $bgcolor->hexValue() . ' }' . "\n";
         }
-
         $ccolor  = Design::toWebColor($this->contentcolor);
-
         if (!empty($ccolor)) {
-            $css .= '#content, #site_nav_local_views .current a { background-color: #';
+            $css .= '#content, #site_nav_local_views li.current a, #site_nav_local_views li:hover a, ';
+			$css .= '#aside_primary .section { background-color: #';
             $css .= $ccolor->hexValue() . '} '."\n";
+            $css .= '#site_notice, #anon_notice, #core { background-color: rgba(';
+            $corecolor = hexdec($ccolor->hexValue());
+            $css .= (int)($corecolor/65536) . ', ';
+            $css .= (int)($corecolor/256) % 256 . ', ';
+            $css .= (int)($corecolor) % 256;
+            $css .= ', 0.7)} '."\n";
         }
-
         $sbcolor = Design::toWebColor($this->sidebarcolor);
-
         if (!empty($sbcolor)) {
-            $css .= '#aside_primary { background-color: #'. $sbcolor->hexValue() . ' }' . "\n";
+            $css .= '#wrap { background-color: #'. $sbcolor->hexValue() . ' }' . "\n";
         }
-
         $tcolor  = Design::toWebColor($this->textcolor);
-
         if (!empty($tcolor)) {
-            $css .= 'html body { color: #'. $tcolor->hexValue() . ' }'. "\n";
+            $css .= 'html body, #site_nav_local_views a { color: #'. $tcolor->hexValue() . ' }'. "\n";
         }
-
         $lcolor  = Design::toWebColor($this->linkcolor);
-
         if (!empty($lcolor)) {
             $css .= 'a { color: #' . $lcolor->hexValue() . ' }' . "\n";
         }
-
         if (!empty($this->backgroundimage) &&
             $this->disposition & BACKGROUND_ON) {
-
            $repeat = ($this->disposition & BACKGROUND_TILE) ?
                'background-repeat:repeat;' :
                'background-repeat:no-repeat;';
-
             $css .= 'body { background-image:url(' .
                 Design::url($this->backgroundimage) .
                 '); ' . $repeat . ' background-attachment:fixed; }' . "\n";
         }
-
         if (0 != mb_strlen($css)) {
             $out->style($css);
         }
     }
-
     static function toWebColor($color)
     {
         if ($color === null || $color === '') {
             return null;
         }
-
         try {
             return new WebColor($color);
         } catch (WebColorException $e) {
@@ -120,29 +102,22 @@ class Design extends Memcached_DataObject
             return null;
         }
     }
-
     static function filename($id, $extension, $extra=null)
     {
         return $id . (($extra) ? ('-' . $extra) : '') . $extension;
     }
-
     static function path($filename)
     {
         $dir = common_config('background', 'dir');
-
         if ($dir[strlen($dir)-1] != '/') {
             $dir .= '/';
         }
-
         return $dir . $filename;
     }
-
     static function url($filename)
     {
         if (StatusNet::isHTTPS()) {
-
             $sslserver = common_config('background', 'sslserver');
-
             if (empty($sslserver)) {
                 // XXX: this assumes that background dir == site dir + /background/
                 // not true if there's another server
@@ -160,33 +135,23 @@ class Design extends Memcached_DataObject
                     $path = common_config('background', 'path');
                 }
             }
-
             $protocol = 'https';
-
         } else {
-
             $path = common_config('background', 'path');
-
             $server = common_config('background', 'server');
-
             if (empty($server)) {
                 $server = common_config('site', 'server');
             }
-
             $protocol = 'http';
         }
-
         if ($path[strlen($path)-1] != '/') {
             $path .= '/';
         }
-
         if ($path[0] != '/') {
             $path = '/'.$path;
         }
-
         return $protocol.'://'.$server.$path.$filename;
     }
-
     function setDisposition($on, $off, $tile)
     {
         if ($on) {
@@ -194,34 +159,27 @@ class Design extends Memcached_DataObject
         } else {
             $this->disposition &= ~BACKGROUND_ON;
         }
-
         if ($off) {
             $this->disposition |= BACKGROUND_OFF;
         } else {
             $this->disposition &= ~BACKGROUND_OFF;
         }
-
         if ($tile) {
             $this->disposition |= BACKGROUND_TILE;
         } else {
             $this->disposition &= ~BACKGROUND_TILE;
         }
     }
-
     /**
      * Return a design object based on the configured site design.
      *
      * @return Design a singleton design object for the site.
      */
-
     static function siteDesign()
     {
         static $siteDesign = null;
-
         if (empty($siteDesign)) {
-
             $siteDesign = new Design();
-
             $attrs = array('backgroundcolor',
                            'contentcolor',
                            'sidebarcolor',
@@ -229,7 +187,6 @@ class Design extends Memcached_DataObject
                            'linkcolor',
                            'backgroundimage',
                            'disposition');
-
             foreach ($attrs as $attr) {
                 $val = common_config('design', $attr);
                 if ($val !== false) {
@@ -237,7 +194,6 @@ class Design extends Memcached_DataObject
                 }
             }
         }
-
         return $siteDesign;
     }
 }

@@ -6,37 +6,48 @@ float:left;
 
 .rot13 {
 display:block;
-background-color:#5F9410;
+background-color: rgb(105, 106, 141);
 border-radius:2px;
-background-image:url(../img/rot13_button.png);
+opacity: 0.6;
+background-image: url("../img/rot13_button.png");
+}
+
+.rot13:hover {
+opacity: 1;
 }
 
 .notice-options {
-width:108px!important;
+width:111px!important;
 }
 
 .striket { text-decoration:line-through; }
 
 .smallt { font-size:8pt; }
 
-.bui { list-style-type:none; }
+.bui { 
+list-style-type:none;
+display: block;
+height: 24px;
+position: absolute;
+top: 100%;
+width: 646px;
+background-color: rgba(160, 163, 173, 0.35);
+}
 
 .bui li {
 cursor:pointer;
 float:left;
-background:url(../img/illu_pattern-01.png) repeat-x scroll 0pt 0pt rgb(170,170,170);
+background-color: rgba(105, 106, 141, 0.6);
 border-radius:5px;
 width:24px;
 height:24px;
-border:2px solid rgb(204,204,204);
-text-shadow:0pt 1px 0pt rgb(255,255,255);
-margin:1px;
+margin-right:4px;
 text-align:center;
 line-height:24px;
-color:black;
+color:white;
 }
 
-.bui li:hover { background-color:rgb(110,160,30); }
+.bui li:hover { background-color: rgb(105, 106, 141); }
 
 .userHighlight,
 .anyHighlight {
@@ -71,13 +82,8 @@ font-style:italic;
 .notice-options .form_disfavor,
 .notice-options .repeated {
 margin-left:0;
-margin-top: 11px!important;
-margin-right:5%!important;
-}
-
-.notice-options .submit_delete {
-background-position:0 -658px!important;
-background-image: url(../../../theme/base/images/icons/icons-01.gif)!important;
+margin-top: 0!important;
+margin-right:5px!important;
 }
 
 .notice-options .notice_delete.submit_dialogbox, .notice_options .submit_delete {
@@ -85,8 +91,13 @@ background-image:none!important;
 cursor:pointer;
 }
 
-.notice-options .notice_delete, .submit_delete {
+.notice-options .notice_delete.dialogbox {
 background-color:white;
+}
+
+.submit_delete {
+background-position: 0pt -658px;
+background-image: url(../../../theme/rdnshiny/images/icons/icons-01.gif);
 }
 
 .notice-options form.notice_delete {
@@ -97,4 +108,34 @@ background-image:none!important;
 
 p.entry-content img { display:inline; }
 
-.form_notice .form_note, .form_notice #notice_action-submit { bottom:30px; }
+.form_notice #notice_action-submit { bottom:30px; }
+
+.rotd {
+  background-color: rgba(80,80,80,0.2);
+  padding: 1px;
+}
+
+/* In-context hover floats over the timeline, above the post in question */
+.context {
+position: absolute;
+bottom: 100%;
+}
+
+.context .notice {
+background-color: rgb(237, 234, 235) !important;
+border: 1px solid rgb(75, 75, 75) !important;
+padding-left: 6px !important;
+border-radius: 4px;
+margin-bottom: -6px !important;
+max-width: 500px;
+z-index: 999999;
+}
+
+.context .notice .avatar {
+left: 6px !important;
+}
+
+.context .notice-options,
+.context .response {
+display: none !important;
+}
