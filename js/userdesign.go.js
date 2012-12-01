@@ -29,7 +29,7 @@ $(document).ready(function() {
 
     function rgb2hex(rgb) {
         if (rgb.slice(0,1) == '#') { return rgb; }
-        rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+        rgb = rgb.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(,\s*[\d\.]+)?\)$/);
         return '#' + dec2hex(rgb[1]) + dec2hex(rgb[2]) + dec2hex(rgb[3]);
     }
     /* dec2hex written by R0bb13 <robertorebollo@gmail.com> */
