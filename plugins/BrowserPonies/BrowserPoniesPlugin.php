@@ -124,15 +124,17 @@ HERE;
 
     function onStartShowExportData($action) {
         $buttons = <<<HERE
-<div class="browserponies">
-    Browser Ponies<br />
-    <input type="text" id="browserponies-name" />
-    <a id="browserponies-start" class="button left" href="#" title="Start/Stop">&#x25B6;</a>
-    <a id="browserponies-plus" class="button middle" href="#" title="Add">+</a>
-    <a id="browserponies-minus" class="button right" href="#" title="Remove">-</a>
-    <div style="clear: both;"></div>
+<div class="section">
+    <div class="browserponies">
+        Browser Ponies<br />
+        <input type="text" id="browserponies-name" />
+        <a id="browserponies-start" class="button left" href="#" title="Start/Stop">&#x25B6;</a>
+        <a id="browserponies-plus" class="button middle" href="#" title="Add">+</a>
+        <a id="browserponies-minus" class="button right" href="#" title="Remove">-</a>
+        <div style="clear: both;"></div>
+    </div>
+    <div id="browserponies-suggest"></div>
 </div>
-<div id="browserponies-suggest"></div>
 HERE;
         $action->raw($buttons);
     }
