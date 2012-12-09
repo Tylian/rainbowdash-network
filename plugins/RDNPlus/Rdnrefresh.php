@@ -97,11 +97,13 @@ class Rdnrefresh extends Memcached_DataObject
     function getValues() {
         $user = common_current_user();
 
-        $database = Rdnrefresh::fetchDB($user->id);
+        if(!empty($user)) {
+            $database = Rdnrefresh::fetchDB($user->id);
+        }
 
         $vars = array();
         $defaults = array(
-            'user_id'           => $user->id,
+            'user_id'           => (!empty($user->id)) ? $user->id : '0',
             'spoilertags'       => 'spoiler spoilers spoileralert poiler soiler spiler spoler spoier spoilr spoile sspoiler sppoiler spooiler spoiiler spoiller spoileer spoilerr psoiler sopiler spioler spolier spoielr spoilre',
             'maincolor'         => '#373737',
             'asidecolor'        => '#212C37',
@@ -115,9 +117,9 @@ class Rdnrefresh extends Memcached_DataObject
             'hideemotes'        => 0,
         );
 
-        if($database) {
+        if(!empty($database)) {
             foreach($defaults as $key => $default) {
-                $dbvar = eval('return $database->' . $key . ';');
+                $dbvar = $database->$key;
                 $vars[$key] = !is_null($dbvar) ? $dbvar : $default;
             }
 
