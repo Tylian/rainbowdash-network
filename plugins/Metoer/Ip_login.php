@@ -45,6 +45,7 @@ require_once INSTALLDIR . '/classes/Memcached_DataObject.php';
 class Ip_login extends Memcached_DataObject
 {
     public $__table = 'ip_login';     // table name
+    public $id;
     public $user_id;                         // int(4)  primary_key not_null
     public $ipaddress;                       // varchar(15)
     public $created;                         // timestamp
@@ -70,7 +71,8 @@ class Ip_login extends Memcached_DataObject
      */
     function table()
     {
-        return array('user_id' => DB_DATAOBJECT_INT + DB_DATAOBJECT_NOTNULL,
+        return array('id' => DB_DATAOBJECT_INT + DB_DATAOBJECT_NOTNULL,
+                     'user_id' => DB_DATAOBJECT_INT + DB_DATAOBJECT_NOTNULL,
                      'ipaddress' => DB_DATAOBJECT_STR + DB_DATAOBJECT_NOTNULL,
                      'created' => DB_DATAOBJECT_MYSQLTIMESTAMP + DB_DATAOBJECT_NOTNULL);
     }
@@ -85,7 +87,8 @@ class Ip_login extends Memcached_DataObject
      */
     function keys()
     {
-        return array('user_id' => 'K');
+        return array('id' => 'K',
+            'user_id' => 'K');
     }
 
     /**

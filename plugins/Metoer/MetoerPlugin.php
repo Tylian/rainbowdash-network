@@ -16,16 +16,18 @@ class MetoerPlugin extends Plugin
         // For storing user-submitted flags on profiles
 
         $schema->ensureTable('ip_login',
-            array(new ColumnDef('user_id', 'integer', null,
-            false, 'PRI'),
-            new ColumnDef('ipaddress', 'varchar', 15, false, 'MUL'),
-            new ColumnDef('created', 'timestamp', null, false, 'MUL')));
+            array(
+                new ColumnDef('id', 'integer', null, false, 'PRI', null, null, true),
+                new ColumnDef('user_id', 'integer', null, false, 'MUL'),
+                new ColumnDef('ipaddress', 'varchar', 15, false, 'MUL'),
+                new ColumnDef('created', 'timestamp', null, false, 'MUL')));
 
         $schema->ensureTable('ec',
-            array(new ColumnDef('user_id', 'integer', null,
-            false, 'PRI'),
-            new ColumnDef('evercookie', 'varchar', 128, false, 'MUL'),
-            new ColumnDef('created', 'timestamp', null, false, 'MUL')));
+            array(
+                new ColumnDef('id', 'integer', null, false, 'PRI', null, null, true),
+                new ColumnDef('user_id', 'integer', null, false, 'MUL'),
+                new ColumnDef('evercookie', 'varchar', 128, false, 'MUL'),
+                new ColumnDef('created', 'timestamp', null, false, 'MUL')));
 
         return true;
     }
