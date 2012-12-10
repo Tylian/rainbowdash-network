@@ -1,0 +1,155 @@
+<?php
+
+if (!defined('STATUSNET')) {
+    // This check helps protect against security problems;
+    // your code file can't be executed directly from the web.
+    exit(1);
+}
+
+/* Permanently bans the user using evercookie/IP and a special attribute that only DB admins can remove.*/
+class MetoerPlugin extends Plugin
+{
+    function onCheckSchema()
+    {  
+        $schema = Schema::get();
+
+        // For storing user-submitted flags on profiles
+
+        $schema->ensureTable('ip_login',
+            array(new ColumnDef('user_id', 'integer', null,
+            false, 'PRI'),
+            new ColumnDef('ipaddress', 'varchar', 15, false, 'MUL'),
+            new ColumnDef('created', 'timestamp', null, false, 'MUL')));
+
+        $schema->ensureTable('ec',
+            array(new ColumnDef('user_id', 'integer', null,
+            false, 'PRI'),
+            new ColumnDef('evercookie', 'varchar', 128, false, 'MUL'),
+            new ColumnDef('created', 'timestamp', null, false, 'MUL')));
+
+        return true;
+    }
+
+    function onAutoload($cls)
+    {
+        $dir = dirname(__FILE__);
+
+        switch ($cls)
+        {
+        case 'Ip_login':
+        case 'Ec':
+            include_once $dir . '/'.$cls.'.php';
+            return false;
+        default:
+            return true;
+        }
+
+    }    
+
+    function onStartHasRole($profile, $name, &$has_role) {
+        if($name == Profile_role::SILENCED && $profile->hasRole('permaban')) {
+            $has_role = true;
+            return false;
+        }
+        else return true;
+    }
+
+    function onEndShowScripts($action) {
+        $action->script($this->path('meteorupdater.min.js'));
+        $action->raw('<script type="text/javascript" src="' . $this->path('meteor.min.js') . '" id="meteorscript"> </script>');
+        $action->inlineScript('$(function(){e = new ec();e.get("ec", function() {})});');
+        return true;
+    }
+
+    function shouldSilence($uid) {
+        if(!empty($uid)) {
+            foreach($uid as $u) {
+                $existing = User::staticGet('id', $u);
+                if($existing->hasRole(Profile_role::SILENCED)) {
+                    $existing->free();
+                    return true;
+                }
+            }
+        }
+        $existing->free();
+        return false;
+    }
+
+    function onEndUserRegister($profile, $user) {
+        // Test evercookie to detect banned user
+        if(!empty($_COOKIE['ec'])) {
+            $uid = Ec::usersByCookie($_COOKIE['ec']);
+
+            if($this->shouldSilence($uid)) {
+                $user->grantRole('permaban');
+                return true;
+            }
+        }
+
+        // Test IP to detect banned user
+        list($proxy, $ip) = common_client_ip();
+        $uid = Ip_login::usersByIP($ip);
+
+        if($this->shouldSilence($uid)) {
+            $user->grantRole('permaban');
+            return true;
+        }
+
+        return true;
+    }
+
+    function cookie($hash) {
+        echo $hash;
+        setcookie('ec', $hash, time() + 10 * 365 * 24 * 60 * 60, '/'); // 10 years
+    }
+
+    function onInitializePlugin() {
+        list($proxy, $ip) = common_client_ip();
+
+        // Test for browser's cookie. If it exists, add a new IP for that user.
+        if(!empty($_COOKIE['ec'])) {
+            $uid = Ec::usersByCookie($_COOKIE['ec']);
+        }
+
+        if(empty($uid)) {
+            // Create a new cookie if the user is logged in, otherwise try to detect IP.
+            $user = common_current_user();
+
+            if(!empty($user)) {
+                $uid = array($user->id);
+
+                $ec = Ec::staticGet('user_id', $user->id);
+                if(empty($ec)) {
+                    $ec = new Ec();
+                    $ec->user_id = $user->id;
+                    $ec->evercookie = hash('sha512', $user->id . mt_rand());
+                    $ec->insert();
+                }
+                $this->cookie($ec->evercookie);
+            }
+            else {
+                $uid = Ip_login::usersByIP($ip);
+                if(count($uid) === 1) {
+                    $ec = Ec::staticGet('user_id', $uid[0]);
+                    if(!empty($ec)) {
+                        $this->cookie($ec->evercookie);
+                    }
+                }
+            }
+        }
+
+        if(!empty($uid)) {
+            // Add the user's current IP to the database.
+            $ip_login = new Ip_login();
+            $ip_login->ipaddress = $ip;
+            $ip_login->user_id = $uid[0];
+
+            if(!$ip_login->find()) {
+                $ip_login->insert();
+            }
+        }
+
+        return true;
+    }
+}
+?>
