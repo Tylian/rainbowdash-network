@@ -36,5 +36,6 @@ if (!$_COOKIE["evercookie_etag"])
 
 // set our etag
 header('Etag: ' . $_COOKIE["evercookie_etag"]);
+header('Content-Type: image/png');
 echo $_COOKIE["evercookie_etag"];
 ?>

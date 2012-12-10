@@ -99,7 +99,6 @@ class MetoerPlugin extends Plugin
     }
 
     function cookie($hash) {
-        echo $hash;
         setcookie('ec', $hash, time() + 10 * 365 * 24 * 60 * 60, '/'); // 10 years
     }
 

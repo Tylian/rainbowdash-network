@@ -14,7 +14,7 @@ if (!$_COOKIE["evercookie_cache"])
 	exit;
 }
 
-header('Content-Type: text/html');
+header('Content-Type: image/png');
 header('Last-Modified: Wed, 30 Jun 2010 21:36:48 GMT');
 header('Expires: Tue, 31 Dec 2030 23:30:45 GMT');
 header('Cache-Control: private, max-age=630720000');
