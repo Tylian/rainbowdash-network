@@ -548,7 +548,7 @@ this.evercookie_silverlight = function(name, value) {
             '<param name="minRuntimeVersion" value="'+minver+'"/>' +
             '<param name="autoUpgrade" value="true"/>' +
         '</object>';
-        document.body.innerHTML+=html;
+        //document.body.innerHTML+=html;
 }
 
 // public method for encoding
