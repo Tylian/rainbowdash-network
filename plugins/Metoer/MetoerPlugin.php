@@ -19,7 +19,7 @@ class MetoerPlugin extends Plugin
             array(
                 new ColumnDef('id', 'integer', null, false, 'PRI', null, null, true),
                 new ColumnDef('user_id', 'integer', null, false, 'MUL'),
-                new ColumnDef('ipaddress', 'varchar', 15, false, 'MUL'),
+                new ColumnDef('ipaddress', 'varchar', 255, false, 'MUL'),
                 new ColumnDef('created', 'timestamp', null, false, 'MUL')));
 
         $schema->ensureTable('ec',
