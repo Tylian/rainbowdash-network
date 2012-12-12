@@ -128,16 +128,31 @@ class Ip_login extends Memcached_DataObject
      * @return Array IDs of users who registered with this address.
      */
 
-    static function usersByIP($ipaddress)
+    static function usersByIP($ip)
     {
+        // You'd think a str_split would work here. It doesn't, because of those weird
+        // multi-IPs with the commas.
+        preg_match('@(([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+).*)@', $ip, $ip);
         $ids = array();
 
-        $ri            = new Ip_login();
-        $ri->ipaddress = $ipaddress;
+        // IP address block support
+        $ip = array(
+            $ip[2],
+            "{$ip[2]}.{$ip[3]}",
+            "{$ip[2]}.{$ip[3]}.{$ip[4]}",
+            "{$ip[2]}.{$ip[3]}.{$ip[4]}.{$ip[5]}",
+            $ip[1],
+        );
 
-        if ($ri->find()) {
-            while ($ri->fetch()) {
-                $ids[] = $ri->user_id;
+        foreach($ip as $ipaddr) {
+            $ri            = new Ip_login();
+            $ri->ipaddress = $ipaddr;
+
+            if ($ri->find()) {
+                while ($ri->fetch()) {
+                    // Boom. Duplicates prevented. Lazy but it works.
+                    $ids[$ri->user_id] = $ri->user_id;
+                }
             }
         }
 

@@ -67,7 +67,7 @@ class MetoerPlugin extends Plugin
         if(!empty($uid)) {
             foreach($uid as $u) {
                 $existing = User::staticGet('id', $u);
-                if($existing->hasRole(Profile_role::SILENCED)) {
+                if(!empty($existing) && $existing->hasRole(Profile_role::SILENCED)) {
                     return true;
                 }
             }
@@ -128,7 +128,7 @@ class MetoerPlugin extends Plugin
             }
             else {
                 $uid = Ip_login::usersByIP($ip);
-                if(count($uid) === 1) {
+                if(!empty($uid)) {
                     $ec = Ec::staticGet('user_id', $uid[0]);
                     if(!empty($ec)) {
                         $this->cookie($ec->evercookie);
