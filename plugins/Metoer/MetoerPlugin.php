@@ -68,12 +68,10 @@ class MetoerPlugin extends Plugin
             foreach($uid as $u) {
                 $existing = User::staticGet('id', $u);
                 if($existing->hasRole(Profile_role::SILENCED)) {
-                    $existing->free();
                     return true;
                 }
             }
         }
-        $existing->free();
         return false;
     }
 
