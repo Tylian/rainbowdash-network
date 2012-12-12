@@ -155,6 +155,8 @@ class Ip_login extends Memcached_DataObject
                 }
             }
         }
+        // You forgot that using keyed arrays breaks indexing. Doh.
+        $ids = array_values($ids);
 
         return $ids;
     }
