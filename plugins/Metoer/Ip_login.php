@@ -144,15 +144,15 @@ class Ip_login extends Memcached_DataObject
             $ip[1],
         );
 
+        $ri            = new Ip_login();
         foreach($ip as $ipaddr) {
-            $ri            = new Ip_login();
-            $ri->ipaddress = $ipaddr;
+            $ri->whereAdd('ipaddress = \'' . mysql_escape_string($ipaddr) . '\'', 'OR');
+        }
 
-            if ($ri->find()) {
-                while ($ri->fetch()) {
-                    // Boom. Duplicates prevented. Lazy but it works.
-                    $ids[$ri->user_id] = $ri->user_id;
-                }
+        if ($ri->find()) {
+            while ($ri->fetch()) {
+                // Boom. Duplicates prevented. Lazy but it works.
+                $ids[$ri->user_id] = $ri->user_id;
             }
         }
         // You forgot that using keyed arrays breaks indexing. Doh.
