@@ -190,9 +190,12 @@ HERE;
         //ROT13 - WARNING. Strips previously incorporated HTML.
         $rotex = '@\[(r|sp)\](.*?)\[/(r|sp)\]@i';
         preg_match_all($rotex, $notice->content, $matches, PREG_SET_ORDER);
+
+        // Forgot to highlight spoiler?
         if(empty($matches) && preg_match('@#[sp][sp]?[oi][oi]?l[er][er]?@i', $notice->content)) {
 
             $matches = array(array("[r]{$notice->content}[/r]", 'r', $notice->content, 'r'));
+            $notice->content = "[r]$notice->content[/r]";
             $notice->rendered = "[r]$notice->rendered[/r]";
         }
 
