@@ -1,5 +1,4 @@
 <?php
-// Test.
 
 if (!defined('STATUSNET')) {
     // This check helps protect against security problems;
@@ -34,7 +33,7 @@ class RDNPlusPlugin extends Plugin
             array('action' => 'rdnrefreshsettings'));
         return true;
     }
-// Different comment    
+
     function onEndAccountSettingsNav($action) {
         $action->menuItem(common_local_url('rdnrefreshsettings'),
             // TRANS: Menu item in settings navigation panel.
@@ -137,6 +136,7 @@ HERE;
     }
 
     function onStartNoticeSave($notice) {
+        global $config;
 
         $dir = dirname(__FILE__);
 
@@ -190,6 +190,12 @@ HERE;
         //ROT13 - WARNING. Strips previously incorporated HTML.
         $rotex = '@\[(r|sp)\](.*?)\[/(r|sp)\]@i';
         preg_match_all($rotex, $notice->content, $matches, PREG_SET_ORDER);
+        if(empty($matches) && preg_match('@#[sp][sp]?[oi][oi]?l[er][er]?@i', $notice->content)) {
+
+            $matches = array(array("[r]{$notice->content}[/r]", 'r', $notice->content, 'r'));
+            $notice->rendered = "[r]$notice->rendered[/r]";
+        }
+
         foreach($matches as $match) {
             if(strtolower($match[1]) == 'r') {
                 $replacematch = strtr($match[2], 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 'nopqrstuvwxyzabcdefghijklmNOPQRSTUVWXYZABCDEFGHIJKLM');
@@ -197,9 +203,13 @@ HERE;
             else {
                 $replacematch = $match[2];
             }
-            $notice->content = str_replace($match[0], "[sp]$replacematch\[/sp]", $notice->content);
-            $rreplacematch = str_replace(array('&','<','>'), array('&amp;','&lt;','&gt;'), $replacematch);
-            $notice->rendered = preg_replace($rotex, '<span class="rotd">' . $rreplacematch . '</span>', $notice->rendered, 1);
+            $notice->content = str_replace($match[0], "[sp]{$replacematch}[/sp]", $notice->content);
+            $notice->rendered = preg_replace($rotex, '<span class="spbar" style="color:#000;background-color:#000;">$2</span>', $notice->rendered, 1);
+        }
+
+        // Prevent thumbs from being processed. This is an evil hack
+        if(!empty($matches)) {
+            $config['attachments']['process_links'] = false;
         }
 
         if(trim(str_replace(array('*','_','/','-','='), '', $notice->content))) return true;

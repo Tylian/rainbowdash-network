@@ -110,7 +110,16 @@ p.entry-content img { display:inline; }
 
 .form_notice #notice_action-submit { bottom:30px; }
 
-.rotd {
+.spbar, .spbar a {
+    color: #000;
+    padding: 1px;
+}
+
+.spbar {
+    background-color: #000;
+}
+
+.rotd, .decoded {
   background-color: rgba(80,80,80,0.2);
   padding: 1px;
 }
@@ -120,8 +129,6 @@ p.entry-content img { display:inline; }
 position: absolute;
 bottom: 100%;
 }
-
-
 
 .context .notice {
 background-color: rgb(237, 234, 235) !important;

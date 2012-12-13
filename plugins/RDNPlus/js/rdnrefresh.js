@@ -37,10 +37,16 @@ $(function(){
     $('.rot13').live('click', function(e){
         e.preventDefault();
         var noticetext = $(this).closest('li').find('p.entry-content').filter(':first');
-        var rotd = noticetext.find('.rotd');
+        var rotd = noticetext.find('.rotd, .spbar');
         if(rotd.length) {
             rotd.each(function() {
-                $(this).text(rot13($(this).text()));
+                if($(this).hasClass('rotd')) {
+                    $(this).text(rot13($(this).text()));
+                }
+                if($(this).hasClass('spbar')) {
+                    $(this).toggleClass('decoded');
+                    $(this).attr('style', '');
+                }
             });
         }
         else {
