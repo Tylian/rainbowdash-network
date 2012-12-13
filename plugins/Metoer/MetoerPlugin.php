@@ -24,8 +24,7 @@ class MetoerPlugin extends Plugin
 
         $schema->ensureTable('ec',
             array(
-                new ColumnDef('id', 'integer', null, false, 'PRI', null, null, true),
-                new ColumnDef('user_id', 'integer', null, false, 'MUL'),
+                new ColumnDef('user_id', 'integer', null, false, 'PRI'),
                 new ColumnDef('evercookie', 'varchar', 128, false, 'MUL'),
                 new ColumnDef('created', 'timestamp', null, false, 'MUL')));
 
