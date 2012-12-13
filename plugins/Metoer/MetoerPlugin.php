@@ -102,37 +102,34 @@ class MetoerPlugin extends Plugin
         setcookie('ec', $hash, time() + 10 * 365 * 24 * 60 * 60, '/'); // 10 years
     }
 
-    function onInitializePlugin() {
+    function onRouterInitialized($m) {
         list($proxy, $ip) = common_client_ip();
 
-        // Test for browser's cookie. If it exists, add a new IP for that user.
-        if(!empty($_COOKIE['ec'])) {
+        // Always test for the user first. If they're logged in give them
+        // their own cookie
+        $user = common_current_user();
+
+        if(!empty($user)) {
+            $uid = array($user->id);
+
+            $ec = Ec::staticGet('user_id', $user->id);
+            if(empty($ec)) {
+                $ec = new Ec();
+                $ec->user_id = $user->id;
+                $ec->evercookie = hash('sha512', $user->id . mt_rand());
+                $ec->insert();
+            }
+            $this->cookie($ec->evercookie);
+        }
+        else if(!empty($_COOKIE['ec'])) { // Get user by cookie
             $uid = Ec::usersByCookie($_COOKIE['ec']);
         }
-
-        if(empty($uid)) {
-            // Create a new cookie if the user is logged in, otherwise try to detect IP.
-            $user = common_current_user();
-
-            if(!empty($user)) {
-                $uid = array($user->id);
-
-                $ec = Ec::staticGet('user_id', $user->id);
-                if(empty($ec)) {
-                    $ec = new Ec();
-                    $ec->user_id = $user->id;
-                    $ec->evercookie = hash('sha512', $user->id . mt_rand());
-                    $ec->insert();
-                }
-                $this->cookie($ec->evercookie);
-            }
-            else {
-                $uid = Ip_login::usersByIP($ip);
-                if(!empty($uid)) {
-                    $ec = Ec::staticGet('user_id', $uid[0]);
-                    if(!empty($ec)) {
-                        $this->cookie($ec->evercookie);
-                    }
+        else { // Get user by IP
+            $uid = Ip_login::usersByIP($ip);
+            if(!empty($uid)) {
+                $ec = Ec::staticGet('user_id', $uid[0]);
+                if(!empty($ec)) {
+                    $this->cookie($ec->evercookie);
                 }
             }
         }
