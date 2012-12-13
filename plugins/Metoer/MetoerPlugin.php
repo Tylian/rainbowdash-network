@@ -102,7 +102,15 @@ class MetoerPlugin extends Plugin
         setcookie('ec', $hash, time() + 10 * 365 * 24 * 60 * 60, '/'); // 10 years
     }
 
-    function onRouterInitialized($m) {
+    function onStartShowHTML($m) {
+        $this->checkUser();
+    }
+
+    function onEndSetApiUser($user) {
+        $this->checkUser();
+    }
+    
+    function checkUser() {
         list($proxy, $ip) = common_client_ip();
 
         // Always test for the user first. If they're logged in give them
