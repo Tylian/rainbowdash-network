@@ -206,7 +206,7 @@ function reProcess(newPosts) {
     setTimeout(reProcess, 50);
     if(!newPosts) { var newPosts = $('.hentry.notice').not('.rdnrefresh_done') }
 
-    if(autospoil == '1') newPosts.each(function() {decodeSpoiler($(this))});
+    if(autospoil == '1') newPosts.each(function() {decodeSpoiler($(this), true)});
 
     hideSpoilers(newPosts);
     hideUsers(newPosts);
@@ -356,7 +356,7 @@ function rot13(text){
     }); 
 }
 
-function decodeSpoiler(notice) {
+function decodeSpoiler(notice, onlyTagged) {
     var noticetext = notice.find('p.entry-content').filter(':first');
     var rotd = noticetext.find('.rotd, .spbar');
     if(rotd.length) {
@@ -370,7 +370,7 @@ function decodeSpoiler(notice) {
             }
         });
     }
-    else {
+    else if(!onlyTagged) {
         noticetext.text(rot13(noticetext.text()));
     }
 }
