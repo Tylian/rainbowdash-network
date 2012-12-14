@@ -60,6 +60,7 @@ class RDNPlusPlugin extends Plugin
             new ColumnDef('logo', 'varchar', 255, true),
             new ColumnDef('backgroundimage', 'varchar', 255, true),
             new ColumnDef('hideemotes', 'integer', 1, true),
+            new ColumnDef('autospoil', 'integer', 1, true),
         ));
 
         return true;
@@ -114,7 +115,7 @@ HERE;
         $localurl = $localurl[0];
 
         $refreshscript = <<<HERE
-var selectedText = ''; var currentUser = "$nick".toLowerCase(); var SPOILERTAGS = "$vars[spoilertags]"; var USERNAMESTAGS = "$vars[usernamestags]"; var ANYHIGHLIGHTWORDS = "$vars[anyhighlightwords]"; var siteDir = "$localurl"; var customstyle = '$vars[customstyle]'; var logo = '$vars[logo]'; var hideemotes = '$vars[hideemotes]';
+var selectedText = ''; var currentUser = "$nick".toLowerCase(); var SPOILERTAGS = "$vars[spoilertags]"; var USERNAMESTAGS = "$vars[usernamestags]"; var ANYHIGHLIGHTWORDS = "$vars[anyhighlightwords]"; var siteDir = "$localurl"; var customstyle = '$vars[customstyle]'; var logo = '$vars[logo]'; var hideemotes = '$vars[hideemotes]'; var autospoil = '$vars[autospoil]';
 HERE;
         $action->inlineScript($refreshscript);
         $action->script($this->path('js/rdnrefresh.js'));

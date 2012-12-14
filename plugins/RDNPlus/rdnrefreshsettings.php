@@ -56,6 +56,12 @@ class RdnrefreshsettingsAction extends SettingsAction
         $this->elementStart('ul', 'form_data');
         if (Event::handle('StartRDNRefreshFormData', array($this))) {
             $this->elementStart('li');
+            $this->checkbox('autospoil', _('Auto unhide spoilers'),
+                            ($this->arg('autospoil')) ?
+                            $this->boolean('autospoil') : $vars['autospoil']);
+            $this->elementEnd('li');
+
+            $this->elementStart('li');
             $this->checkbox('hideemotes', _('Hide emoticons'),
                             ($this->arg('hideemotes')) ?
                             $this->boolean('hideemotes') : $vars['hideemotes']);
@@ -166,6 +172,7 @@ class RdnrefreshsettingsAction extends SettingsAction
                 $vars->linkcolor = substr($this->trimmed('linkcolor'),0,7);
                 $vars->customstyle = $this->boolean('customstyle');
                 $vars->hideemotes = $this->boolean('hideemotes');
+                $vars->autospoil = $this->boolean('autospoil');
 
                 if(isset($orig))
                     $vars->update($orig);

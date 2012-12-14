@@ -36,22 +36,8 @@ $(function(){
 
     $('.rot13').live('click', function(e){
         e.preventDefault();
-        var noticetext = $(this).closest('li').find('p.entry-content').filter(':first');
-        var rotd = noticetext.find('.rotd, .spbar');
-        if(rotd.length) {
-            rotd.each(function() {
-                if($(this).hasClass('rotd')) {
-                    $(this).text(rot13($(this).text()));
-                }
-                if($(this).hasClass('spbar')) {
-                    $(this).toggleClass('decoded');
-                    $(this).attr('style', '');
-                }
-            });
-        }
-        else {
-            noticetext.text(rot13(noticetext.text()));
-        }
+        var notice = $(this).closest('li');
+        decodeSpoiler(notice);
     });
 
     $('.hideSpoilerT, .hideUserT').live('click', function() {
@@ -220,6 +206,8 @@ function reProcess(newPosts) {
     setTimeout(reProcess, 50);
     if(!newPosts) { var newPosts = $('.hentry.notice').not('.rdnrefresh_done') }
 
+    if(autospoil == '1') newPosts.each(function() {decodeSpoiler($(this))});
+
     hideSpoilers(newPosts);
     hideUsers(newPosts);
     delEmotes(newPosts);
@@ -366,6 +354,25 @@ function rot13(text){
     return text.replace(/[a-zA-Z]/g, function(c){ 
         return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26); 
     }); 
+}
+
+function decodeSpoiler(notice) {
+    var noticetext = notice.find('p.entry-content').filter(':first');
+    var rotd = noticetext.find('.rotd, .spbar');
+    if(rotd.length) {
+        rotd.each(function() {
+            if($(this).hasClass('rotd')) {
+                $(this).text(rot13($(this).text()));
+            }
+            if($(this).hasClass('spbar')) {
+                $(this).toggleClass('decoded');
+                $(this).attr('style', '');
+            }
+        });
+    }
+    else {
+        noticetext.text(rot13(noticetext.text()));
+    }
 }
 
 jQuery.fn.textWalk = function( fn, str ) {
