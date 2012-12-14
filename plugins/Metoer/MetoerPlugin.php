@@ -9,6 +9,9 @@ if (!defined('STATUSNET')) {
 /* Permanently bans the user using evercookie/IP and a special attribute that only DB admins can remove.*/
 class MetoerPlugin extends Plugin
 {
+    // Show the banned user a Youtube video.
+    public $video;
+
     function onCheckSchema()
     {  
         $schema = Schema::get();
@@ -101,12 +104,27 @@ class MetoerPlugin extends Plugin
         setcookie('ec', $hash, time() + 10 * 365 * 24 * 60 * 60, '/'); // 10 years
     }
 
-    function onStartShowHTML($m) {
+    function onStartShowHTML($action) {
         $this->checkUser();
+
+        return true;
     }
+
+    function onEndPrimaryNav($action) {
+        $user = common_current_user();
+
+        if(!empty($user) && !empty($this->video) && $user->hasRole('permaban')) {
+            $action->raw('<iframe style="float: left;" width="560" height="315" src="http://www.youtube.com/embed/' . $this->video . '?autoplay=1" frameborder="0" allowfullscreen></iframe>');
+        }
+
+        return true;
+    }
+
 
     function onEndSetApiUser($user) {
         $this->checkUser();
+
+        return true;
     }
     
     function checkUser() {
