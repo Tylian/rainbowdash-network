@@ -84,7 +84,6 @@ class MetoerPlugin extends Plugin
 
             if($this->shouldSilence($uid)) {
                 $user->grantRole('permaban');
-                return true;
             }
         }
 
@@ -94,7 +93,6 @@ class MetoerPlugin extends Plugin
 
         if($this->shouldSilence($uid)) {
             $user->grantRole('permaban');
-            return true;
         }
 
         return true;
