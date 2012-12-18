@@ -14,7 +14,7 @@ class FilmstripPlugin extends Plugin
         $action->style(<<<HERE
 .filmstrip {
 width: 100%;
-height:63px;
+height:59px;
 overflow:hidden;
 border-top-left-radius:5px;
 border-bottom-left-radius:5px;
@@ -94,7 +94,7 @@ HERE
 
         $attachments = new ArrayWrapper($attachments);
 
-        $this->outStrip($action, $attachments, true);
+        $this->outStrip($action, $attachments, false);
 
         return true;
     }
