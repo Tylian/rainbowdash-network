@@ -2487,6 +2487,29 @@ float: none;
 color: #00FF00 !important;
 }
 
+#aside_primary ol.profilelist {
+width: 100%;
+}
+
+#aside_primary .profilelist li {
+width: 48px;
+clear: none;
+padding: 0;
+}
+
+#aside_primary .profilelist .fn.nickname {
+position: absolute;
+bottom: -20px;
+left: 0px;
+display: none;
+background-color: rgba(0, 0, 0, 0.8);
+color: white;
+}
+
+#aside_primary .profile:hover .fn.nickname {
+    display: block;
+}
+
 }/*end of @media screen, projection, tv*/
 
 @media print {
