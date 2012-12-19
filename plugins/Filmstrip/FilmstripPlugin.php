@@ -13,6 +13,7 @@ class FilmstripPlugin extends Plugin
         $path = $this->path('');
         $action->style(<<<HERE
 .filmstrip {
+clear: both;
 width: 100%;
 height:59px;
 overflow:hidden;
