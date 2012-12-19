@@ -37,6 +37,8 @@ padding:0;
 }
 
 .filmstrip .inline-attachment {
+display:block;
+float:left;
 position:relative;
 }
 HERE
