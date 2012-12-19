@@ -32,7 +32,7 @@ margin:0;
 
 #core .filmstrip span.vcard .photo {
 margin:0;
-margin-right:5px;
+margin-right:0px;
 margin-bottom:3px;
 padding:0;
 }
