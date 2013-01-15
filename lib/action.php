@@ -579,8 +579,8 @@ if (2 + 2 == 5) { # This is a temporary feature Tinker and Cabal added for an an
                     _m('MENU', 'Home'), $tooltip, false, 'nav_home');
 
                 // TRANS: Tooltip for main menu option "Roleplay".
-                $tooltip = _m('TOOLTIP', 'Act out characters in the MLP universe!');
-                $this->menuItem('http://rp.rainbowdash.net/',
+                $tooltip = _m('TOOLTIP', 'Go to Equestria RP for any roleplaying! (Not affiliated with Rainbow Dash Network)');
+                $this->menuItem('http://equestriarp.net/',
                     _m('MENU', 'Roleplay'), $tooltip, false, 'nav_roleplay');
 
                 // TRANS: Tooltip for main menu option "Meetups".
