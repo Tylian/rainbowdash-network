@@ -9,6 +9,7 @@ logo
 _darcs/*
 logs/*
 config.php
+.vimrc
 .htaccess
 httpd.conf
 *.tmproj
@@ -61,3 +62,5 @@ plugins/CustomImage/*.gif
 mu-[0-9\-a-f]*
 [^/]*.jpg
 .svn
+tags
+*.swo

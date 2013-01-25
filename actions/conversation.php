@@ -201,6 +201,27 @@ class ConversationTree extends NoticeList
             }
         }
 
+        // FIXME
+        // Flatten conversations by combining long chains
+        if(true && common_config('site', 'flatconversations')) {
+            print_r($this->tree);
+            foreach(array_keys($this->tree) as $id) {
+                if($id != 'root' && !empty($this->tree[$id])) $notices = $this->tree[$id];
+                else continue;
+
+                foreach($this->tree as $pkey => $parents) {
+                    if(in_array($id, $parents)) {
+                        if($pkey != 'root' && count($parents) === 1) {
+                            $this->tree[$pkey] = array_merge($parents, $notices);
+                            unset($this->tree[$id]);
+                        }
+                        break;
+                    }
+                }
+            print_r($this->tree);
+            }
+        }
+
         return $cnt;
     }
 
