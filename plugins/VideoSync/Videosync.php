@@ -79,7 +79,6 @@ class Videosync extends Memcached_DataObject
     static function getCurrent() {
         $v = new Videosync();
         $v->orderBy("started DESC, id ASC");
-        $v->whereAdd("started IS NOT NULL");
         if(!$v->find() || !$v->fetch()) {
             $v = Videosync::setCurrent(1);
         }
@@ -92,7 +91,6 @@ class Videosync extends Memcached_DataObject
 
     static function setCurrent($id) {
         $v = new Videosync();
-        $v->query("UPDATE videosync SET started = NULL, toggle = NULL");
 
         $new = Videosync::staticGet('id', $id);
         if(empty($new)) {
@@ -101,7 +99,7 @@ class Videosync extends Memcached_DataObject
 
         if(!empty($new)) {
             $orig = clone($new);
-            $new->toggle = true;
+            $new->toggle = !($new->toggle);
             $new->update($orig);
         }
         else {
