@@ -57,7 +57,8 @@ class VideoSyncPlugin extends Plugin
             true, 'PRI'),
             new ColumnDef('yt_id', 'varchar', 11, true),
             new ColumnDef('duration', 'integer', 4, true),
-            new ColumnDef('started', 'datetime',  null, true)
+            new ColumnDef('started', 'timestamp',  null, false),
+            new ColumnDef('toggle', 'integer', 1, true),
         ));
 
         return true;

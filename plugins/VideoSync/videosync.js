@@ -1,17 +1,32 @@
 Videosync = {
+    // YouTube ID of the current video
     yt_id: null,
+    // Time the video started (epoch)
     started: null,
+    // The YT.Player instance
     player: null,
+    // Height of the player
     height: 390,
+    // width of the player
     width: 640,
+    // Is the player active/visible?
     active: false,
+    // Name of the state cookie
     cookie: 'VideoSyncState',
+    // second tolerance for stream correction. Any variation lower than this will not cause the stream to jump.
+    tolerance: 2,
+    // ID of the video frame
     videoFrame: 'videosync_box',
+    // ID of the button that toggles the player
     trigger: 'videosync_btn',
+    // Meteor channel that tracks updates
     syncChannel: null,
+    // The original Meteor feed handler
     oldFeedHandler: null,
+    // The original YouTube API handler
     oldAPIHandler: null,
 
+    // Initialize the player
     init: function(parms) {
 
         var V = Videosync;
@@ -46,11 +61,13 @@ Videosync = {
         });
     },
 
+    // Get the cookie that toggles the state of the player
     getCookie: function() {
         if($.cookie(Videosync.cookie)) return true;
         else return false;
     },
 
+    // Toggle the state cookie and the state variable
     toggleCookie: function() {
         var V = Videosync;
         if($.cookie(V.cookie)) {
@@ -63,6 +80,7 @@ Videosync = {
         }
     },
 
+    // Update the player position
     updatePlayer: function(yt_id, pos) {
         var V = Videosync;
         if(yt_id != V.yt_id) {
@@ -70,20 +88,25 @@ Videosync = {
             V.player.loadVideoById(V.yt_id, pos, 'large');
         }
         else {
-            V.player.seekTo(pos);
+            if(Math.abs(V.player.getCurrentTime() - pos) > V.tolerance) {
+                V.player.seekTo(pos);
+            }
         }
     },
 
+    // Handler for the toggle button
     clickButton: function() {
         var V = Videosync;
         V.toggleCookie();
         V.toggleFrame();
     },
 
+    // YouTube API loader
     loadApi: function() {
         $.getScript('//www.youtube.com/iframe_api');
     },
 
+    // Toggles the frame view
     toggleFrame: function() {
         var V = Videosync;
         if(V.active) {
@@ -95,11 +118,13 @@ Videosync = {
         else {
             $('#' + V.trigger).val("Show");
             $('#' + V.videoFrame).replaceWith('<div id="videosync_box"></div>');
+            V.player = null;
             V.removeFeed();
             $('#' + V.videoFrame).hide();
         }
     },
 
+    // Sets up the Meteor feed
     setupFeed: function() {
         var V = Videosync;
         V.oldFeedHandler = Meteor.callbacks['process'];
@@ -107,6 +132,7 @@ Videosync = {
         Meteor.joinChannel(V.syncChannel, 0);
     },
 
+    // Handles data received from the Meteor feed, passing along any that doesn't belong to it
     handleFeed: function(data) {
         var V = Videosync;
         if(data.yt_id) {
@@ -117,6 +143,7 @@ Videosync = {
         }
     },
 
+    // Removes the Meteor feed
     removeFeed: function() {
         var V = Videosync;
         Meteor.leaveChannel(V.syncChannel);
