@@ -94,7 +94,7 @@ Videosync = {
         }
         else {
             $('#' + V.trigger).val("Show");
-            $('#' + V.videoFrame).empty();
+            $('#' + V.videoFrame).replaceWith('<div id="videosync_box"></div>');
             V.removeFeed();
             $('#' + V.videoFrame).hide();
         }
