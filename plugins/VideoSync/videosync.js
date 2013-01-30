@@ -130,14 +130,15 @@ Videosync = {
     setupFeed: function() {
         var V = Videosync;
         V.oldFeedHandler = Meteor.callbacks['process'];
-        Meteor.callbacks['process'] = function(data) {V.handleFeed(JSON.parse(data))};
+        Meteor.callbacks['process'] = function(data) {V.handleFeed(data)};
         Meteor.joinChannel(V.syncChannel, 0);
     },
 
     // Handles data received from the Meteor feed, passing along any that doesn't belong to it
     handleFeed: function(data) {
         var V = Videosync;
-        if(data.yt_id) {
+        if(typeof data.yt_id != 'undefined') {
+            data = JSON.parse(data);
             V.updatePlayer(data.yt_id, data.pos);
         }
         else {
