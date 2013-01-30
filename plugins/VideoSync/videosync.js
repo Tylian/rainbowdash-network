@@ -83,13 +83,15 @@ Videosync = {
     // Update the player position
     updatePlayer: function(yt_id, pos) {
         var V = Videosync;
-        if(yt_id != V.yt_id) {
-            V.yt_id = yt_id;
-            V.player.loadVideoById(V.yt_id, pos, 'large');
-        }
-        else {
-            if(Math.abs(V.player.getCurrentTime() - pos) > V.tolerance) {
-                V.player.seekTo(pos);
+        V.yt_id = yt_id;
+        if(typeof YT != 'undefined') {
+            if(yt_id != V.yt_id) {
+                V.player.loadVideoById(V.yt_id, pos, 'large');
+            }
+            else {
+                if(typeofMath.abs(V.player.getCurrentTime() - pos) > V.tolerance) {
+                    V.player.seekTo(pos);
+                }
             }
         }
     },
