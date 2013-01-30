@@ -75,25 +75,29 @@ class VideoSyncPlugin extends Plugin
     }
 
     function onEndShowScripts($action) {
-        // FIXME: Will put high load on the server. Need to make it so this doesn't run on every page load.
-        $m = $this->getMeteor();
+            // FIXME: Will put high load on the server. Need to make it so this doesn't run on every page load.
+            $m = $this->getMeteor();
 
-        $m->_connect();
-        $m->_publish($this->channelbase . '-videosync', array('yt_id' => $this->v->yt_id, 'pos' => time() - strtotime($this->v->started)));
-        $m->_disconnect();
+            $m->_connect();
+            $m->_publish($this->channelbase . '-videosync', array('yt_id' => $this->v->yt_id, 'pos' => time() - strtotime($this->v->started)));
+            $m->_disconnect();
 
-        $action->script($this->path('videosync.min.js'));
-        $action->inlineScript('Videosync.init(' . json_encode(array(
-            'yt_id' => $this->v->yt_id, 
-            'started' => strtotime($this->v->started),
-            'channel' => $this->channelbase . '-videosync',
-        )) . ');');
+        if($action instanceof PublicAction) {
+            $action->script($this->path('videosync.min.js'));
+            $action->inlineScript('Videosync.init(' . json_encode(array(
+                'yt_id' => $this->v->yt_id, 
+                'started' => strtotime($this->v->started),
+                'channel' => $this->channelbase . '-videosync',
+            )) . ');');
+        }
 
         return true;
     }
 
     function onStartShowNoticeForm($action) {
-        $action->raw('<div id="videosync"><input type="button" value="▼ Watch our live stream! ▼" id="videosync_btn" /><div id="videosync_box"></div>');
+        if($action instanceof PublicAction) {
+            $action->raw('<div id="videosync"><input type="button" value="▼ Watch our live stream! ▼" id="videosync_btn" /><div id="videosync_box"></div>');
+        }
 
         return true;
     }
