@@ -137,9 +137,9 @@ Videosync = {
     // Handles data received from the Meteor feed, passing along any that doesn't belong to it
     handleFeed: function(data) {
         var V = Videosync;
-        if(typeof data.yt_id != 'undefined') {
-            data = JSON.parse(data);
-            V.updatePlayer(data.yt_id, data.pos);
+        jdata = JSON.parse(data);
+        if(typeof data.yt_id == 'undefined') {
+            V.updatePlayer(jdata.yt_id, jdata.pos);
         }
         else {
             V.oldFeedHandler(data);
