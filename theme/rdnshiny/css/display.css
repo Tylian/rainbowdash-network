@@ -122,7 +122,6 @@ h6 {font-size: 1em;}
 #header {
     position: relative;
 	width: 945px;
-	height: 250px;
 	padding: 0px;
 	padding-top: 60px;
 	margin: 0px;
@@ -278,7 +277,7 @@ address img + .fn {display: none;}
 
 .form_notice {
     background: #ccc;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
 	float: left;
 	width: 640px;   
 	margin-top: 0px;
@@ -462,7 +461,7 @@ margin-bottom: 4px;
 	-webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
-.form_notice input.submit {
+.form_notice input.submit, #videosync_btn {
 	border: none !important;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
@@ -472,8 +471,14 @@ margin-bottom: 4px;
 	background-color: rgba(105, 106, 141, 0.6);
 	color: white;
 	z-index: 999 !important;
-	margin: 0px !important;
+	margin: 0px;
 }
+
+#videosync_btn, #videosync_box {
+    width: 645px;
+    margin: 5px;
+}
+
 .bui li:hover, .form_notice input.submit:hover {background-color: rgb(105, 106, 141);}
 
 .form_settings input.submit:hover {
