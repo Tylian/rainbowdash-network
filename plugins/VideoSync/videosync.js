@@ -76,7 +76,6 @@ Videosync = {
 
     clickButton: function() {
         var V = Videosync;
-        alert('Bam! goes the Emeril.');
         V.toggleCookie();
         V.toggleFrame();
     },
@@ -105,7 +104,7 @@ Videosync = {
         var V = Videosync;
         V.oldFeedHandler = Meteor.callbacks['process'];
         Meteor.callbacks['process'] = function(data) {V.handleFeed(JSON.parse(data))};
-        Meteor.joinChannel(V.syncChannel);
+        Meteor.joinChannel(V.syncChannel, 0);
     },
 
     handleFeed: function(data) {
