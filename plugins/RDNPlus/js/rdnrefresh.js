@@ -1,9 +1,9 @@
-if(!currentUser) {
+if(typeof currentUser == 'undefined') {
     try { currentUser = $('#nav_personal a, #nav_profile a').attr('href').replace(siteDir,'').split('/')[1].toLowerCase(); } catch(err) { }
 }
 
 var lastDM = readCookie('lastdm');
-if(!lastDM) {
+if(typeof lastDM == 'undefined') {
     lastDM = 'notice-0';
 }
 
