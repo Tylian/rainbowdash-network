@@ -83,9 +83,9 @@ Videosync = {
     // Update the player position
     updatePlayer: function(yt_id, pos) {
         var V = Videosync;
-        V.yt_id = yt_id;
         if(typeof V.player.getCurrentTime != 'undefined') {
             if(yt_id != V.yt_id) {
+                V.yt_id = yt_id;
                 V.player.loadVideoById(V.yt_id, pos, 'large');
             }
             else {
