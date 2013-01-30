@@ -70,14 +70,18 @@ class VideoSyncPlugin extends Plugin
 
     function onEndShowScripts($action) {
         $this->v = Videosync::getCurrent();
-        $action->inlineScript('var videopos=' . json_encode(array('yt_id' => $this->v->yt_id, 'started' => strtotime($this->v->started))));
+        $action->script($this->path('videosync.js'));
+        $action->inlineScript('Videosync.init(' . json_encode(array(
+            'yt_id' => $this->v->yt_id, 
+            'started' => strtotime($this->v->started),
+            'channel' => $this->channelbase . '-videosync',
+        )) . ');');
 
         return true;
     }
 
     function onEndShowHeader($action) {
-        $m = $this->getMeteor();
-        $action->raw('<div id="videosync"><div id="videosyncbox"></div><input type="button" value="Show" id="videosync_btn" />');
+        $action->raw('<div id="videosync"><div id="videosync_box"></div><input type="button" value="Show" id="videosync_btn" />');
 
         return true;
     }
