@@ -93,7 +93,7 @@ class VideoSyncPlugin extends Plugin
     }
 
     function onStartShowNoticeForm($action) {
-        $action->raw('<div id="videosync"><input type="button" value="Watch our LiveStream!" id="videosync_btn" /><div id="videosync_box"></div>');
+        $action->raw('<div id="videosync"><input type="button" value="▼ Watch our live stream! ▼" id="videosync_btn" /><div id="videosync_box"></div>');
 
         return true;
     }

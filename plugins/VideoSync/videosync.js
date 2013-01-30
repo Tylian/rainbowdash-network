@@ -110,13 +110,13 @@ Videosync = {
     toggleFrame: function() {
         var V = Videosync;
         if(V.active) {
-            $('#' + V.trigger).val("Hide live stream");
+            $('#' + V.trigger).val("\u25B2 Hide live stream \u25B2");
             V.initPlayer();
             V.setupFeed();
             $('#' + V.videoFrame).show();
         }
         else {
-            $('#' + V.trigger).val("Watch our live stream!");
+            $('#' + V.trigger).val("\u25BC Watch our live stream! \u25BC");
             $('#' + V.videoFrame).replaceWith('<div id="' + V.videoFrame + '"></div>');
             V.player = null;
             V.removeFeed();

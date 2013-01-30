@@ -474,6 +474,10 @@ margin-bottom: 4px;
 	margin: 0px;
 }
 
+#videosync_btn {
+    padding: 2px;
+}
+
 #videosync_btn, #videosync_box {
     width: 645px;
     margin: 5px;
