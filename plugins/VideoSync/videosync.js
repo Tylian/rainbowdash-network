@@ -56,7 +56,7 @@ Videosync = {
             width: V.width,
             videoId: V.yt_id,
             events: {
-                'onReady': function() { V.updatePlayer(V.yt_id, new Date().getTime() / 1000 - V.started) },
+                'onReady': function() { V.updatePlayer(V.yt_id, new Date().getTime() / 1000 - V.started, V.started) },
             },
         });
     },
@@ -81,11 +81,12 @@ Videosync = {
     },
 
     // Update the player position
-    updatePlayer: function(yt_id, pos) {
+    updatePlayer: function(yt_id, pos, started) {
         var V = Videosync;
         if(typeof V.player.getCurrentTime != 'undefined') {
             if(yt_id != V.yt_id) {
                 V.yt_id = yt_id;
+                V.started = started;
                 V.player.loadVideoById(V.yt_id, pos, 'large');
             }
             else {
@@ -139,7 +140,7 @@ Videosync = {
         var V = Videosync;
         jdata = JSON.parse(data);
         if(typeof jdata.yt_id != 'undefined') {
-            V.updatePlayer(jdata.yt_id, jdata.pos);
+            V.updatePlayer(jdata.yt_id, jdata.pos, jdata.started);
         }
         else {
             V.oldFeedHandler(data);

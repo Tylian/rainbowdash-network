@@ -75,12 +75,12 @@ class VideoSyncPlugin extends Plugin
     }
 
     function onEndShowScripts($action) {
-            // FIXME: Will put high load on the server. Need to make it so this doesn't run on every page load.
-            $m = $this->getMeteor();
+        // FIXME: Will put high load on the server. Need to make it so this doesn't run on every page load.
+        $m = $this->getMeteor();
 
-            $m->_connect();
-            $m->_publish($this->channelbase . '-videosync', array('yt_id' => $this->v->yt_id, 'pos' => time() - strtotime($this->v->started)));
-            $m->_disconnect();
+        $m->_connect();
+        $m->_publish($this->channelbase . '-videosync', array('yt_id' => $this->v->yt_id, 'pos' => time() - strtotime($this->v->started), 'started' => $this->v->started));
+        $m->_disconnect();
 
         if($action instanceof PublicAction) {
             $action->script($this->path('videosync.min.js'));
