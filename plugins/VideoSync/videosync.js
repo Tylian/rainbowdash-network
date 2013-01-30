@@ -89,7 +89,7 @@ Videosync = {
                 V.player.loadVideoById(V.yt_id, pos, 'large');
             }
             else {
-                if(typeofMath.abs(V.player.getCurrentTime() - pos) > V.tolerance) {
+                if(Math.abs(V.player.getCurrentTime() - pos) > V.tolerance) {
                     V.player.seekTo(pos);
                 }
             }
