@@ -54,7 +54,7 @@ class VideoSyncPlugin extends Plugin
 
         $schema->ensureTable('videosync',
             array(new ColumnDef('id', 'integer', null,
-            true, 'PRI'),
+            true, 'PRI', null, null, true),
             new ColumnDef('yt_id', 'varchar', 11, true),
             new ColumnDef('duration', 'integer', 4, true),
             new ColumnDef('started', 'timestamp',  null, false),

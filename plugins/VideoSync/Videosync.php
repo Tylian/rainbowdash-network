@@ -78,7 +78,7 @@ class Videosync extends Memcached_DataObject
 
     static function getCurrent() {
         $v = new Videosync();
-        $v->orderBy("started DESC");
+        $v->orderBy("started DESC, id ASC");
         $v->whereAdd("started IS NOT NULL");
         if(!$v->find() || !$v->fetch()) {
             $v = Videosync::setCurrent(1);
