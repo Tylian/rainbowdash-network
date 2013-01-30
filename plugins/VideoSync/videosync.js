@@ -138,7 +138,7 @@ Videosync = {
     handleFeed: function(data) {
         var V = Videosync;
         jdata = JSON.parse(data);
-        if(typeof data.yt_id == 'undefined') {
+        if(typeof jdata.yt_id != 'undefined') {
             V.updatePlayer(jdata.yt_id, jdata.pos);
         }
         else {
