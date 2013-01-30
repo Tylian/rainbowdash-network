@@ -82,7 +82,7 @@ class VideoSyncPlugin extends Plugin
         $m->_publish($this->channelbase . '-videosync', array('yt_id' => $this->v->yt_id, 'pos' => time() - strtotime($this->v->started)));
         $m->_disconnect();
 
-        $action->script($this->path('videosync.js'));
+        $action->script($this->path('videosync.min.js'));
         $action->inlineScript('Videosync.init(' . json_encode(array(
             'yt_id' => $this->v->yt_id, 
             'started' => strtotime($this->v->started),
