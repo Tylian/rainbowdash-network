@@ -4,12 +4,20 @@ cursor:pointer;
 float:left;
 }
 
+.addbreaks,
 .rot13 {
 display:block;
 background-color: rgb(105, 106, 141);
 border-radius:2px;
 opacity: 0.6;
+}
+
+.rot13 {
 background-image: url("../img/rot13_button.png");
+}
+
+.addbreaks {
+background-image: url("../img/addbreaks.png");
 }
 
 .rot13:hover {
@@ -17,7 +25,7 @@ opacity: 1;
 }
 
 .notice-options {
-width:111px!important;
+width:133px!important;
 }
 
 .striket { text-decoration:line-through; }
@@ -76,6 +84,7 @@ font-style:italic;
 .notice-options .notice_reply,
 .notice-options .form_repeat,
 .notice-options .rot13,
+.notice-options .addbreaks,
 .notice-options .notice_delete,
 .notice-options .retweet,
 .notice-options .form_favor,

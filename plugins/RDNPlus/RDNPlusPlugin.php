@@ -223,9 +223,9 @@ HERE;
 
     function onStartShowFaveForm($action)
     {
-        $action->out->elementStart('a', array('class' => 'rot13'));
-        $action->out->raw('Decode Spoiler');
-        $action->out->elementEnd('a');
+        $action->out->element('a', array('class' => 'addbreaks', 'title' => 'Unbreak Lines'), 'Unbreak Lines');
+
+        $action->out->element('a', array('class' => 'rot13', 'title' => 'Decode Spoiler'), 'Decode Spoiler');
         /*
         $action->out->element('img', array('src' => $this->path('img/bird_16_blue.png'),
             'title' => _m('Retweet to Twitter'),

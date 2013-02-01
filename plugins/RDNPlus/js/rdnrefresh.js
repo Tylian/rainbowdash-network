@@ -2,8 +2,8 @@ if(typeof currentUser == 'undefined') {
     try { currentUser = $('#nav_personal a, #nav_profile a').attr('href').replace(siteDir,'').split('/')[1].toLowerCase(); } catch(err) { }
 }
 
-var lastDM = readCookie('lastdm');
-if(typeof lastDM == 'undefined') {
+var lastDM = $.cookie('lastdm');
+if(!lastDM) {
     lastDM = 'notice-0';
 }
 
@@ -16,8 +16,7 @@ $(function(){
     if(currentUser) {
         if(location.href.replace(siteDir,'').split('/')[1] == 'inbox') {
             lastDM = $('.messages li').filter(':first').attr('id');
-            eraseCookie('lastdm');
-            createCookie('lastdm', lastDM, 365);
+            $.cookie('lastdm', {'expires': 365, 'path': '/'});
         }
         else {
             var profile = $('#site_nav_local_views, #nav_profile a').filter(':first');
@@ -43,6 +42,11 @@ $(function(){
     $('.hideSpoilerT, .hideUserT').live('click', function() {
         $(this).removeClass('hideSpoilerT hideUserT');
         $(this).children().removeClass('hideSpoiler hideUser');
+    });
+
+    $('.addbreaks').live('click', function(){
+        var notice = $(this).closest('li');
+        addLineBreaksToNotice(notice);
     });
 
     $('.retweet').live('click', function(){
@@ -74,31 +78,6 @@ $(function(){
     });
     
 });
-
-function createCookie(name,value,days) {
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime()+(days*24*60*60*1000));
-        var expires = "; expires="+date.toGMTString();
-    }
-    else var expires = "";
-    document.cookie = name+"="+value+expires+"; path=/";
-}
-
-function readCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-}
-
-function eraseCookie(name) {
-    createCookie(name,"",-1);
-}
 
 function getSelected(){ 
   var userSelection, ta; 
@@ -200,6 +179,11 @@ function delEmotes(newPosts) {
     }
 }
 
+function addLineBreaksToNotice(notice) {
+    var noticeText = $(notice).find('p.entry-content').filter(':first');
+    noticeText.html(noticeText.html().replace(/\n/g, '<br />'));
+}
+
 /* Reprocesses the page and/or post */
 function reProcess(newPosts) {
     if($('#mobile-toggle-disable').length) return;
@@ -226,9 +210,10 @@ function reProcess(newPosts) {
 function delButton(newPosts) {
     $(newPosts).find('.notice_delete').each(function() {
         var notice_id = $(this).parent().parent().attr('id').split('-')[1];
+        var delTitle = $(this).attr('title');
         var container = document.createElement('div');
         var token = $(this).parent().find('.form_favor [name*="token"]').val()
-        $(container).html(('<form action="' + siteDir + '/notice/delete" method="post" class="notice_delete" id="delete-%%%"> <fieldset> <legend>Delete this notice?</legend> <input type="hidden" value="' + token + '" id="token-%%%" name="token"> <input type="hidden" value="%%%" id="notice-d%%%" name="notice"> <input title="Delete this Notice" value="Yes" class="submit submit_delete" name="yes" id="delete-submit-%%%" /> </fieldset> </form>').replace(/%%%/g,notice_id));
+        $(container).html(('<form action="' + siteDir + '/notice/delete" method="post" class="notice_delete" id="delete-%%%"> <fieldset> <legend>Delete this notice?</legend> <input type="hidden" value="' + token + '" id="token-%%%" name="token"> <input type="hidden" value="%%%" id="notice-d%%%" name="notice"> <input title="' + delTitle + '" value="Yes" class="submit submit_delete" name="yes" id="delete-submit-%%%" /> </fieldset> </form>').replace(/%%%/g,notice_id));
         $(container).bind('click', function(event) {
 
             event.preventDefault();
