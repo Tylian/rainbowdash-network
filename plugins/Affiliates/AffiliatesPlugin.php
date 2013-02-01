@@ -80,7 +80,7 @@ HTML
     	);
 
         $path = $this->path("");
-        foreach($affiliates as $key => $a) {
+        foreach($this->affiliates as $key => $a) {
             $action->raw(<<<HTML
 <span id="afspan{$key}">
 <a href="{$a->href}" target="_blank">
