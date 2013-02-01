@@ -82,7 +82,10 @@ class VideoSyncPlugin extends Plugin
             $m->_connect();
             $m->_publish($this->channelbase . '-videosync', array('yt_id' => $this->v->yt_id, 'pos' => time() - strtotime($this->v->started), 'started' => strtotime($this->v->started)));
             $m->_disconnect();
+        }
 
+
+        if($action instanceof PublicAction) {
             $action->script($this->path('videosync.min.js'));
             $action->inlineScript('Videosync.init(' . json_encode(array(
                 'yt_id' => $this->v->yt_id, 
@@ -95,7 +98,7 @@ class VideoSyncPlugin extends Plugin
     }
 
     function onStartShowNoticeForm($action) {
-        if($action instanceof TagAction) {
+        if($action instanceof PublicAction) {
             $action->raw('<div id="videosync"><input type="button" value="▼ Watch videos together on the #RDNStream! ▼" id="videosync_btn" /><div id="videosync_box"></div></div>');
         }
 
