@@ -42,6 +42,8 @@ if (!defined('STATUSNET')) {
 
 class AffiliatesPlugin extends Plugin
 {
+    public $affiliates;
+
 	const VERSION = '0.0.1';
 
     public function onPluginVersion(&$versions)
@@ -71,51 +73,22 @@ class AffiliatesPlugin extends Plugin
         $action->elementStart('div', array('id' => 'affilliate_section',
                                          'class' => 'section'));
 
-    	$action->raw(
-    	<<<EOT
+        $action->raw(<<<HTML
 <h2>Affiliates</h2>
 <span id ="shuffle">
-<span id="afspan-1">
-<a href="http://www.bronyuk.org/" target="_blank">
-<img src="/plugins/Affiliates/BUCK.png?1" alt="BUCK" title"BUCK" border="0" /></a>
-</span>
-<span id="broniesuk">
-<table style="border: none; border-collapse: collapse; border-spacing: 0;">
-<tr>
-<td style="padding: 0;">
-<a href="https://www.facebook.com/Bronies.UK" target="_blank" style="float:left"><img src="/plugins/Affiliates/BroniesUK1.png?1" alt="Bronies UK" title"Bronies UK" border="0" /></a>
-</td>
-<td style="padding: 0;">
-<a href="https://plus.google.com/111252713260579453782/" style="float:left;"><img src="/plugins/Affiliates/BroniesUK2.png?1" alt="Bronies UK" title"Bronies UK" border="0" /></a>
-</td>
-</tr>
-</table>
-</span>
-
-<span id="afspan1">
-<a href="http://equestriainspired.net" target="_blank">
-<img src="/plugins/Affiliates/EquestriaInspired.png?1" alt="Equestria Inspired" title="Equestria Inspired" border=
-"0" /></a>
-</span>
-<span id="afspan2">
-<a href="http://equestriagaming.com" target="_blank">
-<img src="/plugins/Affiliates/EquestriaGaming.png?1" alt="EquestriaGaming" title="EquestriaGaming" border=
-"0" /></a>
-</span>
-<span id="afspan3">
-<a href="http://www.ponyremixplanet.com" target="_blank">
-<img src="/plugins/Affiliates/PonyMixCentral.png?1" alt="Pony Mix Central" title="Pony Mix Central" border=
-"0" /></a>
-</span>
-<span id="afspan4">
-<a href="http://ponysquare.com" target="_blank">
-<img src="/plugins/Affiliates/PonySquare.png?1" alt="Ponysquare" title="Ponysquare" border=
-"0" /></a>
-</span>
-</span>
-
-EOT
+HTML
     	);
+
+        $path = $this->path("");
+        foreach($affiliates as $key => $a) {
+            $action->raw(<<<HTML
+<span id="afspan{$key}">
+<a href="{$a->href}" target="_blank">
+<img src="{$path}/{$a->image}" alt="{$a->alt}" title="{$a->title}" border="0" /></a>
+</span>
+HTML
+            );
+        }
 
     	$action->elementEnd('div');
     }
