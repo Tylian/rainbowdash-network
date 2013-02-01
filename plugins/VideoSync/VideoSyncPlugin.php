@@ -75,7 +75,7 @@ class VideoSyncPlugin extends Plugin
     }
 
     function onEndShowScripts($action) {
-        if($action instanceof PublicAction) {
+        if($action instanceof TagAction) {
             // FIXME: Will put high load on the server. Need to make it so this doesn't run on every page load.
             $m = $this->getMeteor();
 
@@ -95,7 +95,7 @@ class VideoSyncPlugin extends Plugin
     }
 
     function onStartShowNoticeForm($action) {
-        if($action instanceof PublicAction) {
+        if($action instanceof TagAction) {
             $action->raw('<div id="videosync"><input type="button" value="▼ Watch videos together on the #RDNStream! ▼" id="videosync_btn" /><div id="videosync_box"></div></div>');
         }
 
