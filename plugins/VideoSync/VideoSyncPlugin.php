@@ -96,7 +96,7 @@ class VideoSyncPlugin extends Plugin
 
     function onStartShowNoticeForm($action) {
         if($action instanceof PublicAction) {
-            $action->raw('<div id="videosync"><input type="button" value="▼ Watch our live stream! ▼" id="videosync_btn" /><div id="videosync_box"></div></div>');
+            $action->raw('<div id="videosync"><input type="button" value="▼ Watch videos together on the #RDNStream! ▼" id="videosync_btn" /><div id="videosync_box"></div></div>');
         }
 
         return true;
