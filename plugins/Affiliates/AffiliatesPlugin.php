@@ -73,18 +73,14 @@ class AffiliatesPlugin extends Plugin
         $action->elementStart('div', array('id' => 'affilliate_section',
                                          'class' => 'section'));
 
-        $action->raw(<<<HTML
-<h2>Affiliates</h2>
-<span id ="shuffle">
-HTML
-    	);
+        $action->element('h2', 'Affiliates');
 
         $path = $this->path("");
         foreach($this->affiliates as $key => $a) {
             $action->raw(<<<HTML
 <span id="afspan{$key}">
-<a href="{$a->href}" target="_blank">
-<img src="{$path}/{$a->image}" alt="{$a->alt}" title="{$a->title}" border="0" /></a>
+<a href="{$a['href']}" target="_blank">
+<img src="{$path}/{$a['image']}" alt="{$a['alt']}" title="{$a['title']}" border="0" /></a>
 </span>
 HTML
             );
