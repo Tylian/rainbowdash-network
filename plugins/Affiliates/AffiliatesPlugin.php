@@ -73,7 +73,7 @@ class AffiliatesPlugin extends Plugin
         $action->elementStart('div', array('id' => 'affilliate_section',
                                          'class' => 'section'));
 
-        $action->element('h2', 'Affiliates');
+        $action->element('h2', null, 'Affiliates');
 
         $path = $this->path("");
         foreach($this->affiliates as $key => $a) {
