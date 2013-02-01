@@ -223,7 +223,7 @@ HERE;
 
     function onStartShowFaveForm($action)
     {
-        $action->out->element('a', array('class' => 'addbreaks', 'title' => 'Unbreak Lines'), 'Unbreak Lines');
+        $action->out->element('a', array('class' => 'addbreaks', 'title' => 'Break Lines'), 'Break Lines');
 
         $action->out->element('a', array('class' => 'rot13', 'title' => 'Decode Spoiler'), 'Decode Spoiler');
         /*
