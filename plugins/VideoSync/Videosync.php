@@ -33,6 +33,7 @@ class Videosync extends Memcached_DataObject
         return array('id' => DB_DATAOBJECT_INT + DB_DATAOBJECT_NOTNULL,
             'yt_id' => DB_DATAOBJECT_STR + DB_DATAOBJECT_NOTNULL,
             'duration' => DB_DATAOBJECT_INT + DB_DATAOBJECT_NOTNULL,
+            'tag' => DB_DATAOBJECT_STR,
             'started' => DB_DATAOBJECT_MYSQLTIMESTAMP + DB_DATAOBJECT_NOTNULL,
             'toggle' => DB_DATAOBJECT_BOOL,
         );

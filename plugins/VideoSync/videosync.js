@@ -3,6 +3,10 @@ Videosync = {
     yt_id: null,
     // Time the video started (epoch)
     started: null,
+    // Tag to put in the notice box
+    tag: null,
+    // Tag that names the stream
+    streamTag: null,
     // The YT.Player instance
     player: null,
     // Height of the player
@@ -19,6 +23,8 @@ Videosync = {
     videoFrame: 'videosync_box',
     // ID of the button that toggles the player
     trigger: 'videosync_btn',
+    // Notice box ID
+    noticeBox: SN.C.S.NoticeDataText,
     // Meteor channel that tracks updates
     syncChannel: null,
     // The original Meteor feed handler
@@ -34,6 +40,8 @@ Videosync = {
             V.yt_id = parms.yt_id;
             V.started = parms.started;
             V.syncChannel = parms.channel;
+            V.tag = parms.tag;
+            V.streamTag = parms.tag.split(' ')[0];
         }
 
         // Initialize the API first
@@ -44,6 +52,8 @@ Videosync = {
 
         V.active = V.getCookie();
         $('#' + V.trigger).click(V.clickButton);
+
+        V.addTag();
 
         // Event handler for when the document fully loads
         $(V.toggleFrame);
@@ -56,7 +66,7 @@ Videosync = {
             width: V.width,
             videoId: V.yt_id,
             events: {
-                'onReady': function() { V.updatePlayer(V.yt_id, new Date().getTime() / 1000 - V.started, V.started) },
+                'onReady': function() { V.updatePlayer(V.yt_id, new Date().getTime() / 1000 - V.started, V.started, V.tag) },
             },
         });
     },
@@ -65,6 +75,40 @@ Videosync = {
     getCookie: function() {
         if($.cookie(Videosync.cookie)) return true;
         else return false;
+    },
+
+    // Setup reset value
+    setupReset: function() {
+        var V = Videosync;
+        var text = $('#' + V.noticeBox);
+        var oldText = text.val();
+        if(V.active) {
+            V.addTag();
+        }
+        else {
+            text.val('');
+        }
+        text.html(function() { return this.value });
+        text.val(oldText);
+    },
+
+    // Add tag to notice box
+    addTag: function() {
+        var V = Videosync;
+        if(V.tag) {
+            var tag = '#' + V.tag + ' ';
+            var text = $('#' + V.noticeBox);
+            text.val(tag + text.val().replace(tag, ''));
+        }
+    },
+
+    removeTag: function() {
+        var V = Videosync;
+        if(V.tag) {
+            var tag = '#' + V.tag + ' ';
+            var text = $('#' + V.noticeBox);
+            text.val(text.val().replace(tag, ''));
+        }
     },
 
     // Toggle the state cookie and the state variable
@@ -81,12 +125,13 @@ Videosync = {
     },
 
     // Update the player position
-    updatePlayer: function(yt_id, pos, started) {
+    updatePlayer: function(yt_id, pos, started, tag) {
         var V = Videosync;
         if(typeof V.player.getCurrentTime != 'undefined') {
             if(yt_id != V.yt_id) {
                 V.yt_id = yt_id;
                 V.started = started;
+                V.tag = tag;
                 V.player.loadVideoById(V.yt_id, pos, 'large');
             }
             else {
@@ -113,15 +158,19 @@ Videosync = {
     toggleFrame: function() {
         var V = Videosync;
         if(V.active) {
-            $('#' + V.trigger).val("\u25B2 Hide #RDNStream \u25B2");
+            $('#' + V.trigger).val("\u25B2 Hide #" + V.streamTag + " \u25B2");
             V.initPlayer();
+            V.setupReset();
+            V.addTag();
             V.setupFeed();
             $('#' + V.videoFrame).show();
         }
         else {
-            $('#' + V.trigger).val("\u25BC Watch videos together on the #RDNStream! \u25BC");
+            $('#' + V.trigger).val("\u25BC Watch videos together on the #" + V.streamTag + "! \u25BC");
             $('#' + V.videoFrame).replaceWith('<div id="' + V.videoFrame + '"></div>');
             V.player = null;
+            V.setupReset();
+            V.removeTag();
             V.removeFeed();
             $('#' + V.videoFrame).hide();
         }
@@ -140,7 +189,7 @@ Videosync = {
         var V = Videosync;
         jdata = JSON.parse(data);
         if(typeof jdata.yt_id != 'undefined') {
-            V.updatePlayer(jdata.yt_id, jdata.pos, jdata.started);
+            V.updatePlayer(jdata.yt_id, jdata.pos, jdata.started, jdata.tag);
         }
         else {
             V.oldFeedHandler(data);

@@ -18,6 +18,7 @@ class VideoSyncPlugin extends Plugin
     public $controlserver = null;
     public $channelbase   = null;
     public $persistent    = true;
+    public $tag = 'livestream';
 
     function __construct($webserver=null, $webport=4670, $controlport=4671, $controlserver=null, $channelbase='')
     {  
@@ -57,6 +58,7 @@ class VideoSyncPlugin extends Plugin
             true, 'PRI', null, null, true),
             new ColumnDef('yt_id', 'varchar', 11, true),
             new ColumnDef('duration', 'integer', 4, true),
+            new ColumnDef('tag', 'varchar', 50, true),
             new ColumnDef('started', 'timestamp',  null, false),
             new ColumnDef('toggle', 'integer', 1, true),
         ));
@@ -74,13 +76,16 @@ class VideoSyncPlugin extends Plugin
         );
     }
 
+    function getFullTag() {
+        return $this->tag . ((!empty($this->v->tag)) ? ' #' . $this->v->tag : '');
+    }
+
     function onEndShowScripts($action) {
         if($action instanceof TagAction) {
-            // FIXME: Will put high load on the server. Need to make it so this doesn't run on every page load.
             $m = $this->getMeteor();
 
             $m->_connect();
-            $m->_publish($this->channelbase . '-videosync', array('yt_id' => $this->v->yt_id, 'pos' => time() - strtotime($this->v->started), 'started' => strtotime($this->v->started)));
+            $m->_publish($this->channelbase . '-videosync', array('yt_id' => $this->v->yt_id, 'pos' => time() - strtotime($this->v->started), 'started' => strtotime($this->v->started), 'tag' => $this->getFullTag()));
             $m->_disconnect();
         }
 
@@ -90,6 +95,7 @@ class VideoSyncPlugin extends Plugin
             $action->inlineScript('Videosync.init(' . json_encode(array(
                 'yt_id' => $this->v->yt_id, 
                 'started' => strtotime($this->v->started),
+                'tag' => $this->getFullTag(),
                 'channel' => $this->channelbase . '-videosync',
             )) . ');');
         }
@@ -99,7 +105,10 @@ class VideoSyncPlugin extends Plugin
 
     function onStartShowNoticeForm($action) {
         if($action instanceof PublicAction) {
-            $action->raw('<div id="videosync"><input type="button" value="▼ Watch videos together on the #RDNStream! ▼" id="videosync_btn" /><div id="videosync_box"></div></div>');
+            $action->raw(<<<HTML
+<div id="videosync"><input type="button" value="▼ Watch videos together on the #{$this->tag}! ▼" id="videosync_btn" /><div id="videosync_box"></div></div>
+HTML
+            );
         }
 
         return true;

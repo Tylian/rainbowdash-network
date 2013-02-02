@@ -16,7 +16,7 @@ $(function(){
     if(currentUser) {
         if(location.href.replace(siteDir,'').split('/')[1] == 'inbox') {
             lastDM = $('.messages li').filter(':first').attr('id');
-            $.cookie('lastdm', {'expires': 365, 'path': '/'});
+            $.cookie('lastdm', lastDM, {'expires': 365, 'path': '/'});
         }
         else {
             var profile = $('#site_nav_local_views, #nav_profile a').filter(':first');
