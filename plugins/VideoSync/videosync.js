@@ -82,11 +82,9 @@ Videosync = {
         var V = Videosync;
         var text = $('#' + V.noticeBox);
         var oldText = text.val();
+        text.val('');
         if(V.active) {
             V.addTag();
-        }
-        else {
-            text.val('');
         }
         text.html(function() { return this.value });
         text.val(oldText);
