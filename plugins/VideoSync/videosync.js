@@ -131,7 +131,11 @@ Videosync = {
             if(yt_id != V.yt_id) {
                 V.yt_id = yt_id;
                 V.started = started;
+
+                V.removeTag();
                 V.tag = tag;
+                V.addTag();
+
                 V.player.loadVideoById(V.yt_id, pos, 'large');
             }
             else {
