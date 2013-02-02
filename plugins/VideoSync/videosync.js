@@ -134,6 +134,7 @@ Videosync = {
 
                 V.removeTag();
                 V.tag = tag;
+                V.setupReset();
                 V.addTag();
 
                 V.player.loadVideoById(V.yt_id, pos, 'large');
