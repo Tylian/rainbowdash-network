@@ -21,6 +21,8 @@ Videosync = {
     tolerance: 2,
     // ID of the video frame
     videoFrame: 'videosync_box',
+    // Aside container
+    asideFrame: 'videosync_aside',
     // ID of the button that toggles the player
     trigger: 'videosync_btn',
     // Notice box ID
@@ -51,16 +53,24 @@ Videosync = {
         }
 
         V.active = V.getCookie();
-        $('#' + V.trigger).click(V.clickButton);
-
-        V.addTag();
 
         // Event handler for when the document fully loads
-        $(V.toggleFrame);
+        $(function() {
+            $('#' + V.trigger).click(V.clickButton);
+            $('.form_switchvideo .submit').live('click', function(){
+                var field = $('<input name="' + $(this).attr('name') + '" type="hidden" value="' + $(this).attr('value') + '" />');
+                var form = $(this).closest('form');
+                form.append(field);
+                SN.U.FormXHR(form);
+                //form.remove(field);
+                return false;
+            });
+            V.toggleFrame();
+        });
     },
 
     initPlayer: function() {
-        V = Videosync;
+        var V = Videosync;
         V.player = new YT.Player(V.videoFrame, {
             height: V.height,
             width: V.width,
@@ -167,6 +177,7 @@ Videosync = {
             V.addTag();
             V.setupFeed();
             $('#' + V.videoFrame).show();
+            $('#' + V.asideFrame).show();
         }
         else {
             $('#' + V.trigger).val("\u25BC Watch videos together on the #" + V.streamTag + "! \u25BC");
@@ -176,6 +187,7 @@ Videosync = {
             V.removeTag();
             V.removeFeed();
             $('#' + V.videoFrame).hide();
+            $('#' + V.asideFrame).hide();
         }
     },
 

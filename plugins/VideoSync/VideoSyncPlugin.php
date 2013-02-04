@@ -33,13 +33,26 @@ class VideoSyncPlugin extends Plugin
         parent::__construct();
     }
 
+    function onRouterInitialized($m) {
+        $m->connect('main/switchvideo',
+            array('action' => 'switchvideo')
+        );
+
+        return true;
+    }
+
     function onAutoload($cls) {
         $dir = dirname(__FILE__);
 
         switch ($cls) {
+        case 'SwitchvideoAction':
+            require_once $dir . '/switchvideo.php';
+            return false;
         case 'Videosync':
             require_once $dir . '/' . $cls . '.php';
             return false;
+        case 'SwitchForm':
+            require_once $dir . '/' . strtolower($cls) . '.php';
         default:
             return true;
         }
@@ -104,11 +117,25 @@ class VideoSyncPlugin extends Plugin
     }
 
     function onStartShowNoticeForm($action) {
+        $user = common_current_user();
+
         if($action instanceof PublicAction) {
-            $action->raw(<<<HTML
-<div id="videosync"><input type="button" value="▼ Watch videos together on the #{$this->tag}! ▼" id="videosync_btn" /><div id="videosync_box"></div></div>
-HTML
+            $action->elementStart('div', array('id' => 'videosync'));
+            $action->element('input', array(
+                'type' => 'button', 
+                'id' => 'videosync_btn', 
+                'value' => "▼ Watch videos together on the #{$this->tag}! ▼")
             );
+            if(!empty($user) && $user->hasRight(Right::CONFIGURESITE)) {
+                $action->elementStart('div', array('id' => 'videosync_aside'));
+                $v = new Videosync();
+                $v->find();
+                $s = new SwitchForm($action, $v);
+                $s->show();
+                $action->elementEnd('div');
+            }
+            $action->element('div', array('id' => 'videosync_box'));
+            $action->elementEnd('div');
         }
 
         return true;
