@@ -177,9 +177,10 @@ class MobileProfilePlugin extends WAP20Plugin
             }
         }
 
-        if (!$this->serveMobile) {
+        // This whole doctype manipulation stupidity breaks Meteor, so screw that.
+        //if (!$this->serveMobile) {
             return true;
-        }
+        //}
 
         // @fixme $type is undefined, making this if case useless and spewing errors.
         // What's the intent?
