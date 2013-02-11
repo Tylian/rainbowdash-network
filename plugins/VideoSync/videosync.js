@@ -38,6 +38,11 @@ Videosync = {
     init: function(parms) {
 
         var V = Videosync;
+        // Return if the trigger button doesn't exist. This means we aren't logged
+        if(!$('#' + V.trigger).length) {
+            return;
+        }
+
         if(parms) {
             V.yt_id = parms.yt_id;
             V.started = parms.started;
