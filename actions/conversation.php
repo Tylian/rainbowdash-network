@@ -186,6 +186,20 @@ class ConversationTree extends NoticeList
 
         }
 
+        // Heal missing root notice with first notice in database. Hackish.
+        if(empty($this->tree['root'])) {
+            $notice = new Notice();
+            $notice->orderBy('id ASC');
+            $notice->limit(1);
+            $notice->find();
+            $notice->fetch();
+
+            $this->table[$notice->id] = $notice;
+
+            $this->tree['root'] = array($notice->id);
+            $this->tree[$notice->id] = array();
+        }
+
         // Heal broken replies
         foreach(array_keys($this->tree) as $ckey ) {
             if($ckey == 'root') continue;
