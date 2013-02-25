@@ -476,6 +476,7 @@ margin: 0px;
 
 #videosync_btn {
 padding: 2px;
+cursor: pointer;
 }
 
 #videosync_btn, #videosync_box {
