@@ -63,9 +63,9 @@ class ActivityImporter extends QueueHandler
 
         $done = null;
 
-        if (Event::handle('StartImportActivity',
-                          array($user, $author, $activity, $trusted, &$done))) {
-            try {
+        try {
+            if (Event::handle('StartImportActivity',
+                              array($user, $author, $activity, $trusted, &$done))) {
                 switch ($activity->verb) {
                 case ActivityVerb::FOLLOW:
                     $this->subscribeProfile($user, $author, $activity);
@@ -83,16 +83,10 @@ class ActivityImporter extends QueueHandler
                 Event::handle('EndImportActivity',
                               array($user, $author, $activity, $trusted));
                 $done = true;
-            } catch (ClientException $ce) {
-                common_log(LOG_WARNING, $ce->getMessage());
-                $done = true;
-            } catch (ServerException $se) {
-                common_log(LOG_ERR, $se->getMessage());
-                $done = false;
-            } catch (Exception $e) {
-                common_log(LOG_ERR, $e->getMessage());
-                $done = false;
             }
+        } catch (Exception $e) {
+            common_log(LOG_ERR, $e->getMessage());
+            $done = true;
         }
         return $done;
     }
