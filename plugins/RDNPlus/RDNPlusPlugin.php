@@ -110,7 +110,9 @@ HERE;
         $vars = $this->vars;
 
         $user = common_current_user();
-        $nick = $user->nickname;
+        if(!empty($user)) {
+            $nick = $user->nickname;
+        }
         $localurl = explode('?', common_local_url('public'));
         $localurl = $localurl[0];
 
