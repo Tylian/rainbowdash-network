@@ -502,13 +502,8 @@ margin-left: -2px;
 width: 637px;
 margin-left: 0px;
 position:absolute;
-bottom: 100%;
 margin-bottom: -199px;
 overflow:auto;
-animation: fadeout 1.5s ease 7.5s, stay-invisible 999999999s ease 6s;
--moz-animation: fadeout 1.5s ease 7.5s, stay-invisible 999999999s ease 6s;
--o-animation: fadeout 1.5s ease 7.5s, stay-invisible 999999999s ease 6s;
--webkit-animation: fadeout 1.5s ease 7.5s, stay-invisible 999999999s ease 6s;
 }
 
 .form_notice #notice_data-attach_selected {
