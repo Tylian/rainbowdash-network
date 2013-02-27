@@ -51,7 +51,9 @@ while($notice->fetch()) {
     if(!have_option('t', 'test')) {
         $orig = clone($notice);
         $plugin->onStartNoticeSave(&$notice);
-        $notice->update($orig);
+        if($orig->content != $notice->content) {
+            $notice->update($orig);
+        }
     }
     else {
         $orig = clone($notice);
