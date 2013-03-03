@@ -34,7 +34,7 @@ class IpconflictsAction extends Action
         }
 
         $this->ip = new Profile();
-        $this->ip->query("SELECT profile.* FROM profile JOIN ip_login as ip ON profile.id = ip.user_id JOIN ip_login AS ip2 ON ip2.ipaddress = ip.ipaddress JOIN profile_role ON ip2.user_id = profile_role.profile_id WHERE ip.id != ip2.id AND (role='silenced' OR role='permaban') GROUP BY profile.id;");
+        $this->ip->query("SELECT profile.* FROM profile JOIN ip_login as ip ON profile.id = ip.user_id JOIN ip_login AS ip2 ON ip2.ipaddress = ip.ipaddress JOIN profile_role ON ip2.user_id = profile_role.profile_id WHERE (role='silenced' OR role='permaban') GROUP BY profile.id;");
 
         return true;
     }
