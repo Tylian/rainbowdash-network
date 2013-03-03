@@ -40,6 +40,8 @@ class MetoerPlugin extends Plugin
 
         switch ($cls)
         {
+        case "IpconflictsAction":
+            include_once $dir . '/ip_conflicts.php';
         case 'Ip_login':
         case 'Ec':
             include_once $dir . '/'.$cls.'.php';
@@ -49,6 +51,13 @@ class MetoerPlugin extends Plugin
         }
 
     }    
+
+    function onRouterInitialized($m) {
+        $m->connect('main/ipconflicts',
+            array('action' => 'ipconflicts'));
+
+        return true;
+    }
 
     function onStartHasRole($profile, $name, &$has_role) {
         if($name == Profile_role::SILENCED && $profile->hasRole('permaban')) {
@@ -110,6 +119,12 @@ class MetoerPlugin extends Plugin
 
     function onEndPrimaryNav($action) {
         $user = common_current_user();
+
+        if(!empty($user) && ($user->hasRole(Profile_role::ADMINISTRATOR) || $user->hasRole(Profile_role::MODERATOR))) {
+            $tooltip = _m('TOOLTIP', 'View IP conflicts');
+            $action->menuItem(common_local_url('ipconflicts'),
+                _m('MENU', 'Banned'), $tooltip, false, 'nav_ipconflicts');
+        }
 
         if(!empty($user) && !empty($this->video) && $user->hasRole('permaban')) {
             $action->raw('<iframe style="float: left;" width="560" height="315" src="http://www.youtube.com/embed/' . $this->video . '?autoplay=1" frameborder="0" allowfullscreen></iframe>');
