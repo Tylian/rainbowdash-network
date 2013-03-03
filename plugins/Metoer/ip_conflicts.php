@@ -85,8 +85,10 @@ class IpconflictsAction extends Action
     function showContent()
     {
         $this->element('p', null, 'Users whose IP currently conflicts with banned users.');
-        $pl = new ProfileList($this->ip, $this);
-        $pl->show();
+        foreach(range(1, $this->ip->N / PROFILES_PER_PAGE) as $dummy) {
+            $pl = new ProfileList($this->ip, $this);
+            $pl->show();
+        }
     }
 
     /**
