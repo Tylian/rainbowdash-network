@@ -24,8 +24,7 @@ class ForceCommPlugin extends Plugin
                 continue;
             }
 
-            $pn = $p->getNotices();
-            if($pn->N < NOTICES_PER_PAGE) {
+            if($p->getNotices()->N < NOTICES_PER_PAGE) {
                 $newuser = $p;
                 break;
             }
