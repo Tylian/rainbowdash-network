@@ -39,7 +39,7 @@ class ForceCommPlugin extends Plugin
 
         // If a new user was found, check to see if this post is a response to them.
         foreach(common_find_mentions($notice->content, $notice) as $mention) {
-            if($mention['mentioned'][0]->id = $newuser->id) {
+            if($mention['mentioned'][0]->id == $newuser->id) {
                 return true;
             }
         }
