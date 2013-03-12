@@ -176,6 +176,33 @@ class MediaFile
         }
     }
 
+    static function fromURI($param = 'media', $uri = null) {
+        if(empty($uri)) {
+            return;
+        }
+
+        $file = file_get_contents(str_replace('data:', 'data://', $uri));
+        $tempfile = tempnam(sys_get_temp_dir(), rawurlencode(common_config('site', 'name') . "$param-"));
+
+        $_FILES[$param] = array(
+            'tmp_name' => $tempfile,
+            'name' => 'tmpfile',
+            'error' => UPLOAD_ERR_OK,
+            'size' => strlen($file),
+        );
+
+        if(strlen($file) > ImageFile::maxFileSizeInt()) {
+            $_FILES[$param]['error'] = UPLOAD_ERR_INI_SIZE;
+        }
+        else {
+            if(file_put_contents($tempfile, $file) === false) {
+                $_FILES[$param]['error'] = UPLOAD_ERR_CANT_WRITE;
+            }
+        }
+
+        return MediaFile::fromUpload($param);
+    }
+
     static function fromUpload($param = 'media', $user = null)
     {
         if (empty($user)) {
@@ -250,7 +277,13 @@ class MediaFile
             $filename = File::filename($user->getProfile(), $basename, $mimetype);
             $filepath = File::path($filename);
 
-            $result = move_uploaded_file($_FILES[$param]['tmp_name'], $filepath);
+            $result = false;
+            if(!file_exists($filepath)) {
+                $result = move_uploaded_file($_FILES[$param]['tmp_name'], $filepath);
+                if(!$result) {
+                    $result = rename($_FILES[$param]['tmp_name'], $filepath);
+                }
+            }
 
             if (!$result) {
                 // TRANS: Client exception thrown when a file upload operation fails because the file could

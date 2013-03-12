@@ -171,6 +171,9 @@ class NewnoticeAction extends Action
 
         $upload = null;
         $upload = MediaFile::fromUpload('attach');
+        if(empty($upload) && $this->trimmed('ajaxfile')) {
+            $upload = MediaFile::fromURI('ajaxfile', $this->trimmed('ajaxfile'));
+        }
 
         if (isset($upload)) {
 
