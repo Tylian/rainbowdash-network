@@ -114,13 +114,13 @@ var SN = { // StatusNet
          * @access private
          */
         HandleDrop: function(e) {
-            e.stopPropagation();
-            e.preventDefault();
-
             var files = e.originalEvent.dataTransfer.files;
             var count = files.length;
 
             if(count) {
+                e.stopPropagation();
+                e.preventDefault();
+
                 if(typeof files[0].name != 'undefined') {
                     var filename = files[0].name;
                 }
