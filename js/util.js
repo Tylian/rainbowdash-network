@@ -137,6 +137,7 @@ var SN = { // StatusNet
                     return false;
                 }
 
+                $('#'+SN.C.S.NoticeDataAttach).val('');
                 SN.U.NoticeDataAttachSelected(filename);
                 SN.U.PreviewAttach(files[0]);
             }
