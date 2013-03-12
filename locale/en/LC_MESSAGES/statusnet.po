@@ -5757,7 +5757,7 @@ msgstr ""
 
 #: lib/noticeform.php:196
 msgid "Attach a file"
-msgstr ""
+msgstr "Attach a file (or drag file to notice box)"
 
 #: lib/noticeform.php:212
 msgid "Share my location"
