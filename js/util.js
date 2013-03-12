@@ -413,7 +413,7 @@ var SN = { // StatusNet
             form.bind('dragover', SN.U.DropNoop);
             form.bind('drop', SN.U.HandleDrop);
 
-            var attach = form.find('#'+SN.U.NoticeDataAttach);
+            var attach = form.find('#'+SN.C.S.NoticeDataAttach);
 
             form.ajaxForm({
                 dataType: 'xml',
