@@ -194,13 +194,14 @@ text-transform: uppercase;
 margin: 0 1%;
 }
 
-#site_nav_global_primary ul.nav li {
+#site_nav_global_primary ul.nav > li {
 display: inline;
 margin-right: 0px;
 margin-left: 0px;
 }
 
-#site_nav_global_primary ul.nav a {
+#site_nav_global_primary ul.nav > li > a,
+li.nav_dropdown > span {
 padding: 4px 8px;
 line-height: 1.8em;
 border-radius: 4px;
@@ -212,7 +213,8 @@ border-bottom: 1px solid transparent;
 border-left: 1px solid transparent;
 }
 
-#site_nav_global_primary ul.nav a:hover {
+#site_nav_global_primary ul.nav > li > a:hover,
+li.nav_dropdown:hover > span {
 color: #fff;
 background-color: #000;
 border-bottom: 1px solid #666;
@@ -220,8 +222,50 @@ border-left: 1px solid #666;
 text-decoration: none;
 }
 
-#site_nav_global_primary li {
-margin-left: 8px;
+li.nav_dropdown {
+position: relative;
+}
+
+li.nav_dropdown > span:after {
+content: '';
+border: 6px solid transparent;
+border-top: 6px solid #AAA;
+position: relative;
+top: 10px;
+margin-left: 3px;
+}
+
+li.nav_dropdown > ol {
+position: absolute;
+top: 18px;
+left: 0px;
+list-style-type: none;
+min-width: 100%;
+height: auto;
+text-align: left;
+/*display: none;*/
+height: 0px;
+overflow-y: hidden;
+}
+
+li.nav_dropdown:hover > ol {
+/*display: block;*/
+height: auto;
+border-top: 1px solid #666;
+}
+
+li.nav_dropdown a {
+background-color: #333;
+display: block;
+padding: 6px 8px;
+color: white;
+text-decoration: none;
+border-bottom: 1px solid #666;
+border-left: 1px solid #666;
+}
+
+li.nav_dropdown a:hover {
+background-color: black;
 }
 
 #anon_notice { 
@@ -2490,18 +2534,23 @@ width: 98%;
 }
 .entity_profile .note{white-space: pre-wrap}
 
-#site_nav_global_primary li {
+#site_nav_global_primary > * > ul > li {
 float: left;
 }
 
-#site_nav_global_primary #nav_personal,
-#site_nav_global_primary #nav_account,
+/*#site_nav_global_primary #nav_personal,
+#site_nav_global_primary #nav_account,*/
+#site_nav_global_primary #nav_userlinks,
 #site_nav_global_primary #nav_login,
 #site_nav_global_primary #nav_logout,
 #site_nav_global_primary #nav_register,
 #site_nav_global_primary #nav_dmcounter {
 float: none;
 }
+
+li#nav_userlinks {}
+li#nav_userlinks ol {margin-top: -3px; margin-left: -6px}
+li#nav_userlinks > span {text-transform: lowercase; margin-left: -6px}
 
 #site_nav_global_primary #nav_dmcounter strong {
 color: #00FF00 !important;
