@@ -1,6 +1,7 @@
 # Translation of StatusNet - InfiniteScroll to Hebrew (עברית)
 # Exported from translatewiki.net
 #
+# Author: Amire80
 # Author: YaronSh
 # --
 # This file is distributed under the same license as the StatusNet package.
@@ -9,19 +10,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: StatusNet - InfiniteScroll\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-01-29 21:45+0000\n"
-"PO-Revision-Date: 2011-01-29 21:49:57+0000\n"
-"Language-Team: Hebrew <http://translatewiki.net/wiki/Portal:he>\n"
+"POT-Creation-Date: 2011-09-25 21:42+0000\n"
+"PO-Revision-Date: 2011-09-25 21:44:06+0000\n"
+"Language-Team: Hebrew <https://translatewiki.net/wiki/Portal:he>\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-POT-Import-Date: 2011-01-10 18:26:02+0000\n"
-"X-Generator: MediaWiki 1.18alpha (r81195); Translate extension (2010-09-17)\n"
-"X-Translation-Project: translatewiki.net at http://translatewiki.net\n"
+"X-POT-Import-Date: 2011-06-05 21:50:21+0000\n"
+"X-Generator: MediaWiki 1.19alpha (r98079); Translate extension (2011-09-22)\n"
+"X-Translation-Project: translatewiki.net at https://translatewiki.net\n"
 "X-Language-Code: he\n"
 "X-Message-Group: #out-statusnet-plugin-infinitescroll\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: InfiniteScrollPlugin.php:54
+#. TRANS: Plugin dscription.
 msgid ""
 "Infinite Scroll adds the following functionality to your StatusNet "
 "installation: When a user scrolls towards the bottom of the page, the next "
@@ -29,6 +30,6 @@ msgid ""
 "never need to click \"Next Page\", which dramatically increases stickiness."
 msgstr ""
 "Infinite Scroll (גלילה אינסופית) מוסיפה את התכונות הבאות להתקנת ה־StatusNet "
-"שלך: כאשר משתמש גולל אל עבר תחתית הדף, דף ההודעות הבא נטען ונוסף אוטומטית. "
+"שלך: כאשר משתמש גולל אל עבר תחתית הדף, דף העדכונים הבא נטען ונוסף אוטומטית. "
 "משמעות הדבר היא שאין על המשתמשים ללחוץ על \"הדף הבא\", מה שמגביר את תחושת "
 "הדבקות בצורה דרמטית."
