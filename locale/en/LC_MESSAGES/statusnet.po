@@ -5583,7 +5583,7 @@ msgstr ""
 #: lib/mail.php:568
 #, php-format
 msgid "%s (@%s) added your notice as a favorite"
-msgstr "@%2$s favorited your dash"
+msgstr "%1$0s @%2$s favorited your dash"
 
 #: lib/mail.php:570
 #, php-format
