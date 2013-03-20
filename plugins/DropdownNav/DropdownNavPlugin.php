@@ -23,28 +23,38 @@ class DropdownNavPlugin extends Plugin
             _m('MENU', 'Home'), $tooltip, false, 'nav_home');
 
 		// TRANS: Tooltip for main menu option "Rules".
-		$tooltip = _m('TOOLTIP', 'Site Rules!');
+		$tooltip = _m('TOOLTIP', 'Site rules');
 		$action->menuItem(common_local_url('doc', array('title' => 'rules')),
 						_m('MENU', 'Rules'), $tooltip, false, 'nav_rules');
-		
-		$this->startDropdown($action, 'Links', 'nav_links');
 
-            // TRANS: Tooltip for main menu option "Rules".
-            $tooltip = _m('TOOLTIP', 'List of Site Staff');
-            $action->menuItem(common_local_url('staff'),
-                            _m('MENU', 'Staff'), $tooltip, false, 'nav_admins');
-							
-			if($user && common_config('invite', 'enabled')) {
-                // TRANS: Tooltip for main menu option "Invite".
-                $tooltip = _m('TOOLTIP', 'Invite friends and colleagues to join you on %s');
-                $action->menuItem(common_local_url('invite'),
-                                _m('MENU', 'Invite'),
-                                sprintf($tooltip,
-                                        common_config('site', 'name')),
-                                false, 'nav_invitecontact');
-			}
+		// TRANS: Tooltip for main menu option "Rules".
+		$tooltip = _m('TOOLTIP', 'List of site staff');
+		$action->menuItem(common_local_url('staff'),
+						_m('MENU', 'Staff'), $tooltip, false, 'nav_admins');
+		
+		if ($user || !common_config('site', 'private')) {
+			$this->startDropdown($action, _m('MENU', 'Search'), 'nav_search');
 			
-		$this->endDropdown($action);
+				// TRANS: Tooltip for main menu option "Search People".
+				$tooltip = _m('TOOLTIP', 'Find people on this site');
+				$action->menuItem(common_local_url('peoplesearch'),
+								// TRANS: Main menu option when logged in or when the StatusNet instance is not private.
+								_m('People'), $tooltip, false, 'nav_peoplesearch');
+			
+				// TRANS: Tooltip for main menu option "Search People".
+				$tooltip = _m('TOOLTIP', 'Find content of notices');
+				$action->menuItem(common_local_url('noticesearch'),
+								// TRANS: Main menu option when logged in or when the StatusNet instance is not private.
+								_m('Notices'), $tooltip, false, 'nav_noticesearch');
+			
+				// TRANS: Tooltip for main menu option "Search People".
+				$tooltip = _m('TOOLTIP', 'Find groups on this site');
+				$action->menuItem(common_local_url('groupsearch'),
+								// TRANS: Main menu option when logged in or when the StatusNet instance is not private.
+								_m('Groups'), $tooltip, false, 'nav_groupsearch');
+								
+			$this->endDropdown($action);
+		}
 		
 		if($user) {
             if ($user->hasRight(Right::CONFIGURESITE)) {
@@ -55,6 +65,9 @@ class DropdownNavPlugin extends Plugin
                                 _m('MENU', 'Admin'), $tooltip, false, 'nav_admin');
             }
 		}
+		
+		// Allow other plugins to add nav items too
+		Event::handle('EndPrimaryNav', array($action, $this));
 			
         if ($user) {
 
@@ -66,28 +79,38 @@ class DropdownNavPlugin extends Plugin
                                 _m('MENU', 'Personal'), $tooltip, false, 'nav_personal');
 
                 // TRANS: Tooltip for main menu option "Account".
-                $tooltip = _m('TOOLTIP', 'Change your email, avatar, password, profile');
+                $tooltip = _m('TOOLTIP', 'Your incoming messages');
                 $action->menuItem(common_local_url('inbox', array('nickname' => $user->nickname)),
                                 // TRANS: Main menu option when logged in for access to user settings.
                                 _('Inbox'), $tooltip, false, 'nav_dmcounter');
 
                 // TRANS: Tooltip for main menu option "Account".
-                $tooltip = _m('TOOLTIP', 'Change your email, avatar, password, profile');
+                $tooltip = _m('TOOLTIP', 'View replies');
                 $action->menuItem(common_local_url('replies', array('nickname' => $user->nickname)),
                                 // TRANS: Main menu option when logged in for access to user settings.
                                 _('Replies'), $tooltip, false, 'nav_replies');
-
-                // TRANS: Tooltip for main menu option "Account".
-                $tooltip = _m('TOOLTIP', 'Change your email, avatar, password, profile');
-                $action->menuItem(common_local_url('profilesettings'),
-                                // TRANS: Main menu option when logged in for access to user settings.
-                                _('Settings'), $tooltip, false, 'nav_account');
 								
                 // TRANS: Tooltip for main menu option "Services".
                $tooltip = _m('TOOLTIP', 'Connect to services');
                $action->menuItem(common_local_url('oauthconnectionssettings'),
                                 // TRANS: Main menu option when logged in and connection are possible for access to options to connect to other services.
                                 _('Connect'), $tooltip, false, 'nav_connect');
+							
+				if(common_config('invite', 'enabled')) {
+					// TRANS: Tooltip for main menu option "Invite".
+					$tooltip = _m('TOOLTIP', 'Invite friends and colleagues to join you on %s');
+					$action->menuItem(common_local_url('invite'),
+									_m('MENU', 'Invite'),
+									sprintf($tooltip,
+											common_config('site', 'name')),
+									false, 'nav_invitecontact');
+				}
+
+                // TRANS: Tooltip for main menu option "Account".
+                $tooltip = _m('TOOLTIP', 'Change your email, avatar, password, profile');
+                $action->menuItem(common_local_url('profilesettings'),
+                                // TRANS: Main menu option when logged in for access to user settings.
+                                _('Account'), $tooltip, false, 'nav_account');
 			$this->endDropdown($action);
             
 			// TRANS: Tooltip for main menu option "Logout"

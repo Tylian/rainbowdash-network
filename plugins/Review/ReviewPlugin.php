@@ -13,14 +13,20 @@ class ReviewPlugin extends Plugin
 {
     public $filename = '/tmp/deletednotices';
 
-    function onEndPrimaryNav($action) {
+    function onEndPrimaryNav($action, DropdownNavPlugin $dropdown=null) {
         $user = common_current_user();
 
         if(!empty($user) && ($user->hasRole(Profile_role::ADMINISTRATOR) || $user->hasRole(Profile_role::MODERATOR))) {
+			if($dropdown !== null)
+				$dropdown->startDropdown($action, 'Mod tools', 'nav_modlinks');
+			
             $tooltip = _m('TOOLTIP', 'View deleted notices');
             $action->menuItem(common_local_url('deletednotices'),
                 _m('MENU', 'Deleted'), $tooltip, false, 'nav_deleted');
-        }
+		
+			if($dropdown !== null)
+				$dropdown->endDropdown($action);
+        }	
     }
 
     function onRouterInitialized($m) {
