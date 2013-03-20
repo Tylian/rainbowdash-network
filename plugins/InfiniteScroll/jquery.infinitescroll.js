@@ -35,14 +35,17 @@
       
       path.match(relurl) ? path.match(relurl)[2] : path; 
 
+      if ( opts.customRegex && path.match(opts.customRegex) ) {
+          path = path.match(opts.customRegex).slice(1);
+      }
       // there is a 2 in the url surrounded by slashes, e.g. /page/2/
-      if ( path.match(/^(.*?)\b2\b(.*?$)/) ){  
-          path = path.match(/^(.*?)\b2\b(.*?$)/).slice(1);
+      else if ( path.match(/^(.*?)\b(2)\b(.*?$)/) ){  
+          path = path.match(/^(.*?)\b(2)\b(.*?$)/).slice(1);
       } else 
         // if there is any 2 in the url at all.
-        if (path.match(/^(.*?)2(.*?$)/)){
+        if (path.match(/^(.*?)(2)(.*?$)/)){
           debug('Trying backup next selector parse technique. Treacherous waters here, matey.');
-          path = path.match(/^(.*?)2(.*?$)/).slice(1);
+          path = path.match(/^(.*?)(2)(.*?$)/).slice(1);
       } else {
         debug('Sorry, we couldn\'t parse your Next (Previous Posts) URL. Verify your the css selector points to the correct A tag. If you still get this error: yell, scream, and kindly ask for help at infinite-scroll.com.');    
         props.isInvalidPage = true;  //prevent it from running on this page.
@@ -60,8 +63,6 @@
                                 : $(document).height()
     }
     
-    
-        
     function isNearBottom(opts,props){
       
       // distance remaining in the scroll
@@ -103,7 +104,7 @@
     		
     		// increment the URL bit. e.g. /page/3/
     		props.currPage++;
-    		
+
     		debug('heading into ajax',path);
     		
     		// if we're dealing with a table we can't use DIVs
@@ -139,7 +140,15 @@
                     
                     // pass in the new DOM element as context for the callback
                     callback.call( box[0] );
-                    
+
+                    // pushState (if supported)
+                    if (typeof history.pushState !== 'undefined') {
+                        index = (props.currPage - 1) * $(opts.itemSelector).length / props.currPage;
+                        pos = $(opts.itemSelector).eq(index).offset().top;
+    
+                        history.pushState({'page': props.currPage}, '', path.join( props.currPage ) );
+                    }
+
     		            if (!opts.animate) props.isDuringAjax = false; // once the call is done, we can allow it again.
   	            }
     		    }); // end of load()
@@ -173,8 +182,8 @@
     if (!path) { debug('Navigation selector not found'); return; }
     
     // set the path to be a relative URL from root.
-    path          = determinePath(path);
-    
+    path           = determinePath(path, opts);
+    props.currPage = path.splice(1, 1)[0] - 1;
 
     // reset scrollTop in case of page refresh:
     if (opts.localMode) $(props.container)[0].scrollTop = 0;
@@ -204,7 +213,7 @@
         $(opts.localMode ? this : window).unbind('scroll.infscr');
       } 
     });
-    
+
     if(opts.infiniteScroll){
       // bind scroll handler to element (if its a local scroll) or window  
       $(opts.localMode ? this : window)
@@ -239,6 +248,7 @@
                           donetext        : "<em>Congratulations, you've reached the end of the internet.</em>",
                           navSelector     : "div.navigation",
                           contentSelector : null,           // not really a selector. :) it's whatever the method was called on..
+                          customRegex     : null,
                           extraScrollPx   : 150,
                           itemSelector    : "div.post",
                           animate         : false,
