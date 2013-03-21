@@ -19,7 +19,7 @@ $(function(){
             $.cookie('lastdm', lastDM, {'expires': 365, 'path': '/'});
         }
         else {
-            var profile = $('#site_nav_local_views, #nav_profile a').filter(':first');
+            var profile = $(/*'#site_nav_local_views, #nav_profile a'*/ '#nav_dmcounter').filter(':first');
             var oldinbox = profile.find('a[href*="inbox"]');
             if(oldinbox.length) {
                 oldinbox.addClass('dmcounter');
@@ -120,8 +120,18 @@ function updateDM() {
         else {
             var newDM = $(holder).find('.messages li').length;
         }
-    $('.dmcounter').html('Inbox (' + newDM + ')');
+    $('.dmcounter').html('Inbox'+(newDM == 0 ? '' : ' (<strong>' + newDM + ' new</strong>)'));
         setTimeout(updateDM, 60000);
+		
+		if(newDM > 0)
+			$('#nav_userlinks').addClass('new_dms');
+		else
+			$('#nav_userlinks').removeClass('new_dms');
+		
+		lastDM = $.cookie('lastdm');
+		if(!lastDM) {
+			lastDM = 'notice-0';
+		}
 
         }});
 }
@@ -309,7 +319,7 @@ function customStyle() {
     if(logo) {$('.logo.photo').attr('src', logo)}
     }
 }
-
+/*
 //Get user selected text
 function getSelected(){
   var userSelection, ta;
@@ -333,7 +343,7 @@ function getSelected(){
     }
   }
 return userSelection;
-}
+} silly widget, you duplicated code here and I'm going to leave this just to spite you*/
 
 function rot13(text){ 
     return text.replace(/[a-zA-Z]/g, function(c){ 

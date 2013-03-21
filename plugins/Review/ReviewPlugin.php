@@ -17,10 +17,7 @@ class ReviewPlugin extends Plugin
         $user = common_current_user();
 
         if(!empty($user) && ($user->hasRole(Profile_role::ADMINISTRATOR) || $user->hasRole(Profile_role::MODERATOR))) {
-			if($dropdown !== null)
-				$dropdown->startDropdown($action, 'Mod tools', 'nav_modlinks');
-			
-            $tooltip = _m('TOOLTIP', 'View deleted notices');
+			$tooltip = _m('TOOLTIP', 'View deleted notices');
             $action->menuItem(common_local_url('deletednotices'),
                 _m('MENU', 'Deleted'), $tooltip, false, 'nav_deleted');
 		

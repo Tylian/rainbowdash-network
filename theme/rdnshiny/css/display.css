@@ -241,17 +241,13 @@ top: 18px;
 left: 0px;
 list-style-type: none;
 min-width: 100%;
-height: auto;
 text-align: left;
-/*display: none;*/
-height: 0px;
-overflow-y: hidden;
+border-top: 1px solid #666;
+display: none;
 }
 
 li.nav_dropdown:hover > ol {
-/*display: block;*/
-height: auto;
-border-top: 1px solid #666;
+display: block;
 }
 
 li.nav_dropdown a {
@@ -262,6 +258,7 @@ color: white;
 text-decoration: none;
 border-bottom: 1px solid #666;
 border-left: 1px solid #666;
+white-space: nowrap
 }
 
 li.nav_dropdown a:hover {
@@ -2538,8 +2535,8 @@ width: 98%;
 float: left;
 }
 
-/*#site_nav_global_primary #nav_personal,
-#site_nav_global_primary #nav_account,*/
+#site_nav_global_primary ul.nav > #nav_personal,
+#site_nav_global_primary ul.nav > #nav_account,
 #site_nav_global_primary #nav_userlinks,
 #site_nav_global_primary #nav_login,
 #site_nav_global_primary #nav_logout,
@@ -2548,7 +2545,14 @@ float: left;
 float: none;
 }
 
-li#nav_userlinks {}
+li#nav_userlinks > span:before {content: '@'}
+li.new_dms#nav_userlinks > span:before {
+content: '!!';
+color: red;
+font-weight: bold;
+}
+li.new_dms li#nav_dmcounter a {background-color: #242}
+li.new_dms li#nav_dmcounter a:hover {background-color: #020}
 li#nav_userlinks ol {margin-top: -3px; margin-left: -6px}
 li#nav_userlinks > span {text-transform: lowercase; margin-left: -6px}
 

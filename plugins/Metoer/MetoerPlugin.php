@@ -117,10 +117,13 @@ class MetoerPlugin extends Plugin
         return true;
     }
 
-    function onEndPrimaryNav($action) {
+    function onEndPrimaryNav($action, DropdownNavPlugin $dropdown=null) {
         $user = common_current_user();
 
         if(!empty($user) && ($user->hasRole(Profile_role::ADMINISTRATOR) || $user->hasRole(Profile_role::MODERATOR))) {
+            if($dropdown !== null)
+				$dropdown->startDropdown($action, 'Mod tools', 'nav_modlinks');
+			
             $tooltip = _m('TOOLTIP', 'View IP conflicts');
             $action->menuItem(common_local_url('ipconflicts'),
                 _m('MENU', 'Banned'), $tooltip, false, 'nav_ipconflicts');

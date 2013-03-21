@@ -56,6 +56,27 @@ class DropdownNavPlugin extends Plugin
 			$this->endDropdown($action);
 		}
 		
+		if(true) { // I don't think widget'll let me move these to the sidebar :(
+			$this->startDropdown($action, _m('Links'), 'nav_links');
+				
+                // TRANS: Tooltip for main menu option "Roleplay".
+                $tooltip = _m('TOOLTIP', 'Go to Equestria RP for any roleplaying! (Not affiliated with Rainbow Dash Network)'/*"(but we're putting them in the nav header of our site anyway)"*/);
+										 
+                $action->menuItem('http://equestriarp.net/',
+                    _m('MENU', /*'Roleplay'*/ 'Equestria RP'), $tooltip, false, 'nav_roleplay');
+
+                // TRANS: Tooltip for main menu option "Meetups".
+                $tooltip = _m('TOOLTIP', /*'Pony/brony meetups and social groups!'*/ 'Find a pony meetup or group near you');
+                $action->menuItem('http://www.bronies.com/map/',
+                                // TRANS: Main menu option when logged in for access to personal profile and friends timeline.
+                                _m('MENU', /*'Meetups'*/ 'Meetup map'), $tooltip, false, 'nav_meetups');
+			
+			$this->endDropdown($action);
+			
+			// ilu stumpy~ <3
+			//$action->menuItem('http://rainbowdash.net/group/sonic', 'SANIC', 'gotta go fast', false, 'nav_sanic');
+		}
+		
 		if($user) {
             if ($user->hasRight(Right::CONFIGURESITE)) {
                 // TRANS: Tooltip for menu option "Admin".
@@ -71,7 +92,7 @@ class DropdownNavPlugin extends Plugin
 			
         if ($user) {
 
-			$this->startDropdown($action, '@' . $user->nickname, 'nav_userlinks');
+			$this->startDropdown($action, $user->nickname, 'nav_userlinks');
                 // TRANS: Tooltip for main menu option "Personal".
                 $tooltip = _m('TOOLTIP', 'Personal profile and friends timeline');
                 $action->menuItem(common_local_url('all', array('nickname' => $user->nickname)),
