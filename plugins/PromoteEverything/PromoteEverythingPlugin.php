@@ -67,7 +67,8 @@ class PromoteEverythingPlugin extends Plugin
 
     function onStartShowSections($action) {
         if($action instanceof PublicAction) {
-            (new PromotedNoticeSection($action))->show();
+            $pns = new PromotedNoticeSection($action);
+            $pns->show();
         }
 
         return true;
