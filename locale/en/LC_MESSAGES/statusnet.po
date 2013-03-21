@@ -556,7 +556,7 @@ msgstr ""
 
 #: actions/apioauthauthorize.php:310 lib/action.php:438
 msgid "Account"
-msgstr ""
+msgstr "Settings"
 
 #: actions/apioauthauthorize.php:313 actions/login.php:230
 #: actions/profilesettings.php:106 actions/register.php:424
