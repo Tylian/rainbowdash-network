@@ -13,17 +13,28 @@ class ReviewPlugin extends Plugin
 {
     public $filename = '/tmp/deletednotices';
 
-    function onEndPrimaryNav($action, DropdownNavPlugin $dropdown=null) {
+    function onEndPrimaryNav($action) {
+        if(Event::hasHandler('EndAdminDropdown')) return true;
+
         $user = common_current_user();
 
         if(!empty($user) && ($user->hasRole(Profile_role::ADMINISTRATOR) || $user->hasRole(Profile_role::MODERATOR))) {
-			$tooltip = _m('TOOLTIP', 'View deleted notices');
-            $action->menuItem(common_local_url('deletednotices'),
-                _m('MENU', 'Deleted'), $tooltip, false, 'nav_deleted');
-		
-			if($dropdown !== null)
-				$dropdown->endDropdown($action);
+            $this->menuItem($action);
         }	
+
+        return true;
+    }
+
+    function onEndAdminDropdown($action) {
+        $this->menuItem($action);
+
+        return true;
+    }
+
+    function menuItem($action) {
+        $tooltip = _m('TOOLTIP', 'View deleted notices');
+        $action->menuItem(common_local_url('deletednotices'),
+            _m('MENU', 'Deleted'), $tooltip, false, 'nav_deleted');
     }
 
     function onRouterInitialized($m) {

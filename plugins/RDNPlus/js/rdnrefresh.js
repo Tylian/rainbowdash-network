@@ -319,31 +319,6 @@ function customStyle() {
     if(logo) {$('.logo.photo').attr('src', logo)}
     }
 }
-/*
-//Get user selected text
-function getSelected(){
-  var userSelection, ta;
-  if (window.getSelection && document.activeElement){
-    if (document.activeElement.nodeName == "TEXTAREA" ||
-        (document.activeElement.nodeName == "INPUT" &&
-        document.activeElement.getAttribute("type").toLowerCase() == "text")){
-      ta = document.activeElement;
-      userSelection = ta.value.substring(ta.selectionStart, ta.selectionEnd);
-    } else {
-      userSelection = window.getSelection();
-    }
-  } else {
-    // all browsers, except IE before version 9
-    if (document.getSelection){       
-        userSelection = document.getSelection();
-    }
-    // IE below version 9
-    else if (document.selection){
-        userSelection = document.selection.createRange();
-    }
-  }
-return userSelection;
-} silly widget, you duplicated code here and I'm going to leave this just to spite you*/
 
 function rot13(text){ 
     return text.replace(/[a-zA-Z]/g, function(c){ 
