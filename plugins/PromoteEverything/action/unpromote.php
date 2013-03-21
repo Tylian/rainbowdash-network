@@ -93,6 +93,7 @@ class UnpromoteAction extends Action
             return;
         }
 
+        Promote::blow('promote:notice_ids');
         if ($this->boolean('ajax')) {
             $this->startHTML('text/xml;charset=utf-8');
             $this->elementStart('head');

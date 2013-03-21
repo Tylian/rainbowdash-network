@@ -44,6 +44,12 @@ class PromoteEverythingPlugin extends Plugin
         return true;
     }
 
+    function onStartNoticeSave($notice) {
+        Promote::blow('promote:notice_ids');
+
+        return true;
+    }
+
     function onCheckSchema() {
         $schema = Schema::get();
 
