@@ -11,6 +11,7 @@ class MetoerPlugin extends Plugin
 {
     // Show the banned user a Youtube video.
     public $video;
+    private $dropdownCalled = false;
 
     function onCheckSchema()
     {  
@@ -120,7 +121,7 @@ class MetoerPlugin extends Plugin
     function onEndPrimaryNav($action) {
         $user = common_current_user();
 
-        if(!Event::hasHandler('EndAdminDropdown')) {
+        if(!$this->dropdownCalled) {
             if(!empty($user) && ($user->hasRole(Profile_role::ADMINISTRATOR) || $user->hasRole(Profile_role::MODERATOR))) {
                 $this->menuItem($action);
             }
@@ -134,6 +135,7 @@ class MetoerPlugin extends Plugin
     }
 
     function onEndAdminDropdown($action) {
+        $this->dropdownCalled = true;
         $this->menuItem($action);
 
         return true;

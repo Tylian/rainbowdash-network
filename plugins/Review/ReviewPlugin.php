@@ -12,9 +12,10 @@ include_once(INSTALLDIR . '/lib/noticelist.php');
 class ReviewPlugin extends Plugin
 {
     public $filename = '/tmp/deletednotices';
+    private $dropdownCalled = false;
 
     function onEndPrimaryNav($action) {
-        if(Event::hasHandler('EndAdminDropdown')) return true;
+        if($this->dropdownCalled) return true;
 
         $user = common_current_user();
 
@@ -26,6 +27,7 @@ class ReviewPlugin extends Plugin
     }
 
     function onEndAdminDropdown($action) {
+        $this->dropdownCalled = true;
         $this->menuItem($action);
 
         return true;
