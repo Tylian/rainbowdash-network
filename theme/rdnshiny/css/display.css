@@ -2211,6 +2211,8 @@ background-position: 0 -1714px;
 .notice-options .notice_reply,
 .notice-options form.form_favor input.submit,
 .notice-options form.form_disfavor input.submit,
+.notice-options form.form_promote input.submit,
+.notice-options form.form_unpromote input.submit,
 .notice-options .notice_delete,
 .notice-options form.form_repeat input.submit,
 #new_group a,
@@ -2384,10 +2386,12 @@ background-position:0 -1054px;
 .form_notice label[for=notice_data-attach] {
 background-position: 0 -328px;
 }
-.form_notice label[for=notice_data-geo] {
+.form_notice label[for=notice_data-geo], 
+.notice-options form.form_promote input.submit {
 background-position: 0 -1780px;
 }
-.form_notice label[for=notice_data-geo].checked {
+.form_notice label[for=notice_data-geo].checked,
+.notice-options form.form_unpromote input.submit {
 background-position: 0 -1846px;
 }
 
