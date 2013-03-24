@@ -209,7 +209,7 @@ line-height: 1.8em;
 border-radius: 4px;
 -moz-border-radius: 4px;
 -webkit-border-radius: 4px;
-color: #fff !important;
+color: #fff !important; /*FIXME seems to be unnecessary*/
 text-shadow: 0px 1px 0px rgba(0,0,0,0.8);  
 border-bottom: 1px solid transparent;
 border-left: 1px solid transparent;
@@ -399,7 +399,7 @@ position:absolute;
 top: 100%;
 right: 100px;
 cursor:pointer;
-margin: 4px !important;
+margin: 4px;
 z-index: 1002;
 }
 
@@ -505,7 +505,7 @@ box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 .form_notice input.submit, #videosync_btn, .form_switchvideo input.submit {
-border: none !important;
+border: none;
 border-radius: 4px;
 -moz-border-radius: 4px;
 -webkit-border-radius: 4px;
@@ -513,7 +513,7 @@ font-weight: normal;
 font-size: 1em;
 background-color: rgba(105, 106, 141, 0.6);
 color: white;
-z-index: 999 !important;
+z-index: 999;
 margin: 0px;
 }
 
@@ -658,7 +658,7 @@ text-decoration: none;
 #site_nav_local_views a:hover {
 background: none;
 display: block;
-color: #4d4d4d !important;
+color: #4d4d4d !important; /*FIXME*/
 box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
 -moz-box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
 -webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
@@ -673,12 +673,6 @@ border-top-right-radius:4px;
 -moz-border-radius-topright:4px;
 -webkit-border-top-right-radius:4px;
 }
-/*
-#site_nav_local_views a:hover {
-color: #4d424c !important;
-background-color: #b3b3b3;
-text-shadow: 0 1px 0 rgba(255,255,255,0.75);  
-}*/
 
 #core, #videosync_aside {
 display:inline;
@@ -703,11 +697,11 @@ display: none;
 }
 
 #videosync_aside input {
-    display: none;
+display: none;
 }
 
 #videosync_aside:hover input {
-    display: inline;
+display: inline;
 }
 
 #content {
@@ -1087,13 +1081,13 @@ right: 0;
 
 .inline-attachment
 {
-max-height: 75px !important;
+max-height: 75px;
 overflow: hidden;
 }
 
 .inline-attachment img
 {
-width: auto !important;
+width: auto;
 opacity: 0.7;
 }
 
@@ -1104,7 +1098,7 @@ opacity: 1;
 
 .notice div.thumbnails
 {
-width: 630px !important;
+width: 630px;
 max-width: 630px !important;
 float: none;
 max-height: 160px;
@@ -1219,7 +1213,7 @@ left:0;
 }
 
 .notice-options a.notice_delete{
-position:absolute !important;
+position:absolute;
 right:0px;
 }
 
@@ -1668,24 +1662,24 @@ width:34%;
 #form_ostatus_connect.dialogbox .form_data input,
 #form_ostatus_sub.dialogbox .form_data input {
 float: right;
-width: 52% !important;
+width: 52% !important; /**/
 }
 
 #form_ostatus_connect.dialogbox .form_data .form_guide,
 #form_ostatus_sub.dialogbox .form_data .form_guide {
-background: none !important;
+background: none !important; /**/
 text-align: right;
 margin-right: 16px;
 }
 
 .section .entity_actions {
-margin-right: 0px !important;
+margin-right: 0px !important; /**/
 }
 
 .section .entity_remote_subscribe {
-color:#000 !important;
-padding-left: 26px !important;
-background-position: 4px -1183px !important;
+color:#000 !important; /**/
+padding-left: 26px !important; /**/
+background-position: 4px -1183px !important; /**/
 }
 
 #filter_tags ul li,
@@ -1889,7 +1883,7 @@ display:block;
 }
 
 .entity_actions a, .entity_actions input, .entity_actions p {
-color: #333 !important;
+color: #333 !important; /**/
 font-weight: normal;
 line-height: 1.6em;
 }
@@ -1903,7 +1897,7 @@ padding: 4px 4px 4px 26px;
 }
 
 .entity_actions a, .entity_actions p, .entity_actions .entity_subscribe input, .entity_actions .entity_block input, .entity_actions .entity_moderation input, .entity_actions .entity_role input, .entity_actions .entity_nudge input, .entity_actions .entity_delete input, .entity_actions .entity_block input, .entity_actions .entity_seize input {
-background-color: #ccc !important;
+background-color: #ccc !important; /**/
 border: none;
 }
 
@@ -1912,7 +1906,7 @@ padding: 2px 4px 4px 28px;
 }
 
 .entity_actions a:hover, .entity_actions p:hover, .entity_actions .entity_subscribe input:hover, .entity_actions .entity_block input:hover, .entity_actions .entity_moderation input:hover, .entity_actions .entity_role input:hover, .entity_actions .entity_nudge input:hover, .entity_actions .entity_seize input:hover {
-background-color: #f2f2f2 !important;
+background-color: #f2f2f2 !important; /**/
 }
 
 .entity_actions #entity_remote_subscribe a {
@@ -1950,7 +1944,7 @@ width: 396px;
 display:block;
 margin-bottom:11px;
 font-weight: normal;
-color: #333 !important;
+color: #333;
 }
 
 .entity_send-a-message .form_notice label,
@@ -1989,9 +1983,9 @@ position:absolute;
 z-index:1;
 border-width:1px;
 border-style:solid;
-    top: 20px;
-    right: 0px;
-    background-color: #fff;
+top: 20px;
+right: 0px;
+background-color: #fff;
 }
 
 .entity_tags ul {
@@ -2187,11 +2181,11 @@ background-position: 0 -1714px;
 }
 
 #realtime_play, #realtime_pause, #realtime_popup {
-    opacity: 0.6;
+opacity: 0.6;
 }
 
 #realtime_play:hover, #realtime_pause:hover, #realtime_popup:hover {
-    opacity: 1;
+opacity: 1;
 }
 
 /* icons */
@@ -2430,58 +2424,58 @@ overflow-x: hidden;
 }
 
 .realtime-popup #wrap {
-padding: 0px !important;
-margin: 0px !important;
+padding: 0px !important; /*EXTERNAL OVERRIDE*/
+margin: 0px !important; /**/
 }
 
 .realtime-popup #content {
-padding: 0px !important;
-margin: 0px !important;
-width: 100% !important;
+padding: 0px !important; /**/
+margin: 0px !important; /**/
+width: 100% !important; /**/
 border-top-right-radius: 4px;
 }
 
 .realtime-popup .form_notice {
-float: left !important;
-position: static !important;
-background-color: transparent !important;
-height: 108px !important;
-width: 96% !important;
-max-width: 640px !important;
-min-width: 400px !important;
-margin: 6px 2% !important;
-overflow: hidden !important;
+float: left !important; /**/
+position: static !important; /**/
+background-color: transparent !important; /**/
+height: 108px !important; /**/
+width: 96% !important; /**/
+max-width: 640px !important; /**/
+min-width: 400px !important; /**/
+margin: 6px 2% !important; /**/
+overflow: hidden !important; /**/
 }
 
 .realtime-popup #notice_data-attach_selected {
-bottom: 0 !important;
-width: 16px !important;
+bottom: 0 !important; /**/
+width: 16px !important; /**/
 }
 
 .realtime-popup #notice_data-attach_selected code {
-display: none !important;
+display: none !important; /**/
 }
 
 .realtime-popup .form_notice fieldset {
-width: 100% !important;
-margin: 0 !important;
+width: 100% !important; /**/
+margin: 0 !important; /**/
 }
 .realtime-popup .form_notice textarea {
-width: 98% !important;
-padding: 6px 0 6px 2% !important;
+width: 98% !important; /**/
+padding: 6px 0 6px 2% !important; /**/
 }
 
 .realtime-popup .form_notice input.submit {
-top: 84px !important;
+top: 84px !important; /**/
 }
 
 .realtime-popup #notice_data-attach {
-width: 16px !important;
+width: 16px !important; /**/
 }
 
 body#bookmarklet #wrap,
 body#bookmarklet #header {
-width: 670px !important;
+width: 670px !important; /* Not sure what this is*/
 height: 150px !important;
 margin: 0 !important;
 padding: 0 !important;
@@ -2503,6 +2497,7 @@ color: red;
 
 span a[href$="/tag/nsfw"]:hover:after
 {
+/* This should be moved out of the CSS at some point*/
 content:"This post contains a link to NSFW material. Viewer discretion is advised.";
 background-color: #FFAAAA;
 border: 1px dotted red;
@@ -2523,6 +2518,7 @@ color: #008000;
 span a[href$="/tag/spoiler"]:hover:after,
 span a[href$="/tag/spoilers"]:hover:after
 {
+/* This should be moved out of the CSS at some point*/
 content:"This post contains or links to a spoiler. Decode or click at your own risk.";
 background-color: #80C080;
 border: 1px dotted #008000;
@@ -2567,7 +2563,7 @@ li#nav_userlinks ol {margin-top: -3px; margin-left: -6px}
 li#nav_userlinks > span {text-transform: lowercase; margin-left: -6px}
 
 #site_nav_global_primary #nav_dmcounter strong {
-color: #00FF00 !important;
+color: #00FF00;
 }
 
 }/*end of @media screen, projection, tv*/

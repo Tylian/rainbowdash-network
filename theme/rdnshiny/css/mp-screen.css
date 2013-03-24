@@ -1,122 +1,119 @@
 /* mobile style */
 
 #wrap {
-    margin: 0;
-    padding: 0;
-	min-width:0;
-    max-width:100%;
-	width: auto !important;
-	box-shadow:none;
-	overflow-x: hidden;
-	background-image: none !important;
+margin: 0;
+padding: 0;
+min-width:0;
+max-width:100%;
+width: auto !important;
+box-shadow:none;
+overflow-x: hidden;
+background-image: none !important;
 }
 
 #header {
-    width: 100%;
-	height: auto;
-    padding: 0;
-	margin: 0;
+width: 100%;
+height: auto;
+padding: 0;
+margin: 0;
 }
 
 address {
-	position: absolute;
-	left: 0px;
-	top: 0px;
-	background-color: #333;
-	width: 100px;
-	height: 28px;
-	z-index: 123457;
+position: absolute;
+left: 0px;
+top: 0px;
+background-color: #333;
+width: 100px;
+height: 28px;
+z-index: 123457;
 }
 
 address img {
-	width: 100px;
-	height: 28px;
+width: 100px;
+height: 28px;
 }
 
 address img + .fn {
-	display: none;
-	/*display:block;
-	margin-top:1em;
-    margin-right: 10px;
-	clear: left;
-	float:left;*/
+display: none;
+/*display:block;
+margin-top:1em;
+margin-right: 10px;
+clear: left;
+float:left;*/
 }
 
 #site_nav_global_primary {
-    font-size: 1em;
-	letter-spacing: 0em;
-	list-style-type: none;
-	list-style-position: inside;
-	border-radius: 0;
-	background-image: none;
-	background-color: #333;
-	position: static;
-	/position: fixed;
-	/left: 0;
-	/top: 0;
-	margin: 0 !important;
-	padding: 0 !important;
-	width: 100%;
-	z-index: 123456;
-	height: auto;
+font-size: 1em;
+letter-spacing: 0em;
+list-style-type: none;
+list-style-position: inside;
+border-radius: 0;
+background-image: none;
+background-color: #333;
+position: static;
+margin: 0 !important;
+padding: 0 !important;
+width: 100%;
+z-index: 123456;
+height: auto;
 }
 
 #nav_dummy {
-	width: 100px;
-	height: 28px;
-	display: block;
-	float: left;
+width: 100px;
+height: 28px;
+display: block;
+float: left;
 }
 
 #site_nav_global_primary li {
-	display: inline !important;
-	float: none !important;
+display: inline !important;
+float: none !important;
 }
 
 #site_nav_global_primary li a {
-	display: block;
-	background-color: #333;
-	float: left;
-	margin: 0;
-	height: 18px;
-	padding: 8px 5px 2px;
-    font-size:0.9em;
-    line-height: 1em;
-    color: #fff !important;
+display: block;
+background-color: #333;
+float: left;
+margin: 0;
+height: 18px;
+padding: 8px 5px 2px;
+font-size:0.9em;
+line-height: 1em;
+color: #fff !important;
 }
 
 .form_notice {
-    margin: 0;
-    width: 98%;
-    padding: 4px 1%;
+margin: 0;
+width: 98%;
+padding: 4px 1%;
 }
 
 .form_notice fieldset {
-	margin: 0 !important;
-	padding: 0 !important;
+margin: 0 !important;
+padding: 0 !important;
 }
 
 #form_notice-direct.form_notice {
-    padding-top: 10px;
+padding-top: 10px;
 }
 
 .form_notice textarea {
-    width: 98%;
-    height: 50px;
-    padding: 4px 1%;
+width: 98%;
+height: 50px;
+padding: 4px 1%;
 }
 
 #notice_text-count {
-	position:absolute;
-	bottom:4px;
-    right: 4px;
-    font-size: 0.8em;
-	z-index:9999999;
-	pointer-events: none;
+position:absolute;
+bottom:4px;
+right: 4px;
+font-size: 0.8em;
+z-index:9999999;
+pointer-events: none;
 }
 
 #form_notice-direct.form_notice #notice_text-count {
-    left: -185px;
+left: -185px;
 }
 
 /*input type=file no good in
@@ -140,83 +137,83 @@ opacity:1;
 }
 
 .form_notice #notice_action-submit {
-    text-align: center;
-    width: 100%;
-    font-size: 0.8em;
-    top: 0px;
-    position: relative;
+text-align: center;
+width: 100%;
+font-size: 0.8em;
+top: 0px;
+position: relative;
 }
 
 #site_nav_local_views {
-	position: relative;
-	z-index: 9;
-	float: left;
-	margin: 0px 10px 2px 4px;
-    width: auto;
+position: relative;
+z-index: 9;
+float: left;
+margin: 0px 10px 2px 4px;
+width: auto;
 }
 
 #site_nav_local_views .nav{padding-top: 0}
 
 #site_nav_local_views li {
-	width: auto;
-	text-align: left;
+width: auto;
+text-align: left;
 }
 
 #site_nav_local_views a {
-    background: none;
-	display:block;
-    float: left;
-	padding: 4px;
-    margin-right: 4px;
-	border: none !important;
-	font-size: 0.9em;
-	font-weight: normal;
-	letter-spacing: 0em;
-	text-transform: uppercase;
-	color: #f2f2f2 !important;
-    background-color: #444;
-	text-shadow: none; 
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
+background: none;
+display:block;
+float: left;
+padding: 4px;
+margin-right: 4px;
+border: none !important;
+font-size: 0.9em;
+font-weight: normal;
+letter-spacing: 0em;
+text-transform: uppercase;
+color: #f2f2f2 !important;
+background-color: #444;
+text-shadow: none; 
+border-radius: 4px;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
 }
 
 #site_nav_local_views a:hover {
-    background: none;
-    background-color: #b3b3b3;
+background: none;
+background-color: #b3b3b3;
 }
 
 #site_nav_local_views .current a {
-    background: none;
-	display: inline;
-    color: #4d4d4d !important;
-    box-shadow: none;
-    -moz-box-shadow: none;
-	-webkit-box-shadow: none;
-	border-bottom: 1px solid #fff;
-	text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
-    background-color: #e2e2e2;
-    text-decoration: none;
+background: none;
+display: inline;
+color: #4d4d4d !important;
+box-shadow: none;
+-moz-box-shadow: none;
+-webkit-box-shadow: none;
+border-bottom: 1px solid #fff;
+text-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+background-color: #e2e2e2;
+text-decoration: none;
 }
 
 #core {
-    width: 100%;
-    margin: 0;
+width: 100%;
+margin: 0;
 }
 
 #content {
-    width: 96%;
-    padding: 10px 2%;
-    margin: 0;
-    min-height: auto;
-	border-radius-topright: 4px;
-	-moz-border-radius-topright: 4px;
-	-webkit-border-top-right-radius: 4px;
+width: 96%;
+padding: 10px 2%;
+margin: 0;
+min-height: auto;
+border-radius-topright: 4px;
+-moz-border-radius-topright: 4px;
+-webkit-border-top-right-radius: 4px;
 }
 
 #footer {
-    margin: 0;
-    padding: 10px 4px 4px 4px;
+margin: 0;
+padding: 10px 4px 4px 4px;
 }
 
 .form_settings fieldset {
@@ -227,7 +224,7 @@ margin-bottom:7px;
 width:auto;
 display:block;
 float:none;
-    text-align: left;
+text-align: left;
 }
 
 .form_settings .form_data li {
@@ -255,17 +252,17 @@ margin-left:0;
 
 
 #settings_design_color .form_data {
- width: auto;
- margin-right: 0;
+width: auto;
+margin-right: 0;
 }
 
 .entity_profile {
-	width: 100%;
-	min-height: 0;
-	margin-bottom: 0;
+width: 100%;
+min-height: 0;
+margin-bottom: 0;
 }
 .entity_actions {margin: 0}
 .entity_actions li {
-	float: left;
-	margin: 0 2px;
+float: left;
+margin: 0 2px;
 }
