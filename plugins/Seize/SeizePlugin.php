@@ -37,11 +37,14 @@ class SeizePlugin extends Plugin
             && !$profile->hasRole(Profile_role::OWNER)
             //|| $cur->hasRole(Profile_role::MODERATOR)
         ) && $cur->id != $profile->id) {
+		$action->elementStart('li', array('class' => 'entity_seize'));
             $sf = new SeizeForm($action, $profile,
                 array('nickname' => $profile->nickname,
                 'action' => $action->trimmed('action')));
             $sf->show();
+		$action->elementEnd('li');	
         }
+		
 
         return true;
     }

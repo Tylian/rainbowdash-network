@@ -76,6 +76,8 @@ background: url(../images/banner.png) 0px 34px padding-box no-repeat #b5ddef;
 background-color: rgba(181, 221, 239, 0.9);
 }
 
+#wrap ~ * {display: none}
+
 a {
 color: #0A3D76; 
 text-decoration: none; 
@@ -1900,7 +1902,7 @@ padding: 3px 4px 4px 28px;
 padding: 4px 4px 4px 26px;
 }
 
-.entity_actions a, .entity_actions p, .entity_actions .entity_subscribe input, .entity_actions .entity_block input, .entity_actions .entity_moderation input, .entity_actions .entity_role input, .entity_actions .entity_nudge input, .entity_actions .entity_delete input {
+.entity_actions a, .entity_actions p, .entity_actions .entity_subscribe input, .entity_actions .entity_block input, .entity_actions .entity_moderation input, .entity_actions .entity_role input, .entity_actions .entity_nudge input, .entity_actions .entity_delete input, .entity_actions .entity_block input, .entity_actions .entity_seize input {
 background-color: #ccc !important;
 border: none;
 }
@@ -1909,7 +1911,7 @@ border: none;
 padding: 2px 4px 4px 28px;
 }
 
-.entity_actions a:hover, .entity_actions p:hover, .entity_actions .entity_subscribe input:hover, .entity_actions .entity_block input:hover, .entity_actions .entity_moderation input:hover, .entity_actions .entity_role input:hover, .entity_actions .entity_nudge input:hover, .entity_actions .entity_delete input:hover {
+.entity_actions a:hover, .entity_actions p:hover, .entity_actions .entity_subscribe input:hover, .entity_actions .entity_block input:hover, .entity_actions .entity_moderation input:hover, .entity_actions .entity_role input:hover, .entity_actions .entity_nudge input:hover, .entity_actions .entity_seize input:hover {
 background-color: #f2f2f2 !important;
 }
 
@@ -2232,6 +2234,7 @@ button.close,
 .entity_role p,
 .entity_role_administrator input.submit,
 .entity_role_moderator input.submit,
+.entity_actions .entity_seize input,
 .notice-options .repeated,
 .form_notice label[for=notice_data-geo],
 button.minimize,
@@ -2330,6 +2333,9 @@ background-position: 5px -1973px;
 }
 .entity_clear input.submit {
 background-position: 5px -2039px;
+}
+.entity_seize input.submit {
+background-position:5px -2238px;
 }
 .entity_flag input.submit,
 .entity_flag p {

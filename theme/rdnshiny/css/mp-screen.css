@@ -12,17 +12,20 @@
 }
 
 #header {
-    width: 96%;
+    width: 100%;
 	height: auto;
-    padding: 0 2%;
+    padding: 0;
 	margin: 0;
 }
 
 address {
-	margin:0 0 5px;
-	padding:0;
+	position: absolute;
+	left: 0px;
+	top: 0px;
 	background-color: #333;
+	width: 100px;
 	height: 28px;
+	z-index: 123457;
 }
 
 address img {
@@ -40,39 +43,52 @@ address img + .fn {
 }
 
 #site_nav_global_primary {
-	width: auto !important;
-	margin: 0;
-	padding: 0;
-	padding-bottom: 5px;
-	position: static !important;
-    height: auto;
     font-size: 1em;
 	letter-spacing: 0em;
 	list-style-type: none;
 	list-style-position: inside;
 	border-radius: 0;
-	background: none !important;
+	background-image: none;
+	background-color: #333;
+	position: static;
+	/position: fixed;
+	/left: 0;
+	/top: 0;
+	margin: 0 !important;
+	padding: 0 !important;
+	width: 100%;
+	z-index: 123456;
+	height: auto;
+}
+
+#nav_dummy {
+	width: 100px;
+	height: 28px;
+	display: block;
+	float: left;
 }
 
 #site_nav_global_primary li {
-	float: left !important;
-	background-color: #333;
-	margin: 0;
-	height: 18px;
-	padding: 5px;
-    font-size:0.9em;
-    line-height: 1em;
+	display: inline !important;
+	float: none !important;
 }
 
 #site_nav_global_primary li a {
+	display: block;
+	background-color: #333;
+	float: left;
+	margin: 0;
+	height: 18px;
+	padding: 8px 5px 2px;
+    font-size:0.9em;
+    line-height: 1em;
     color: #fff !important;
 }
 
 .form_notice {
-    float: left;
-    margin: 0 -10px;
-    width: 100%;
-    padding: 4px;
+    margin: 0;
+    width: 98%;
+    padding: 4px 1%;
 }
 
 .form_notice fieldset {
@@ -92,10 +108,11 @@ address img + .fn {
 
 #notice_text-count {
 	position:absolute;
-	bottom:2px;
-    right: 2px;
+	bottom:4px;
+    right: 4px;
     font-size: 0.8em;
-	z-index:9;
+	z-index:9999999;
+	pointer-events: none;
 }
 
 #form_notice-direct.form_notice #notice_text-count {

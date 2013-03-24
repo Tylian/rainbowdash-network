@@ -320,25 +320,45 @@ class MobileProfilePlugin extends WAP20Plugin
     function _showPrimaryNav($action)
     {
         $user    = common_current_user();
+		$class = $user ? 'loggedin' : 'loggedout';
         $action->elementStart('ul', array('id' => 'site_nav_global_primary'));
+		
+		$action->element('span', array('id'=>'nav_dummy'));
+
+		// TRANS: Tooltip for main menu option "Rules".
+		$action->menuItem(common_local_url('doc', array('title' => 'rules')),
+						_m('MENU', 'Rules'));
         if ($user) {
             $action->menuItem(common_local_url('all', array('nickname' => $user->nickname)),
-                            _m('Home'));
+                            _m('Personal'));
+
+                // TRANS: Tooltip for main menu option "Account".
+                $tooltip = _m('TOOLTIP', 'Your incoming messages');
+                $action->menuItem(common_local_url('inbox', array('nickname' => $user->nickname)),
+                                // TRANS: Main menu option when logged in for access to user settings.
+                                _('Inbox'), $tooltip, false, 'nav_dmcounter');
+								
             $action->menuItem(common_local_url('profilesettings'),
                             _m('Account'));
-            $action->menuItem(common_local_url('oauthconnectionssettings'),
-                                _m('Connect'));
+            /*$action->menuItem(common_local_url('oauthconnectionssettings'),
+                                _m('Connect'));*/
             if ($user->hasRight(Right::CONFIGURESITE)) {
                 $action->menuItem(common_local_url('siteadminpanel'),
-                                _m('Admin'), _m('Change site configuration'), false, 'nav_admin');
+                                _m('Admin'), null, false, 'nav_admin');
             }
-            if (common_config('invite', 'enabled')) {
+            /*if (common_config('invite', 'enabled')) {
                 $action->menuItem(common_local_url('invite'),
                                 _m('Invite'));
-            }
+            }*/
+            $action->menuItem(common_local_url('peoplesearch'),
+                            _m('Search'));
             $action->menuItem(common_local_url('logout'),
                             _m('Logout'));
         } else {
+			if (!common_config('site', 'private')) {
+				$action->menuItem(common_local_url('peoplesearch'),
+								_m('Search'));
+			}
             if (!common_config('site', 'closed')) {
                 $action->menuItem(common_local_url('register'),
                                 _m('Register'));
@@ -346,10 +366,7 @@ class MobileProfilePlugin extends WAP20Plugin
             $action->menuItem(common_local_url('login'),
                             _m('Login'));
         }
-        if ($user || !common_config('site', 'private')) {
-            $action->menuItem(common_local_url('peoplesearch'),
-                            _m('Search'));
-        }
+		$action->element('div', array('style' => 'clear: both;width: 1px;height: 1px'));
         $action->elementEnd('ul');
     }
 
