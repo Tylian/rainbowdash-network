@@ -336,7 +336,6 @@ background-color: transparent;
 border: 0;
 position: relative;
 width: auto;
-margin-right: 50px;
 }
 
 .form_notice legend {display: none;}
@@ -347,7 +346,10 @@ float: left;
 padding: 6px;
 position: relative;
 z-index: 9;
-width: 633px;
+width: 100%;
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
 height: 70px;
 border: 1px solid #bbb;
 border-radius: 4px;
