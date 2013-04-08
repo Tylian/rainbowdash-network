@@ -86,7 +86,7 @@ class Promote extends Memcached_DataObject
     {
         $promote = new Promote();
         
-        $promote->orderBy('created DESC, id DESC');
+        $promote->orderBy("FIELD(type, 'tag', 'group', 'profile', 'notice'), created DESC, id DESC");
             
         if (!is_null($offset)) {
             $promote->limit($offset, $limit);
