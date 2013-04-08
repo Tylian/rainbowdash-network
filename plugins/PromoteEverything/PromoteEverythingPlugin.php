@@ -45,7 +45,8 @@ class PromoteEverythingPlugin extends Plugin
     }
 
     function onStartNoticeSave($notice) {
-        Promote::blow('promote:notice_ids');
+        $notice->blowStream('promote:notice_ids');
+        $notice->blowStream('promote:notice_ids;last');
 
         return true;
     }

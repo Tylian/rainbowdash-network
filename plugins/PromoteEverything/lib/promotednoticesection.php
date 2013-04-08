@@ -47,7 +47,7 @@ class PromotedNoticeSection extends NoticeSection
 {
     function getNotices()
     {
-        return Promote::getStream(0, NOTICES_PER_SECTION);
+        return Promote::getStream(0, NOTICES_PER_SECTION + 1);
     }
 
     function title()
