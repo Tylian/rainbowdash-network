@@ -110,7 +110,7 @@ function updateDM() {
 
 function hideUsers(newPosts) {
     // Remove users
-    if(rdnrefresh_vars.usernamestags.replace(/W+/,'') != '') {
+    if(rdnrefresh_vars.usernamestags && rdnrefresh_vars.usernamestags.replace(/W+/,'') != '') {
         usernamesTags = rdnrefresh_vars.usernamestags.split(' ');
         $(newPosts).find(".vcard.author .nickname.fn, .vcard.author .url").each(
                 function(){
@@ -133,7 +133,7 @@ function hideUsers(newPosts) {
 
 function hideSpoilers(newPosts) {
     // Remove spoilers
-    if(rdnrefresh_vars.spoilertags.replace(/W+/,'') != '') {
+    if(rdnrefresh_vars.spoilertags && rdnrefresh_vars.spoilertags.replace(/W+/,'') != '') {
         spoilerTags = rdnrefresh_vars.spoilertags.toLowerCase().split(' ');
         $(newPosts).find(".tag a").each(
                 function(){
@@ -259,7 +259,7 @@ function delButton(newPosts) {
 
 /* Highlights any word the user has typed into the highlight any box. SLOW */
 function highlightAny(newPosts) {
-    if(rdnrefresh_vars.anyhighlightwords.replace(/W+/,'') != ''){
+    if(rdnrefresh_vars.anyhighlightwords && rdnrefresh_vars.anyhighlightwords.replace(/W+/,'') != ''){
         var words = rdnrefresh_vars.anyhighlightwords.split(' ');
         var posts = $(newPosts).find('p.entry-content');
         $.each(words, function() {
