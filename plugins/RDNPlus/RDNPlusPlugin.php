@@ -81,10 +81,25 @@ class RDNPlusPlugin extends Plugin
                 if ($message->find() && $message->fetch()) {
                     $this->vars['lastdm'] = $message->id;
 
-                    $r = Rdnrefresh::staticGet('user_id', $action->user->id);
-                    $orig = clone($r);
+                    $r = Rdnrefresh::staticGet('user_id', $user->id);
+
+                    if(!empty($r)) {
+                        $orig = clone($r);
+                    }
+                    else {
+                        $r = new Rdnrefresh();
+                        $r->user_id = $user->id;
+                    }
+
                     $r->lastdm = $message->id;
-                    $r->update($orig);
+
+                    if(isset($orig)) {
+                        $r->update($orig);
+                    }
+                    else {
+                        $r->insert();
+                    }
+
                     $r->free();
                     $r = null;
                 }
