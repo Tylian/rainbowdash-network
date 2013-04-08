@@ -1,10 +1,7 @@
+var selectedText = '';
+
 if(typeof currentUser == 'undefined') {
     try { currentUser = $('#nav_personal a, #nav_profile a').attr('href').replace(siteDir,'').split('/')[1].toLowerCase(); } catch(err) { }
-}
-
-var lastDM = $.cookie('lastdm');
-if(!lastDM) {
-    lastDM = 'notice-0';
 }
 
 $(function(){
@@ -14,23 +11,17 @@ $(function(){
 
         // Get number of new DMs and append it to the Personal link
     if(currentUser) {
-        if(location.href.replace(siteDir,'').split('/')[1] == 'inbox') {
-            lastDM = $('.messages li').filter(':first').attr('id');
-            $.cookie('lastdm', lastDM, {'expires': 365, 'path': '/'});
+        var profile = $('#nav_dmcounter, #site_nav_local_views').filter(':first');
+        var oldinbox = profile.find('a[href*="inbox"]');
+        if(oldinbox.length) {
+            oldinbox.addClass('dmcounter');
         }
         else {
-            var profile = $(/*'#site_nav_local_views, #nav_profile a'*/ '#nav_dmcounter').filter(':first');
-            var oldinbox = profile.find('a[href*="inbox"]');
-            if(oldinbox.length) {
-                oldinbox.addClass('dmcounter');
-            }
-            else {
-            profile.append('<li style="float: left;"><a title="Inbox" class="dmcounter" href="' + siteDir + currentUser + '/inbox">Inbox</a></li>');
-            }
-
-            profile.find('ul.nav').css('width','auto');
-            updateDM();
+        profile.append('<li style="float: left;"><a title="Inbox" class="dmcounter" href="' + siteDir + currentUser + '/inbox">Inbox</a></li>');
         }
+
+        profile.find('ul.nav').css('width','auto');
+        updateDM();
     }
 
     $('.rot13').live('click', function(e){
@@ -47,16 +38,6 @@ $(function(){
     $('.addbreaks').live('click', function(){
         var notice = $(this).closest('li');
         addLineBreaksToNotice(notice);
-    });
-
-    $('.retweet').live('click', function(){
-        var target = $(this).closest('li');
-        var theContent = $(target).find('p.entry-content').filter(':first').text().replace(/@[a-zA-Z0-9_]+[^\.]/g, '');
-        var theAuthor = $(target).find('.vcard.author .url').filter(':first').attr('href').split('/');
-        theAuthor = theAuthor[theAuthor.length-1];
-        var theTweet = 'http://twitter.com/intent/tweet?text=';
-        theTweet += escape('#rdn RD @' + theAuthor + ' ' + theContent);
-        window.open(theTweet);
     });
 
     $('.bbTools li').live('click', function() {
@@ -106,40 +87,31 @@ return userSelection;
 function updateDM() {
     $.ajax({
         type: 'GET',
-    url: siteDir + currentUser + '/inbox',
-    error: function(response) {},
-    success: function(response) {
-        var holder = document.createElement('div');
-        holder.innerHTML = response;
+        url: siteDir + currentUser + '/inbox?peek=peek',
+        error: function(response) {},
+        success: function(response) {
+            var holder = document.createElement('div');
+            holder.innerHTML = response;
 
-        // Passing the new page to post checker
-        var lastDMItem = $(holder).find('#' + lastDM);
-        if(lastDMItem.length) {
-            var newDM = lastDMItem.prevAll().length;
-        }
-        else {
-            var newDM = $(holder).find('.messages li').length;
-        }
-    $('.dmcounter').html('Inbox'+(newDM == 0 ? '' : ' (<strong>' + newDM + ' new</strong>)'));
-        setTimeout(updateDM, 60000);
-		
-		if(newDM > 0)
-			$('#nav_userlinks').addClass('new_dms');
-		else
-			$('#nav_userlinks').removeClass('new_dms');
-		
-		lastDM = $.cookie('lastdm');
-		if(!lastDM) {
-			lastDM = 'notice-0';
-		}
-
-        }});
+            // Passing the new page to post checker
+            var lastDMItem = $(holder).find('#message-' + rdnrefresh_vars.lastdm);
+            if(lastDMItem.length) {
+                var newDM = lastDMItem.prevAll().length;
+            }
+            else {
+                var newDM = $(holder).find('.messages li').length;
+            }
+            $('.dmcounter').html('Inbox'+(newDM == 0 ? '' : ' <strong>(' + newDM + ' new)</strong>'));
+            setTimeout(updateDM, 60000);
+            
+            (newDM > 0) ? $('#nav_userlinks').addClass('new_dms') : $('#nav_userlinks').removeClass('new_dms');
+    }});
 }
 
 function hideUsers(newPosts) {
     // Remove users
-    if(USERNAMESTAGS.replace(/W+/,'') != '') {
-        usernamesTags = USERNAMESTAGS.split(' ');
+    if(rdnrefresh_vars.usernamestags.replace(/W+/,'') != '') {
+        usernamesTags = rdnrefresh_vars.usernamestags.split(' ');
         $(newPosts).find(".vcard.author .nickname.fn, .vcard.author .url").each(
                 function(){
                     tag = $(this);
@@ -161,8 +133,8 @@ function hideUsers(newPosts) {
 
 function hideSpoilers(newPosts) {
     // Remove spoilers
-    if(SPOILERTAGS.replace(/W+/,'') != '') {
-        spoilerTags = SPOILERTAGS.toLowerCase().split(' ');
+    if(rdnrefresh_vars.spoilertags.replace(/W+/,'') != '') {
+        spoilerTags = rdnrefresh_vars.spoilertags.toLowerCase().split(' ');
         $(newPosts).find(".tag a").each(
                 function(){
                     tag = $(this);
@@ -181,7 +153,7 @@ function hideSpoilers(newPosts) {
 
 /* Removes emoticons */
 function delEmotes(newPosts) {
-    if(hideemotes == '1') {
+    if(rdnrefresh_vars.hideemotes == '1') {
         $(newPosts).find('img.emote').each(function() {
             $(this).before($(this).attr('alt'));
             $(this).remove();
@@ -200,7 +172,7 @@ function reProcess(newPosts) {
     setTimeout(reProcess, 50);
     if(!newPosts) { var newPosts = $('.hentry.notice').not('.rdnrefresh_done') }
 
-    if(autospoil == '1') newPosts.each(function() {decodeSpoiler($(this), true)});
+    if(rdnrefresh_vars.autospoil == '1') newPosts.each(function() {decodeSpoiler($(this), true)});
 
     hideSpoilers(newPosts);
     hideUsers(newPosts);
@@ -287,8 +259,8 @@ function delButton(newPosts) {
 
 /* Highlights any word the user has typed into the highlight any box. SLOW */
 function highlightAny(newPosts) {
-    if(ANYHIGHLIGHTWORDS.replace(/W+/,'') != ''){
-        var words = ANYHIGHLIGHTWORDS.split(' ');
+    if(rdnrefresh_vars.anyhighlightwords.replace(/W+/,'') != ''){
+        var words = rdnrefresh_vars.anyhighlightwords.split(' ');
         var posts = $(newPosts).find('p.entry-content');
         $.each(words, function() {
             var wordex = new RegExp('(' + this + ')', 'gi');
@@ -313,10 +285,9 @@ function highlightUsername(newPosts) {
     });
 }
 
-/* Converts a hex string to an array RGB */
 function customStyle() {
-    if(customstyle == '1') {
-    if(logo) {$('.logo.photo').attr('src', logo)}
+    if(rdnrefresh_vars.customstyle == '1') {
+    if(rdnrefresh_vars.logo) {$('.logo.photo').attr('src', logo)}
     }
 }
 

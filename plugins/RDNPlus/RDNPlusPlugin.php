@@ -61,36 +61,58 @@ class RDNPlusPlugin extends Plugin
             new ColumnDef('backgroundimage', 'varchar', 255, true),
             new ColumnDef('hideemotes', 'integer', 1, true),
             new ColumnDef('autospoil', 'integer', 1, true),
+            new ColumnDef('lastdm', 'integer', null, true),
         ));
 
         return true;
     }
-    
+
+    function resetInbox($action) {
+        /* Reset Inbox counter */
+        if($action instanceof InboxAction) {
+            $user = common_current_user();
+            if(!empty($user) && $action->user->id == $user->id && !$action->arg('peek')) {
+                $message = new Message();
+
+                $message->to_profile = $action->user->id;
+                $message->orderBy('created DESC, id DESC');
+                $message->limit(1);
+
+                if ($message->find() && $message->fetch()) {
+                    $this->vars['lastdm'] = $message->id;
+
+                    $r = Rdnrefresh::staticGet('user_id', $action->user->id);
+                    $orig = clone($r);
+                    $r->lastdm = $message->id;
+                    $r->update($orig);
+                    $r->free();
+                    $r = null;
+                }
+            }
+        }
+    }
+
     function onEndShowStyles($action)
     {
         if(!isset($this->vars)) {
             $this->vars = Rdnrefresh::getValues();
         }
 
+        $this->resetInbox($action);
+
         $vars = $this->vars;
 
         if($vars['customstyle']) {
+            $d = new Design;
 
-            $backgroundimage = '';
-            $vars['backgroundimage'] = $vars['backgroundimage'] ? "body { background-image: url(" . $vars['backgroundimage'] . "); }" : '';
+            $d->backgroundimage = $vars['backgroundimage'] ? "body { background-image: url(" . $vars['backgroundimage'] . "); }" : '';
 
-            $vars['maincolor'] = $this->hex2rgb($vars['maincolor']);
-            $vars['asidecolor'] = $this->hex2rgb($vars['asidecolor']);
+            $d->contentcolor = $vars['maincolor'];
+            $d->sidebarcolor = $vars['sidebarcolor'];
+            $d->linkcolor = $vars['linkcolor'];
+            $d->textcolor = $vars['pagecolor'];
 
-            $refreshstyle = <<<HERE
-#content, #content_wrapper { color: $vars[pagecolor]; background-color: rgba($vars[maincolor],0.9);}
-$vars[backgroundimage]
-#form_notice { color: $vars[pagecolor]; }
-body a { color: $vars[linkcolor]; }
-#aside_primary_wrapper, #site_nav_local_views_wrapper, #aside_primary, #site_nav_local_views { color: $vars[pagecolor]; background-color: rgba($vars[asidecolor], 0.9); }
-#wrap { border: 0; background-color: transparent; background-image: none;}
-HERE;
-            $action->style($refreshstyle);
+            $d->showCSS($action);
         }
 
         $action->cssLink($this->path('css/rdnrefresh.css'), null, 'screen, tv, projection, handheld');
@@ -107,17 +129,16 @@ HERE;
             $this->vars = Rdnrefresh::getValues();
         }
 
-        $vars = $this->vars;
-
         $user = common_current_user();
-        $nick = (!empty($user)) ? $user->nickname: '';
+        $nick = strtolower((!empty($user)) ? $user->nickname: '');
         $localurl = explode('?', common_local_url('public'));
         $localurl = $localurl[0];
 
-        $refreshscript = <<<HERE
-var selectedText = ''; var currentUser = "$nick".toLowerCase(); var SPOILERTAGS = "$vars[spoilertags]"; var USERNAMESTAGS = "$vars[usernamestags]"; var ANYHIGHLIGHTWORDS = "$vars[anyhighlightwords]"; var siteDir = "$localurl"; var customstyle = '$vars[customstyle]'; var logo = '$vars[logo]'; var hideemotes = '$vars[hideemotes]'; var autospoil = '$vars[autospoil]';
-HERE;
-        $action->inlineScript($refreshscript);
+        $action->inlineScript(
+            '   var rdnrefresh_vars = ' . json_encode($this->vars) .
+            ';  var currentUser     = "' . addslashes($nick) .
+            '"; var siteDir         = "' . addslashes($localurl) . '";'
+        );
         $action->script($this->path('js/rdnrefresh.js'));
 
         return true;
@@ -136,11 +157,7 @@ HERE;
         return true;
     }
 
-    function onStartNoticeSave($notice) {
-        global $config;
-
-        $dir = dirname(__FILE__);
-
+    function parseFormatting($notice) {
         // HTML code
         $bbcode = array(
             '@()\[b\](.*?)\[/b\]()@i',
@@ -188,6 +205,13 @@ HERE;
         $notice->rendered = preg_replace($bbcode, $markup, $notice->rendered);
         $notice->rendered = preg_replace($markdown, $markup_hybrid, $notice->rendered);
 
+        if(trim(str_replace(array('*','_','/','-','='), '', $notice->content))) return true;
+        else throw new ClientException('Notice cannot be blank');
+    }
+
+    function hideSpoilers($notice) {
+        global $config;
+
         //ROT13 - WARNING. Strips previously incorporated HTML.
         $rotex = '@\[(r|sp)\](.*?)\[/(r|sp)\]@i';
         preg_match_all($rotex, $notice->content, $matches, PREG_SET_ORDER);
@@ -215,9 +239,13 @@ HERE;
         if(!empty($matches)) {
             $config['attachments']['process_links'] = false;
         }
+    }
 
-        if(trim(str_replace(array('*','_','/','-','='), '', $notice->content))) return true;
-        else throw new ClientException('Notice cannot be blank');
+    function onStartNoticeSave($notice) {
+        $this->parseFormatting($notice);
+        $this->hideSpoilers($notice);
+
+        return true;
     }
 
 
@@ -240,7 +268,7 @@ HERE;
     {
         $versions[] = array('name' => 'RDN Plus',
                             'version' => STATUSNET_VERSION,
-                            'author' => 'ponydude+minti',
+                            'author' => 'widget+minti',
                             'homepage' => 'http://status.net/wiki/Plugin:Sample',
                             'rawdescription' =>
                           // TRANS: Plugin description.
@@ -248,13 +276,5 @@ HERE;
         return true;
     }
 
-    function hex2rgb($color){
-        $color = str_replace('#','',$color);
-        $rgb[] = hexdec(substr($color,0,2));
-        $rgb[] = hexdec(substr($color,2,2));
-        $rgb[] = hexdec(substr($color,4,2));
-        $color = join(', ', $rgb);
-        return $color;
-    }
 }
 ?>

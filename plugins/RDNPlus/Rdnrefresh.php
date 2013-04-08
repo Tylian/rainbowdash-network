@@ -23,6 +23,7 @@ class Rdnrefresh extends Memcached_DataObject
     public $backgroundimage;
     public $hideemotes;
     public $autospoil;
+    public $lastdm;
 
     function staticGet($k, $v=null)
     {
@@ -52,6 +53,7 @@ class Rdnrefresh extends Memcached_DataObject
             'backgroundimage' => DB_DATAOBJECT_STR + DB_DATAOBJECT_NOTNULL,
             'hideemotes' => DB_DATAOBJECT_BOOL + DB_DATAOBJECT_NOTNULL,
             'autospoil' => DB_DATAOBJECT_BOOL + DB_DATAOBJECT_NOTNULL,
+            'lastdm' => DB_DATAOBJECT_INT,
         );
     }
 
@@ -91,16 +93,11 @@ class Rdnrefresh extends Memcached_DataObject
         return array(false, false, false);
     }
 
-    function fetchDB($userid) {
-        $vars = Rdnrefresh::staticGet('user_id', $userid);
-        return $vars;
-    }
-
     function getValues() {
         $user = common_current_user();
 
         if(!empty($user)) {
-            $database = Rdnrefresh::fetchDB($user->id);
+            $database = Rdnrefresh::staticGet('user_id', $user->id);
         }
 
         $vars = array();
@@ -118,6 +115,7 @@ class Rdnrefresh extends Memcached_DataObject
             'usernamestags'     => '',
             'hideemotes'        => 0,
             'autospoil'         => 0,
+            'lastdm'            => 0,
         );
 
         if(!empty($database)) {

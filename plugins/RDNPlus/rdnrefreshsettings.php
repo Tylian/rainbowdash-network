@@ -151,7 +151,7 @@ class RdnrefreshsettingsAction extends SettingsAction
 
             if(!empty($user)) {
 
-                $vars = Rdnrefresh::fetchDB($user->id);
+                $vars = Rdnrefresh::staticGet('user_id', $user->id);
 
                 if(empty($vars)) {
                     $vars = new Rdnrefresh();
