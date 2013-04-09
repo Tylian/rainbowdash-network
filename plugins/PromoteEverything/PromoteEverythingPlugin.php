@@ -85,7 +85,7 @@ class PromoteEverythingPlugin extends Plugin
         $user = common_current_user();
         $notice = $item->notice;
         $action = $item->out;
-        if ($user & $user->hasRight(Right::CONFIGURESITE) &&
+        if ($user && $user->hasRight(Right::CONFIGURESITE) &&
             Event::handle('StartShowPromoteForm', array($action))) {
             $promote = new Promote();
             $promote->type = 'notice';
