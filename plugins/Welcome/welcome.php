@@ -32,7 +32,7 @@ class WelcomeAction extends Action
         $user = common_current_user();
 
         if(!empty($user)) {
-            if(false && !$user->email) {
+            if(!$user->email) {
                 $this->validated = false;
                 return true;
             }
@@ -111,7 +111,7 @@ class WelcomeAction extends Action
 
         $this->element('p', null, sprintf('Congratulations! And welcome to %s!', $sitename));
 
-        if(false && !$this->validated) {
+        if(!$this->validated) {
             $this->element('p', null, 'You should receive a message by email momentarily, with instructions on how to confirm your email address.');
 
             $this->elementStart('p');
