@@ -574,7 +574,10 @@ class RegisterAction extends Action
                                        array('nickname' => $nickname));
 
         // Redirect to custom welcome page
-        if(file_exists(INSTALLDIR . '/doc-src/welcome')) {
+        if(class_exists('WelcomeAction')) {
+            common_redirect(common_local_url('welcome'));
+        }
+        else if(file_exists(INSTALLDIR . '/doc-src/welcome')) {
             common_redirect(common_local_url('doc', array('title' => 'welcome')));
         }
 
