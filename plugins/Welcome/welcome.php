@@ -52,10 +52,10 @@ class WelcomeAction extends Action
 
             // Get a notice for the user to play with. Make sure it contains a group and hash tag.
             $this->notice = new Notice;
-            $this->notice->query('SELECT notice.* FROM notice ' .
+            Memcached_DataObject::cachedQuery('Notice', 'SELECT notice.* FROM notice ' .
                 'JOIN notice_tag ON notice_tag.notice_id = notice.id ' .
                 'JOIN group_inbox ON group_inbox.notice_id = notice.id ' .
-                'GROUP BY notice.id HAVING COUNT(*) >= 2');
+                'GROUP BY notice.id HAVING COUNT(*) >= 2', null);
         }
 
         return true;
