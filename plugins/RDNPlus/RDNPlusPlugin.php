@@ -57,6 +57,7 @@ class RDNPlusPlugin extends Plugin
             new ColumnDef('pagecolor', 'char', 7, true),
             new ColumnDef('linkcolor', 'char', 7, true),
             new ColumnDef('customstyle', 'integer', 1, true),
+            new ColumnDef('usemarkdown', 'integer', 1, true),
             new ColumnDef('logo', 'varchar', 255, true),
             new ColumnDef('backgroundimage', 'varchar', 255, true),
             new ColumnDef('hideemotes', 'integer', 1, true),
@@ -214,11 +215,17 @@ class RDNPlusPlugin extends Plugin
             '$1<span class="smallt">=$2=</span>$3',
         );
 
-        $notice->content = preg_replace($bbcode, $plaintext, $notice->content);
-        $notice->content = preg_replace($markdown, $plaintext, $notice->content);
+        if(!isset($this->vars)) {
+            $this->vars = Rdnrefresh::getValues();
+        }
 
+        if($this->vars['usemarkdown']) {
+            $notice->content = preg_replace($markdown, $plaintext, $notice->content);
+            $notice->rendered = preg_replace($markdown, $markup_hybrid, $notice->rendered);
+        }
+        
+        $notice->content = preg_replace($bbcode, $plaintext, $notice->content);
         $notice->rendered = preg_replace($bbcode, $markup, $notice->rendered);
-        $notice->rendered = preg_replace($markdown, $markup_hybrid, $notice->rendered);
 
         if(trim(str_replace(array('*','_','/','-','='), '', $notice->content))) return true;
         else throw new ClientException('Notice cannot be blank');

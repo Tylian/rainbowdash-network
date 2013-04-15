@@ -19,6 +19,7 @@ class Rdnrefresh extends Memcached_DataObject
     public $pagecolor;
     public $linkcolor;
     public $customstyle;
+    public $usemarkdown;
     public $logo;
     public $backgroundimage;
     public $hideemotes;
@@ -49,6 +50,7 @@ class Rdnrefresh extends Memcached_DataObject
             'pagecolor' => DB_DATAOBJECT_STR + DB_DATAOBJECT_NOTNULL,
             'linkcolor' => DB_DATAOBJECT_STR + DB_DATAOBJECT_NOTNULL,
             'customstyle' => DB_DATAOBJECT_BOOL + DB_DATAOBJECT_NOTNULL,
+            'usemarkdown' => DB_DATAOBJECT_BOOL + DB_DATAOBJECT_NOTNULL,
             'logo' => DB_DATAOBJECT_STR + DB_DATAOBJECT_NOTNULL,
             'backgroundimage' => DB_DATAOBJECT_STR + DB_DATAOBJECT_NOTNULL,
             'hideemotes' => DB_DATAOBJECT_BOOL + DB_DATAOBJECT_NOTNULL,
@@ -109,6 +111,7 @@ class Rdnrefresh extends Memcached_DataObject
             'pagecolor'         => '#FFFFFF',
             'linkcolor'         => '#00EE00',
             'customstyle'       => 0,
+            'usemarkdown'       => 1,
             'logo'              => '',
             'backgroundimage'   => '',
             'anyhighlightwords' => '',

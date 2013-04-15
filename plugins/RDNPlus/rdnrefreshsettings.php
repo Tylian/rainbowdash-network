@@ -56,6 +56,13 @@ class RdnrefreshsettingsAction extends SettingsAction
         $this->elementStart('ul', 'form_data');
         if (Event::handle('StartRDNRefreshFormData', array($this))) {
             $this->elementStart('li');
+            $this->checkbox('usemarkdown', _('Parse RDN-Flavor Markdown'),
+                            ($this->arg('usemarkdown')) ?
+                            $this->boolean('usemarkdown') : $vars['usemarkdown']);
+            $this->elementEnd('li');
+
+
+            $this->elementStart('li');
             $this->checkbox('autospoil', _('Auto unhide spoilers'),
                             ($this->arg('autospoil')) ?
                             $this->boolean('autospoil') : $vars['autospoil']);
@@ -171,6 +178,7 @@ class RdnrefreshsettingsAction extends SettingsAction
                 $vars->asidecolor = substr($this->trimmed('asidecolor'),0,7);
                 $vars->linkcolor = substr($this->trimmed('linkcolor'),0,7);
                 $vars->customstyle = $this->boolean('customstyle');
+                $vars->usemarkdown = $this->boolean('usemarkdown');
                 $vars->hideemotes = $this->boolean('hideemotes');
                 $vars->autospoil = $this->boolean('autospoil');
 
